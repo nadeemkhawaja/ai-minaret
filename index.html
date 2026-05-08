@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>ArgueMind — Sharpen Your Thinking</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@400;600;700;800;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@400;600;700;800;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    DESIGN SYSTEM — Broadsheet Editorial
@@ -2064,6 +2064,65 @@ select option { background: var(--paper); }
   .topic-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--rule-heavy); }
   .topic-card:nth-last-child(-n+2) { border-bottom: none; }
 }
+
+/* ============================================================
+   MULTILINGUAL — RTL layout + Arabic/Urdu fonts
+   ============================================================ */
+html[dir="rtl"] body { direction: rtl; text-align: right; }
+html[dir="rtl"] .masthead-nav-left { order: 3; }
+html[dir="rtl"] .masthead-nav-right { order: 1; }
+html[dir="rtl"] .masthead-main { grid-template-columns: 1fr auto 1fr; }
+html[dir="rtl"] .front-grid { direction: rtl; }
+html[dir="rtl"] .cat-strip { flex-direction: row-reverse; }
+html[dir="rtl"] .article-text { direction: rtl; text-align: right; }
+html[dir="rtl"] .coach-text { direction: rtl; text-align: right; }
+html[dir="rtl"] .article-footer { flex-direction: row-reverse; }
+html[dir="rtl"] .acc-head { flex-direction: row-reverse; }
+html[dir="rtl"] .config-inner { direction: rtl; }
+html[dir="rtl"] .live-turn { direction: rtl; }
+html[dir="rtl"] .archive-entry { direction: rtl; }
+
+/* Arabic / Urdu: use system fonts that support Naskh script */
+html[lang="ar"] .article-text,
+html[lang="ar"] .coach-text,
+html[lang="ar"] .ltext,
+html[lang="ar"] .pull-quote,
+html[lang="ar"] .host-text,
+html[lang="ar"] .lt-text,
+html[lang="ar"] .exchange-text,
+html[lang="ur"] .article-text,
+html[lang="ur"] .coach-text,
+html[lang="ur"] .ltext,
+html[lang="ur"] .pull-quote,
+html[lang="ur"] .host-text,
+html[lang="ur"] .lt-text,
+html[lang="ur"] .exchange-text {
+  font-family: 'Noto Naskh Arabic', 'Arabic Typesetting', 'Segoe UI', Tahoma, sans-serif;
+  font-size: 15px;
+  line-height: 2.0;
+}
+
+/* Language switcher flags */
+.lang-switcher {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  margin-left: 6px;
+}
+.lang-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 3px 6px;
+  font-size: 15px;
+  cursor: pointer;
+  opacity: .55;
+  transition: all .15s;
+  line-height: 1;
+}
+.lang-btn:hover { opacity: .85; border-color: var(--rule); }
+.lang-btn.active { opacity: 1; border-color: var(--rule-heavy); background: var(--paper2); }
+
 </style>
 </head>
 <body>
@@ -2072,6 +2131,7 @@ select option { background: var(--paper); }
 <div class="telegram" id="telegram"></div>
 
 <!-- MASTHEAD -->
+
 <header class="masthead">
   <div class="masthead-top">
     <div>Est. 2025 &nbsp;·&nbsp; Vol. II &nbsp;·&nbsp; ArgueMind</div>
@@ -2093,13 +2153,19 @@ select option { background: var(--paper); }
 
     <div class="masthead-title" onclick="scrollTo(0,0)">
       <div class="paper-name">ArgueMind</div>
-      <div class="paper-tagline">Hosted by Loffi &nbsp;·&nbsp; Sharpen Your Thinking &nbsp;·&nbsp; Powered by Claude</div>
+      <div class="paper-tagline" id="masthead-tagline">Hosted by Loffi &nbsp;·&nbsp; Sharpen Your Thinking &nbsp;·&nbsp; Powered by Claude</div>
     </div>
 
     <nav class="masthead-nav-right">
       <button class="nav-item" onclick="exportDebate('md')">Export</button>
       <button class="nav-item" onclick="copyAll()">Copy</button>
       <button class="nav-item" onclick="clearAll()">Clear</button>
+      <div class="lang-switcher" id="lang-switcher">
+        <button class="lang-btn active" data-lang="en" onclick="switchLang('en')" title="English">🇬🇧</button>
+        <button class="lang-btn" data-lang="ar" onclick="switchLang('ar')" title="العربية">🇸🇦</button>
+        <button class="lang-btn" data-lang="ur" onclick="switchLang('ur')" title="اردو">🇵🇰</button>
+        <button class="lang-btn" data-lang="es" onclick="switchLang('es')" title="Español">🇪🇸</button>
+      </div>
     </nav>
   </div>
 </header>
@@ -2123,15 +2189,15 @@ select option { background: var(--paper); }
       <div class="front-grid">
         <!-- LEFT: Intro column -->
         <div class="front-col col-rule">
-          <div class="kicker">Meet Your Strategist</div>
-          <h1 class="headline">Sharpen your thinking with <em>ArgueMind</em></h1>
-          <p class="deck">Your AI debate strategist. Loffi argues, challenges, questions your logic, fires back in real time, and delivers a verdict that makes you think harder.</p>
-          <div class="byline">Hosted by Loffi &nbsp;·&nbsp; AI Debate Strategist &nbsp;·&nbsp; All Editions</div>
+          <div class="kicker" id="hero-kicker">Meet Your Strategist</div>
+          <h1 class="headline"><span id="hero-headline-text">Sharpen your thinking with</span> <em id="hero-headline-em">ArgueMind</em></h1>
+          <p class="deck" id="hero-deck">Your AI debate strategist. Loffi argues, challenges, questions your logic, fires back in real time, and delivers a verdict that makes you think harder.</p>
+          <div class="byline" id="hero-byline">Hosted by Loffi &nbsp;·&nbsp; AI Debate Strategist &nbsp;·&nbsp; All Editions</div>
           <div class="stat-row">
-            <div class="stat-box"><div class="stat-num">15</div><div class="stat-label">Categories</div></div>
-            <div class="stat-box"><div class="stat-num">7</div><div class="stat-label">Layers</div></div>
-            <div class="stat-box"><div class="stat-num">90</div><div class="stat-label">Topics</div></div>
-            <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">Modes</div></div>
+            <div class="stat-box"><div class="stat-num">15</div><div class="stat-label" id="stat-cats">Categories</div></div>
+            <div class="stat-box"><div class="stat-num">7</div><div class="stat-label" id="stat-layers">Layers</div></div>
+            <div class="stat-box"><div class="stat-num">90</div><div class="stat-label" id="stat-topics">Topics</div></div>
+            <div class="stat-box"><div class="stat-num">3</div><div class="stat-label" id="stat-modes">Modes</div></div>
           </div>
         </div>
 
@@ -2167,28 +2233,28 @@ select option { background: var(--paper); }
             <div style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--ink4);text-transform:uppercase;">AI Debate Strategist · ArgueMind</div>
           </div>
 
-          <div class="kicker">Dispatch Preview</div>
+          <div class="kicker" id="prev-label">Dispatch Preview</div>
           <div style="border:1px solid var(--rule-heavy);padding:12px;margin-bottom:12px;">
-            <div style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:6px;">Selected Motion</div>
+            <div style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:6px;" id="prev-motion-label">Selected Motion</div>
             <div style="font-family:var(--serif);font-size:15px;font-weight:700;line-height:1.3;margin-bottom:8px;" id="prev-topic">—</div>
             <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);" id="prev-pos">Pick a topic and position →</div>
           </div>
 
           <!-- Feature toggles inline -->
           <div style="border:1px solid var(--rule-heavy);padding:10px 12px;margin-bottom:10px;">
-            <div style="font-family:var(--cond);font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;">Print Settings</div>
+            <div style="font-family:var(--cond);font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;" id="print-settings-label">Print Settings</div>
             <div class="toggles-row" style="padding:0;">
               <div class="toggle-item" onclick="toggleFeature('fallacy')">
                 <div class="toggle-box checked" id="tog-fallacy">✓</div>
-                <span class="toggle-text">Fallacy Scan</span>
+                <span class="toggle-text" id="tog-label-fallacy">Fallacy Scan</span>
               </div>
               <div class="toggle-item" onclick="toggleFeature('socratic')">
                 <div class="toggle-box" id="tog-socratic"></div>
-                <span class="toggle-text">Socratic Drill</span>
+                <span class="toggle-text" id="tog-label-socratic">Socratic Drill</span>
               </div>
               <div class="toggle-item" onclick="toggleFeature('video')">
                 <div class="toggle-box" id="tog-video"></div>
-                <span class="toggle-text">Live Avatar</span>
+                <span class="toggle-text" id="tog-label-video">Live Avatar</span>
               </div>
             </div>
           </div>
@@ -2206,16 +2272,16 @@ select option { background: var(--paper); }
     <!-- CONFIGURATION -->
     <div class="config-block">
       <div class="config-header">
-        <span>Configure Your Argument</span>
+        <span id="cfg-header-label">Configure Your Argument</span>
         <span style="font-family:var(--mono);font-size:9px;opacity:.6;">Section 02</span>
       </div>
       <div class="config-inner">
         <div>
-          <div class="cf-label">Your Position</div>
+          <div class="cf-label" id="cf-position-label">Your Position</div>
           <select id="sel-pos"><option value="">— Select side —</option></select>
         </div>
         <div>
-          <div class="cf-label">Persona</div>
+          <div class="cf-label" id="cf-persona-label">Persona</div>
           <select id="sel-persona">
             <option value="Domain Analyst">Domain Analyst</option>
             <option value="Academic Researcher">Academic Researcher</option>
@@ -2228,7 +2294,7 @@ select option { background: var(--paper); }
           </select>
         </div>
         <div>
-          <div class="cf-label">Argument Depth</div>
+          <div class="cf-label" id="cf-depth-label">Argument Depth</div>
           <select id="sel-depth">
             <option value="150-200">Brief — 150–200 words</option>
             <option value="220-270" selected>Standard — 220–270 words</option>
@@ -2236,8 +2302,8 @@ select option { background: var(--paper); }
           </select>
         </div>
         <div>
-          <div class="cf-label">Language</div>
-          <select id="sel-lang">
+          <div class="cf-label" id="cf-lang-label" style="display:none;">Language</div>
+          <select id="sel-lang" style="display:none;">
             <option value="">English</option>
             <option value="Write your entire response in Arabic. ">Arabic</option>
             <option value="Write your entire response in Spanish. ">Spanish</option>
@@ -2248,13 +2314,13 @@ select option { background: var(--paper); }
           </select>
         </div>
         <div>
-          <div class="cf-label">Knowledge Source</div>
+          <div class="cf-label" id="cf-source-label">Knowledge Source</div>
           <select id="sel-source-quick" onchange="S.source=this.value"></select>
         </div>
       </div>
 
       <div class="tone-row">
-        <span class="tone-label">Tone —</span>
+        <span class="tone-label" id="tone-label">Tone —</span>
         <button class="tone-pill sel" data-tone="compelling and rhetorically persuasive">Persuasive</button>
         <button class="tone-pill" data-tone="formal and academic">Formal</button>
         <button class="tone-pill" data-tone="sharp and aggressive">Aggressive</button>
@@ -2264,45 +2330,40 @@ select option { background: var(--paper); }
       </div>
     </div>
 
-    <!-- VOICE ACCORDION -->
-    <div class="accordion">
-      <div class="acc-head" onclick="toggleAcc('voice')">
+
+
+    <!-- KOKORO TTS SETTINGS -->
+    <div class="accordion" style="margin-bottom:1rem;">
+      <div class="acc-head" onclick="toggleAcc('kokoro')">
         <div class="acc-head-left">
-          Voice — Loffi via ElevenLabs
-          <span class="acc-badge" id="voice-badge">NOT CONNECTED</span>
+          🔊 Kokoro TTS — Local voice (runs in your browser, no API key)
+          <span class="acc-badge" id="kokoro-badge">OFF</span>
         </div>
-        <span class="acc-arrow" id="voice-arrow">▼</span>
+        <span class="acc-arrow" id="kokoro-arrow">▼</span>
       </div>
-      <div class="acc-body" id="voice-body">
-        <div style="display:flex;gap:0;margin-bottom:12px;">
-          <input type="password" id="el-key" style="flex:1;border:1px solid var(--rule-heavy);padding:8px 10px;font-family:var(--mono);font-size:12px;outline:none;background:var(--paper);" placeholder="ElevenLabs API key...">
-          <button onclick="connectEL()" style="background:var(--ink);border:none;padding:8px 14px;font-family:var(--cond);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--paper);cursor:pointer;">Connect</button>
+      <div class="acc-body" id="kokoro-body">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+          <div class="toggle-item" onclick="toggleKokoro()">
+            <div class="toggle-box" id="tog-kokoro"></div>
+            <span class="toggle-text">Enable Kokoro TTS</span>
+          </div>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--ink4);">First use downloads ~80MB model · then works offline · Apache licensed</span>
         </div>
-        <div class="voice-grid">
-          <div>
-            <div class="vcl">Voice</div>
-            <select id="sel-voice" style="font-size:11px;">
-              <option value="21m00Tcm4TlvDq8ikWAM">Rachel — calm</option>
-              <option value="AZnzlk1XvdvUeBnXmlld">Domi — strong</option>
-              <option value="EXAVITQu4vr4xnSDxMaL">Bella — warm</option>
-              <option value="ErXwobaYiN019PkySvjV">Antoni</option>
-              <option value="VR6AewLTigWG4xSOukaG">Arnold</option>
-              <option value="pNInz6obpgDQGcFmaJgB">Adam</option>
-            </select>
-          </div>
-          <div>
-            <div class="vcl">Stability <span id="stab-v">0.50</span></div>
-            <input type="range" class="vsl" id="stab-sl" min="0" max="1" step=".05" value=".5" oninput="document.getElementById('stab-v').textContent=parseFloat(this.value).toFixed(2)">
-          </div>
-          <div>
-            <div class="vcl">Speed <span id="speed-v">1.0×</span></div>
-            <input type="range" class="vsl" id="speed-sl" min="0.7" max="1.5" step=".1" value="1" oninput="document.getElementById('speed-v').textContent=parseFloat(this.value).toFixed(1)+'×'">
-          </div>
+        <div style="margin-bottom:10px;">
+          <div class="cf-label">Voice</div>
+          <select id="kokoro-voice" onchange="S.kokoroVoice=this.value" style="max-width:280px;">
+            <option value="af_sky">af_sky — American Female, warm</option>
+            <option value="af_nicole">af_nicole — American Female, soft</option>
+            <option value="af_bella">af_bella — American Female, bright</option>
+            <option value="af_sarah">af_sarah — American Female, clear</option>
+            <option value="am_adam">am_adam — American Male, deep</option>
+            <option value="am_michael">am_michael — American Male, natural</option>
+            <option value="bf_emma">bf_emma — British Female, elegant</option>
+            <option value="bm_george">bm_george — British Male, authoritative</option>
+          </select>
         </div>
-        <div class="voice-modes">
-          <button class="vmode-btn" data-vm="all" onclick="setVM(this)">All Layers</button>
-          <button class="vmode-btn sel" data-vm="final" onclick="setVM(this)">Final Verdict</button>
-          <button class="vmode-btn" data-vm="off" onclick="setVM(this)">Manual</button>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ink4);line-height:1.7;">
+          Powered by <strong>kokoro-js</strong> + Transformers.js · 82M parameter model · Runs via WebAssembly · No data leaves your machine
         </div>
       </div>
     </div>
@@ -2316,7 +2377,7 @@ select option { background: var(--paper); }
     <!-- PRESS BUTTON -->
     <button class="press-btn" id="press-btn" onclick="runPipeline()">
       <span>⊕ Run 7-Layer Reasoning Engine</span>
-      <span class="press-subtext" id="press-sub">Loffi will argue · question · counter · critique · deliver verdict</span>
+      <span class="press-subtext" id="run-btn-sub">Loffi will argue · question · counter · critique · deliver verdict</span>
     </button>
 
     <!-- TELEMETRY -->
@@ -2366,8 +2427,8 @@ select option { background: var(--paper); }
   <!-- ========== TAB: AI vs AI ARENA ========== -->
   <div id="tab-aia" style="display:none;">
     <div class="kicker" style="margin-top:1rem;">Arena — Match Report</div>
-    <h1 class="headline" style="margin-bottom:.5rem;">Loffi vs <em>The Opposition</em></h1>
-    <p class="deck" style="margin-bottom:1.5rem;">Watch two AI debaters go head-to-head. Loffi argues one side; you assign the opponent's persona. An impartial judge delivers the final verdict.</p>
+    <h1 class="headline" style="margin-bottom:.5rem;"><span id="arena-headline-text">Loffi vs The Opposition</span></h1>
+    <p class="deck" id="arena-deck" style="margin-bottom:1.5rem;">Watch two AI debaters go head-to-head. Loffi argues one side; you assign the opponent's persona. An impartial judge delivers the final verdict.</p>
 
     <div class="config-block">
       <div class="config-header"><span>Arena Configuration</span></div>
@@ -2442,8 +2503,8 @@ select option { background: var(--paper); }
   <!-- ========== TAB: LIVE DEBATE ========== -->
   <div id="tab-live" style="display:none;">
     <div class="kicker" style="margin-top:1rem;">Live Edition</div>
-    <h1 class="headline" style="margin-bottom:.5rem;">Debate <em>Loffi</em> live</h1>
-    <p class="deck" style="margin-bottom:1.5rem;">Speak your arguments. Loffi listens, sharpens her counter in real time, and fires back. Your microphone vs her reasoning.</p>
+    <h1 class="headline" style="margin-bottom:.5rem;"><span id="live-headline-text">Debate Loffi live</span></h1>
+    <p class="deck" id="live-deck" style="margin-bottom:1.5rem;">Speak your arguments. Loffi listens, sharpens her counter in real time, and fires back. Your microphone vs her reasoning.</p>
 
     <div class="broadcast-booth">
       <div class="booth-tape">
@@ -2459,13 +2520,7 @@ select option { background: var(--paper); }
         <div class="host-nameplate">
           <div class="hn-name">Loffi</div>
           <div class="hn-title">AI Strategist</div>
-          <div class="host-speaking-indicator" id="si-bars">
-            <div class="si-bar" style="height:4px;"></div>
-            <div class="si-bar" style="height:8px;"></div>
-            <div class="si-bar" style="height:6px;"></div>
-            <div class="si-bar" style="height:10px;"></div>
-            <div class="si-bar" style="height:4px;"></div>
-          </div>
+
         </div>
 
         <div class="host-speech">
@@ -2477,20 +2532,7 @@ select option { background: var(--paper); }
         </div>
       </div>
 
-      <div class="waveform-strip" id="waveform-strip">
-        <div class="ws-bar" style="height:4px;"></div>
-        <div class="ws-bar" style="height:14px;"></div>
-        <div class="ws-bar" style="height:8px;"></div>
-        <div class="ws-bar" style="height:18px;"></div>
-        <div class="ws-bar" style="height:10px;"></div>
-        <div class="ws-bar" style="height:6px;"></div>
-        <div class="ws-bar" style="height:16px;"></div>
-        <div class="ws-bar" style="height:12px;"></div>
-        <div class="ws-bar" style="height:4px;"></div>
-        <div class="ws-bar" style="height:20px;"></div>
-        <div class="ws-bar" style="height:8px;"></div>
-        <div class="ws-bar" style="height:14px;"></div>
-      </div>
+
 
       <div class="live-paper" id="live-paper">
         <div style="padding:2rem;text-align:center;font-family:var(--mono);font-size:11px;color:var(--ink4);letter-spacing:.06em;">NO TRANSCRIPT YET</div>
@@ -2706,7 +2748,7 @@ select option { background: var(--paper); }
   <!-- ========== TAB: HISTORY ========== -->
   <div id="tab-history" style="display:none;">
     <div class="kicker" style="margin-top:1rem;">Archive</div>
-    <h1 class="headline" style="margin-bottom:1.5rem;">Your Argument <em>Record</em></h1>
+    <h1 class="headline" style="margin-bottom:1.5rem;"><span id="archive-headline-text">Your Argument Record</span></h1>
     <div class="archive">
       <div class="archive-head">
         <div class="archive-title">Session Record</div>
@@ -3126,16 +3168,397 @@ const S = {
   persona:'Domain Analyst', tone:'compelling and rhetorically persuasive',
   depth:'220-270', lang:'', source:'',
   layers:{}, totalIn:0, totalOut:0, startTime:0,
-  elKey:'', voiceMode:'final', running:false,
+  running:false,
+  kokoroEnabled:false, kokoroVoice:'af_sky',
   fallacyOn:true, socraticOn:false, videoOn:false,
   socraticPending:false, socraticAnswers:[],
   liveActive:false, liveTranscript:[], liveRound:0,
   recognition:null, recognizing:false,
-  activeAudio:null, isSpeaking:false,
+  activeAudio:null,
   history:[], lastScore:null,
   waveInterval:null, siInterval:null,
   currentCat:'sports'
 };
+
+
+// ================================================================
+// MULTILINGUAL SYSTEM
+// 4 languages: English · Arabic · Urdu · Spanish
+// UI strings, RTL layout, prompt injection, voice fallback
+// ================================================================
+
+const LANGS = {
+  en: {
+    code: 'en', dir: 'ltr', name: 'English',
+    promptInstruction: '',
+    voiceLang: 'en-US',
+    kokoroSupported: true,
+    strings: {
+      appTagline: 'AI Debate Strategist · Sharpen Your Thinking · Powered by Claude',
+      hostedBy: 'Hosted by Loffi',
+      selectTopic: 'Select Topic',
+      dispatchPreview: 'Dispatch Preview',
+      selectedMotion: 'Selected Motion',
+      pickTopic: 'Pick a topic and position →',
+      printSettings: 'Print Settings',
+      fallacyScan: 'Fallacy Scan',
+      socraticDrill: 'Socratic Drill',
+      liveAvatar: 'Live Avatar',
+      customPlaceholder: 'Or propose your own motion...',
+      customBtn: 'File →',
+      configureArg: 'Configure Your Argument',
+      yourPosition: 'Your Position',
+      persona: 'Persona',
+      depth: 'Argument Depth',
+      language: 'Language',
+      knowledgeSource: 'Knowledge Source',
+      toneLabel: 'Tone —',
+      runBtn: '⊕ Run 7-Layer Reasoning Engine',
+      runSub: 'Loffi will argue · question · counter · critique · deliver verdict',
+      running: 'Composing dispatch...',
+      debate: 'Debate',
+      arena: 'Arena',
+      live: 'Live',
+      flowchart: 'Flowchart',
+      archive: 'Archive',
+      export: 'Export',
+      copy: 'Copy',
+      clear: 'Clear',
+      debateTab: 'Today\'s Edition',
+      headline: 'Sharpen your thinking with',
+      headlineEm: 'ArgueMind',
+      deck: 'Your AI debate strategist. Loffi argues, challenges, questions your logic, fires back in real time, and delivers a verdict that makes you think harder.',
+      byline: 'Hosted by Loffi · AI Debate Strategist · All Editions',
+      statCats: 'Categories', statLayers: 'Layers', statTopics: 'Topics', statModes: 'Modes',
+      arenaTitle: 'Loffi vs The Opposition',
+      arenaDeck: 'Watch two AI debaters go head-to-head. Loffi argues one side; you assign the opponent\'s persona. An impartial judge delivers the final verdict.',
+      liveTitle: 'Debate Loffi live',
+      liveDeck: 'Speak your arguments. Loffi listens, sharpens her counter in real time, and fires back. Your microphone vs her reasoning.',
+      archiveTitle: 'Your Argument Record',
+      openFloor: 'Open Floor',
+      micSpeak: 'Mic — Hold to speak',
+      endJudge: 'End & Judge',
+      copyBtn: 'Copy',
+      readAloud: 'Read Aloud',
+      printed: 'PRINTED',
+      composing: 'COMPOSING',
+      socraticHead: 'LOFFI CHALLENGES YOUR LOGIC — Answer before we continue',
+      socraticSubmit: 'Strengthen arguments → Continue',
+      fallacyAlertHead: '⚠ Logical Fallacy Alert — Review Before Arguing',
+    }
+  },
+  ar: {
+    code: 'ar', dir: 'rtl', name: 'العربية',
+    promptInstruction: 'اكتب ردك بالكامل باللغة العربية الفصحى. استخدم أسلوباً أكاديمياً واضحاً. ',
+    voiceLang: 'ar-SA',
+    kokoroSupported: false,
+    strings: {
+      appTagline: 'استراتيجي النقاش بالذكاء الاصطناعي · شحذ تفكيرك · بتقنية كلود',
+      hostedBy: 'مستضاف من لوفي',
+      selectTopic: 'اختر الموضوع',
+      dispatchPreview: 'معاينة القضية',
+      selectedMotion: 'الموضوع المختار',
+      pickTopic: 'اختر موضوعاً وموقفاً →',
+      printSettings: 'إعدادات الطباعة',
+      fallacyScan: 'فحص المغالطات',
+      socraticDrill: 'التدريب السقراطي',
+      liveAvatar: 'الصورة المباشرة',
+      customPlaceholder: 'أو اقترح موضوعك الخاص...',
+      customBtn: 'إرسال ←',
+      configureArg: 'تكوين حجتك',
+      yourPosition: 'موقفك',
+      persona: 'الشخصية',
+      depth: 'عمق الحجة',
+      language: 'اللغة',
+      knowledgeSource: 'مصدر المعرفة',
+      toneLabel: 'النبرة —',
+      runBtn: '⊕ تشغيل محرك التفكير من 7 طبقات',
+      runSub: 'لوفي ستجادل · تتساءل · تعارض · تنتقد · وتصدر حكمها',
+      running: 'جاري التأليف...',
+      debate: 'نقاش',
+      arena: 'الحلبة',
+      live: 'مباشر',
+      flowchart: 'المخطط',
+      archive: 'الأرشيف',
+      export: 'تصدير',
+      copy: 'نسخ',
+      clear: 'مسح',
+      debateTab: 'إصدار اليوم',
+      headline: 'شحذ تفكيرك مع',
+      headlineEm: 'ArgueMind',
+      deck: 'استراتيجي النقاش بالذكاء الاصطناعي. لوفي تجادل وتتحدى وتشكك في منطقك وترد عليك في الوقت الفعلي.',
+      byline: 'مستضاف من لوفي · استراتيجي نقاش الذكاء الاصطناعي · جميع الإصدارات',
+      statCats: 'الفئات', statLayers: 'الطبقات', statTopics: 'الموضوعات', statModes: 'الأوضاع',
+      arenaTitle: 'لوفي في مواجهة المعارض',
+      arenaDeck: 'شاهد متناقشَين من الذكاء الاصطناعي يواجهان بعضهما. لوفي تجادل في أحد الجانبين؛ أنت تعيّن شخصية المعارض.',
+      liveTitle: 'ناقش لوفي مباشرة',
+      liveDeck: 'تكلم بحججك. لوفي تستمع وتصوغ ردها في الوقت الفعلي.',
+      archiveTitle: 'سجل نقاشاتك',
+      openFloor: 'افتح الجلسة',
+      micSpeak: 'المايكروفون — امسك للتحدث',
+      endJudge: 'إنهاء والحكم',
+      copyBtn: 'نسخ',
+      readAloud: 'اقرأ بصوت عالٍ',
+      printed: 'مطبوع',
+      composing: 'جاري التأليف',
+      socraticHead: 'لوفي تتحدى منطقك — أجب قبل المتابعة',
+      socraticSubmit: 'تعزيز الحجج ← المتابعة',
+      fallacyAlertHead: '⚠ تنبيه مغالطة منطقية — راجع قبل الجدال',
+    }
+  },
+  ur: {
+    code: 'ur', dir: 'rtl', name: 'اردو',
+    promptInstruction: 'اپنا مکمل جواب اردو میں لکھیں۔ واضح اور معیاری اردو استعمال کریں۔ ',
+    voiceLang: 'ur-PK',
+    kokoroSupported: false,
+    strings: {
+      appTagline: 'اے آئی بحث حکمت عملی · اپنی سوچ تیز کریں · کلود سے چلائی گئی',
+      hostedBy: 'لوفی کی میزبانی میں',
+      selectTopic: 'موضوع منتخب کریں',
+      dispatchPreview: 'تحریک کی پیش نظر',
+      selectedMotion: 'منتخب تحریک',
+      pickTopic: 'موضوع اور مؤقف منتخب کریں →',
+      printSettings: 'پرنٹ ترتیبات',
+      fallacyScan: 'غلط استدلال کا اسکین',
+      socraticDrill: 'سقراطی مشق',
+      liveAvatar: 'لائیو اوتار',
+      customPlaceholder: 'یا اپنا موضوع تجویز کریں...',
+      customBtn: 'جمع کریں ←',
+      configureArg: 'اپنی دلیل ترتیب دیں',
+      yourPosition: 'آپ کا مؤقف',
+      persona: 'کردار',
+      depth: 'دلیل کی گہرائی',
+      language: 'زبان',
+      knowledgeSource: 'علم کا ماخذ',
+      toneLabel: 'لہجہ —',
+      runBtn: '⊕ سات پرت استدلال انجن چلائیں',
+      runSub: 'لوفی بحث کرے گی · سوال اٹھائے گی · مخالفت کرے گی · تنقید کرے گی · فیصلہ سنائے گی',
+      running: 'تیار ہو رہا ہے...',
+      debate: 'بحث',
+      arena: 'میدان',
+      live: 'براہ راست',
+      flowchart: 'فلو چارٹ',
+      archive: 'آرکائیو',
+      export: 'برآمد',
+      copy: 'نقل',
+      clear: 'صاف',
+      debateTab: 'آج کا ایڈیشن',
+      headline: 'اپنی سوچ تیز کریں',
+      headlineEm: 'ArgueMind',
+      deck: 'آپ کا اے آئی بحث حکمت ساز۔ لوفی بحث کرتی ہے، چیلنج کرتی ہے، منطق پر سوال اٹھاتی ہے۔',
+      byline: 'لوفی کی میزبانی میں · اے آئی بحث حکمت ساز · تمام ایڈیشن',
+      statCats: 'زمرے', statLayers: 'پرتیں', statTopics: 'موضوعات', statModes: 'طریقے',
+      arenaTitle: 'لوفی بمقابلہ حریف',
+      arenaDeck: 'دو اے آئی بحث کاروں کو آمنے سامنے دیکھیں۔ لوفی ایک طرف دلیل دیتی ہے؛ آپ حریف کا کردار مقرر کریں۔',
+      liveTitle: 'لوفی سے براہ راست بحث کریں',
+      liveDeck: 'اپنی دلیلیں بولیں۔ لوفی سنتی ہے اور فوری جواب دیتی ہے۔',
+      archiveTitle: 'آپ کا بحث ریکارڈ',
+      openFloor: 'فلور کھولیں',
+      micSpeak: 'مائیک — بولنے کے لیے تھامیں',
+      endJudge: 'ختم کریں اور فیصلہ کریں',
+      copyBtn: 'نقل',
+      readAloud: 'بلند آواز میں پڑھیں',
+      printed: 'مطبوع',
+      composing: 'تیار ہو رہا ہے',
+      socraticHead: 'لوفی آپ کی منطق کو چیلنج کرتی ہے — جاری رکھنے سے پہلے جواب دیں',
+      socraticSubmit: 'دلائل مضبوط کریں ← جاری رکھیں',
+      fallacyAlertHead: '⚠ منطقی غلطی کا انتباہ — بحث سے پہلے نظرثانی کریں',
+    }
+  },
+  es: {
+    code: 'es', dir: 'ltr', name: 'Español',
+    promptInstruction: 'Escribe toda tu respuesta en español con un estilo académico claro y persuasivo. ',
+    voiceLang: 'es-ES',
+    kokoroSupported: true,
+    strings: {
+      appTagline: 'Estratega de Debate IA · Agudiza tu Pensamiento · Impulsado por Claude',
+      hostedBy: 'Presentado por Loffi',
+      selectTopic: 'Seleccionar Tema',
+      dispatchPreview: 'Vista Previa',
+      selectedMotion: 'Moción Seleccionada',
+      pickTopic: 'Elige un tema y posición →',
+      printSettings: 'Configuración',
+      fallacyScan: 'Detector de Falacias',
+      socraticDrill: 'Método Socrático',
+      liveAvatar: 'Avatar en Vivo',
+      customPlaceholder: 'O propón tu propio tema...',
+      customBtn: 'Usar →',
+      configureArg: 'Configura tu Argumento',
+      yourPosition: 'Tu Posición',
+      persona: 'Personaje',
+      depth: 'Profundidad del Argumento',
+      language: 'Idioma',
+      knowledgeSource: 'Fuente de Conocimiento',
+      toneLabel: 'Tono —',
+      runBtn: '⊕ Ejecutar Motor de Razonamiento de 7 Capas',
+      runSub: 'Loffi argumentará · cuestionará · rebatirá · criticará · emitirá veredicto',
+      running: 'Componiendo despacho...',
+      debate: 'Debate',
+      arena: 'Arena',
+      live: 'En Vivo',
+      flowchart: 'Diagrama',
+      archive: 'Archivo',
+      export: 'Exportar',
+      copy: 'Copiar',
+      clear: 'Limpiar',
+      debateTab: 'Edición de Hoy',
+      headline: 'Agudiza tu pensamiento con',
+      headlineEm: 'ArgueMind',
+      deck: 'Tu estratega de debate con IA. Loffi argumenta, desafía, cuestiona tu lógica y responde en tiempo real.',
+      byline: 'Presentado por Loffi · Estratega de Debate IA · Todas las Ediciones',
+      statCats: 'Categorías', statLayers: 'Capas', statTopics: 'Temas', statModes: 'Modos',
+      arenaTitle: 'Loffi vs La Oposición',
+      arenaDeck: 'Observa a dos debatidores de IA enfrentarse. Loffi argumenta un lado; tú asignas el personaje del oponente.',
+      liveTitle: 'Debate con Loffi en Vivo',
+      liveDeck: 'Expresa tus argumentos. Loffi escucha, perfecciona su réplica en tiempo real y responde.',
+      archiveTitle: 'Tu Registro de Debates',
+      openFloor: 'Abrir Sesión',
+      micSpeak: 'Micrófono — Mantén para hablar',
+      endJudge: 'Finalizar y Juzgar',
+      copyBtn: 'Copiar',
+      readAloud: 'Leer en Voz Alta',
+      printed: 'IMPRESO',
+      composing: 'COMPONIENDO',
+      socraticHead: 'LOFFI DESAFÍA TU LÓGICA — Responde antes de continuar',
+      socraticSubmit: 'Reforzar argumentos → Continuar',
+      fallacyAlertHead: '⚠ Alerta de Falacia Lógica — Revisa Antes de Argumentar',
+    }
+  }
+};
+
+let currentLang = 'en';
+
+function switchLang(code) {
+  const lang = LANGS[code];
+  if (!lang) return;
+  currentLang = code;
+
+  // Update html attributes
+  document.documentElement.lang = code;
+  document.documentElement.dir = lang.dir;
+
+  // Update active flag button
+  document.querySelectorAll('.lang-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.lang === code));
+
+  // Update prompt instruction
+  S.lang = lang.promptInstruction;
+
+  // Update lang dropdown to match
+  const sel = document.getElementById('sel-lang');
+  if (sel) sel.value = lang.promptInstruction;
+
+  // Update Kokoro voice language hint
+  S.kokoroVoiceLang = lang.voiceLang;
+
+  // Apply UI string translations
+  applyStrings(lang.strings);
+
+  // Flash confirmation
+  telegram(`${lang.name} — زبان تبدیل ہوگئی / Language changed`, 'ok');
+}
+
+function applyStrings(s) {
+  const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+  const setPlaceholder = (id, text) => { const el = document.getElementById(id); if (el) el.placeholder = text; };
+  const setHTML = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+
+  // Masthead
+  set('masthead-tagline', s.appTagline);
+
+  // Nav tabs
+  const tabs = document.querySelectorAll('.nav-item');
+  const tabKeys = ['debate', 'arena', 'live', 'flowchart', 'archive'];
+  const tabStrings = [s.debate, s.arena, s.live, s.flowchart, s.archive];
+  tabs.forEach((t, i) => { if (tabStrings[i]) t.textContent = tabStrings[i]; });
+
+  // Nav-right
+  const navRight = document.querySelectorAll('.masthead-nav-right .nav-item');
+  if (navRight[0]) navRight[0].textContent = s.export;
+  if (navRight[1]) navRight[1].textContent = s.copy;
+  if (navRight[2]) navRight[2].textContent = s.clear;
+
+  // Hero
+  set('hero-kicker', s.debateTab);
+  set('hero-headline-text', s.headline);
+  set('hero-headline-em', s.headlineEm);
+  set('hero-deck', s.deck);
+  set('hero-byline', s.byline);
+  set('stat-cats', s.statCats);
+  set('stat-layers', s.statLayers);
+  set('stat-topics', s.statTopics);
+  set('stat-modes', s.statModes);
+
+  // Cat kicker
+  const kicker = document.getElementById('cat-kicker');
+  if (kicker) {
+    const parts = kicker.textContent.split(' — ');
+    kicker.textContent = s.selectTopic + (parts[1] ? ' — ' + parts[1] : '');
+  }
+
+  // Config section
+  set('cfg-header-label', s.configureArg);
+  set('cf-position-label', s.yourPosition);
+  set('cf-persona-label', s.persona);
+  set('cf-depth-label', s.depth);
+  set('cf-lang-label', s.language);
+  set('cf-source-label', s.knowledgeSource);
+  set('tone-label', s.toneLabel);
+
+  // Feature toggles
+  set('tog-label-fallacy', s.fallacyScan);
+  set('tog-label-socratic', s.socraticDrill);
+  set('tog-label-video', s.liveAvatar);
+
+  // Dispatch preview
+  set('prev-label', s.dispatchPreview);
+  set('prev-motion-label', s.selectedMotion);
+  const prevPos = document.getElementById('prev-pos');
+  if (prevPos && prevPos.textContent.includes('Pick a') || prevPos && prevPos.textContent.includes('→')) {
+    prevPos.textContent = s.pickTopic;
+  }
+
+  // Custom topic
+  setPlaceholder('custom-in', s.customPlaceholder);
+  const customBtn = document.querySelector('.custom-btn');
+  if (customBtn) customBtn.textContent = s.customBtn;
+
+  // Run button
+  set('run-btn-text', s.runBtn);
+  set('run-btn-sub', s.runSub);
+
+  // Fallacy alert head
+  const fhead = document.querySelector('.fallacy-alert-head');
+  if (fhead) fhead.textContent = s.fallacyAlertHead;
+
+  // Socratic
+  const shead = document.querySelector('.sb-head');
+  if (shead) shead.textContent = s.socraticHead;
+  const ssub = document.querySelector('.sb-submit');
+  if (ssub) ssub.textContent = s.socraticSubmit;
+
+  // Live debate
+  set('live-start', s.openFloor);
+  set('live-end', '⏹ ' + s.endJudge);
+
+  // Arena / Live section headlines
+  set('arena-headline-text', s.arenaTitle);
+  set('arena-deck', s.arenaDeck);
+  set('live-headline-text', s.liveTitle);
+  set('live-deck', s.liveDeck);
+  set('archive-headline-text', s.archiveTitle);
+}
+
+function toggleKokoro() {
+  S.kokoroEnabled = !S.kokoroEnabled;
+  const box = document.getElementById('tog-kokoro');
+  const badge = document.getElementById('kokoro-badge');
+  box.classList.toggle('checked', S.kokoroEnabled);
+  box.textContent = S.kokoroEnabled ? '✓' : '';
+  badge.textContent = S.kokoroEnabled ? 'ON' : 'OFF';
+  badge.className = S.kokoroEnabled ? 'acc-badge active' : 'acc-badge';
+  if (S.kokoroEnabled && !_kokoroTTS) initKokoro();
+}
 
 // ================================================================
 // BOOT
@@ -3146,7 +3569,7 @@ window.onload = () => {
   buildCatStrip();
   renderCat('sports');
   initTones();
-  setInterval(animateSiBars, 200);
+
 };
 
 // ================================================================
@@ -3328,54 +3751,77 @@ function initTones() {
 }
 
 // ================================================================
-// VOICE
+// KOKORO TTS — runs 100% locally in the browser via kokoro-js
+// First call downloads ~80MB model and caches it; subsequent calls instant
 // ================================================================
-function connectEL() {
-  const k = document.getElementById('el-key').value.trim();
-  if (!k) { telegram('Enter API key first', 'err'); return; }
-  S.elKey = k;
-  const badge = document.getElementById('voice-badge');
-  badge.textContent = 'CONNECTED';
-  badge.className = 'acc-badge active';
-  telegram('Loffi voice connected', 'ok');
-}
+let _kokoroTTS = null;
+let _kokoroLoading = false;
 
-function setVM(el) {
-  document.querySelectorAll('.vmode-btn').forEach(b=>b.classList.remove('sel'));
-  el.classList.add('sel');
-  S.voiceMode = el.dataset.vm;
+async function initKokoro() {
+  if (_kokoroTTS) return _kokoroTTS;
+  if (_kokoroLoading) {
+    // Wait for the in-progress load
+    while (_kokoroLoading) await delay(200);
+    return _kokoroTTS;
+  }
+  if (!S.kokoroEnabled) return null;
+  _kokoroLoading = true;
+  try {
+    telegram('Loading Kokoro TTS model (~80MB, first time only)...', 'ok');
+    const { KokoroTTS } = await import('https://cdn.jsdelivr.net/npm/kokoro-js@1.2.0/dist/kokoro.js/+esm');
+    _kokoroTTS = await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
+      dtype: 'q8',
+    });
+    telegram('Kokoro TTS ready ✓', 'ok');
+  } catch(e) {
+    telegram('Kokoro load failed — using browser TTS', 'err');
+    S.kokoroEnabled = false;
+  } finally { _kokoroLoading = false; }
+  return _kokoroTTS;
 }
 
 async function speak(text) {
   if (!text) return;
-  const clean = text.replace(/<[^>]+>/g,'').substring(0,2000);
-  if (S.activeAudio) { try{S.activeAudio.pause();}catch(e){} S.activeAudio=null; }
-  S.isSpeaking = true;
-  startWave(); startSiBars();
-  try {
-    if (S.elKey) {
-      const r = await fetch('/.netlify/functions/elevenlabs', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ text:clean, voice_id:document.getElementById('sel-voice').value,
-          stability:parseFloat(document.getElementById('stab-sl').value),
-          similarity_boost:.75,
-          speed:parseFloat(document.getElementById('speed-sl').value), apiKey:S.elKey })
-      });
-      if (r.ok) {
-        const blob = await r.blob();
-        const audio = new Audio(URL.createObjectURL(blob));
-        S.activeAudio = audio;
-        audio.onended = () => { S.isSpeaking=false; stopWave(); stopSiBars(); };
-        audio.play(); return;
+  const clean = text.replace(/<[^>]+>/g, '').substring(0, 2000);
+  const lang = LANGS[currentLang] || LANGS.en;
+  startSiBars();
+
+  // Kokoro for EN/ES (supported languages)
+  if (S.kokoroEnabled && lang.kokoroSupported) {
+    try {
+      const tts = await initKokoro();
+      if (tts) {
+        const voice = S.kokoroVoice || 'af_sky';
+        const audio = await tts.generate(clean, { voice });
+        const wav = audio.toWav();
+        const blob = new Blob([wav], { type: 'audio/wav' });
+        const url = URL.createObjectURL(blob);
+        const a = new Audio(url);
+        S.activeAudio = a;
+        a.onended = () => { stopSiBars(); URL.revokeObjectURL(url); };
+        a.play();
+        return;
       }
-    }
-  } catch(e){}
+    } catch(e) { console.warn('Kokoro speak error:', e); }
+  }
+
+  // Browser TTS fallback — supports Arabic (ar-SA) and Urdu (ur-PK)
   if ('speechSynthesis' in window) {
+    // Ensure voices are loaded
+    let voices = speechSynthesis.getVoices();
+    if (!voices.length) {
+      await new Promise(r => { speechSynthesis.onvoiceschanged = r; setTimeout(r, 1000); });
+      voices = speechSynthesis.getVoices();
+    }
     const u = new SpeechSynthesisUtterance(clean);
-    u.rate = parseFloat(document.getElementById('speed-sl').value);
-    u.onend = () => { S.isSpeaking=false; stopWave(); stopSiBars(); };
+    u.lang = lang.voiceLang;
+    u.rate = currentLang === 'ar' || currentLang === 'ur' ? 0.85 : 0.95;
+    const match = voices.find(v => v.lang === lang.voiceLang)
+      || voices.find(v => v.lang.startsWith(lang.code));
+    if (match) u.voice = match;
+    u.onend = () => stopSiBars();
     speechSynthesis.speak(u);
-  } else { S.isSpeaking=false; stopWave(); stopSiBars(); }
+  } else { stopSiBars(); }
 }
 
 // ================================================================
@@ -3385,7 +3831,7 @@ async function runPipeline() {
   S.position = document.getElementById('sel-pos').value;
   S.persona = document.getElementById('sel-persona').value;
   S.depth = document.getElementById('sel-depth').value;
-  S.lang = document.getElementById('sel-lang').value;
+  // S.lang is set by the language switcher — don't override from dropdown
   S.topic = S.topic || document.getElementById('custom-in').value.trim();
 
   if (!S.topic) { telegram('Choose a topic first', 'err'); return; }
@@ -3395,7 +3841,7 @@ async function runPipeline() {
   S.running=true; S.layers={}; S.totalIn=0; S.totalOut=0;
   S.startTime=Date.now(); S.socraticAnswers=[];
   document.getElementById('press-btn').disabled=true;
-  document.getElementById('press-sub').textContent='Composing dispatch...';
+  document.getElementById('run-btn-sub').textContent='Composing dispatch...';
   document.getElementById('tw-progress').style.display='block';
   document.getElementById('score-wrap').innerHTML='';
   document.getElementById('coach-wrap').innerHTML='';
@@ -3483,12 +3929,7 @@ End with a bold "FINAL VERDICT:" from Loffi. ${S.depth} words.`);
     // TELEMETRY OPTIMIZATION ALERT
     runTelemetryOptimization();
 
-    // Auto-voice
-    if (S.voiceMode==='all') {
-      for(let i=1;i<=5;i++) if(S.layers[i]){await speak(S.layers[i]);await delay(400);}
-    } else if (S.voiceMode==='final' && S.layers[5]) {
-      await speak(S.layers[5]);
-    }
+
 
     saveHistory();
     document.getElementById('export-strip').classList.add('show');
@@ -3500,7 +3941,7 @@ End with a bold "FINAL VERDICT:" from Loffi. ${S.depth} words.`);
   } finally {
     S.running=false;
     document.getElementById('press-btn').disabled=false;
-    document.getElementById('press-sub').textContent='Loffi will argue · question · counter · critique · deliver verdict';
+    document.getElementById('run-btn-sub').textContent='Loffi will argue · question · counter · critique · deliver verdict';
     document.getElementById('tw-progress').style.display='none';
     updateTele();
   }
@@ -3625,7 +4066,7 @@ function fillArticle(div, n, title, sub, color, text, inTok, outTok, elapsed) {
       <span class="art-meta-item">↓ <b>${outTok}</b> out</span>
       <span class="art-meta-item" style="${effColor}">eff <b>${efficiency}</b></span>
       <button class="art-btn" onclick="copyTxt(this,'${esc(text)}')">Copy</button>
-      <button class="art-btn" id="play-btn-${n}" onclick="playLayer(this,${n})">Read Aloud</button>
+
     </div>`;
 }
 
@@ -3877,7 +4318,6 @@ ${r===1?'Opening':'Round '+r} argument. Sharp, specific, evidence-based. ${depth
     const lt=await api(lp,550);
     history.push({who:'Loffi',text:lt});
     lEx.querySelector('.exchange-text').textContent=lt;
-    if(S.voiceMode==='all'&&S.elKey) await speak(lt);
     await delay(500);
 
     // Opponent
@@ -4104,25 +4544,10 @@ function initAvatar() {
 // ================================================================
 // WAVEFORM + SI BARS
 // ================================================================
-function startWave() {
-  const ws=document.getElementById('waveform-strip');
-  if(ws){ws.classList.add('show');}
-  S.waveInterval=setInterval(()=>{
-    document.querySelectorAll('.ws-bar').forEach(b=>b.style.height=(3+Math.random()*18)+'px');
-  },100);
-}
-function stopWave() {
-  const ws=document.getElementById('waveform-strip');
-  if(ws){ws.classList.remove('show');}
-  clearInterval(S.waveInterval);
-}
-function startSiBars() {
-  S.siInterval=setInterval(()=>{
-    document.querySelectorAll('.si-bar').forEach(b=>b.style.height=(2+Math.random()*12)+'px');
-  },120);
-}
-function stopSiBars(){ clearInterval(S.siInterval); }
-function animateSiBars(){ if(S.isSpeaking) document.querySelectorAll('.si-bar').forEach(b=>b.style.height=(2+Math.random()*12)+'px'); }
+function startSiBars() { /* audio indicator — reserved for Kokoro */ }
+function stopSiBars() { clearInterval(S.siInterval); }
+function startWave() {}
+function stopWave() {}
 
 // ================================================================
 // TABS
@@ -4237,9 +4662,13 @@ function shareDebate() {
 function copyTxt(btn,text) { navigator.clipboard.writeText(text||'').then(()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1400);}); }
 
 function playLayer(btn, n) {
-  if(btn.classList.contains('playing')){if(S.activeAudio)S.activeAudio.pause();btn.classList.remove('playing');btn.textContent='Read Aloud';return;}
-  btn.classList.add('playing');btn.textContent='■ Stop';
-  speak(S.layers[n]||'').then(()=>{btn.classList.remove('playing');btn.textContent='Read Aloud';});
+  if (!S.kokoroEnabled) { telegram('Enable Kokoro TTS in settings to use Read Aloud', 'err'); return; }
+  if (btn.classList.contains('playing')) {
+    if (S.activeAudio) { S.activeAudio.pause(); S.activeAudio = null; }
+    btn.classList.remove('playing'); btn.textContent = 'Read Aloud'; return;
+  }
+  btn.classList.add('playing'); btn.textContent = '■ Stop';
+  speak(S.layers[n] || '').then(() => { btn.classList.remove('playing'); btn.textContent = 'Read Aloud'; });
 }
 
 function delay(ms){return new Promise(r=>setTimeout(r,ms));}
@@ -4271,24 +4700,29 @@ function clearAll(){
 // ================================================================
 // API
 // ================================================================
+// ================================================================
+// API — proxied through server.js (key in .env, never in browser)
+// ================================================================
 async function api(prompt, maxTokens=1200) {
-  const r=await fetch('/.netlify/functions/claude',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({messages:[{role:'user',content:prompt}],max_tokens:maxTokens})
+  const r = await fetch('/api/claude', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
   });
-  if(!r.ok) throw new Error(`API ${r.status}`);
-  const d=await r.json();
-  return d.content?.[0]?.text||'';
+  if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error?.message || `Server ${r.status} — run: npm start`); }
+  const d = await r.json();
+  return d.content?.[0]?.text || '';
 }
 
 async function apiWithTokens(prompt, maxTokens=1200) {
-  const r=await fetch('/.netlify/functions/claude',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({messages:[{role:'user',content:prompt}],max_tokens:maxTokens})
+  const r = await fetch('/api/claude', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
   });
-  if(!r.ok) throw new Error(`API ${r.status}`);
-  const d=await r.json();
-  return{text:d.content?.[0]?.text||'',in:d.usage?.input_tokens||0,out:d.usage?.output_tokens||0};
+  if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error?.message || `Server ${r.status} — run: npm start`); }
+  const d = await r.json();
+  return { text: d.content?.[0]?.text || '', in: d.usage?.input_tokens || 0, out: d.usage?.output_tokens || 0 };
 }
 </script>
 </body>
