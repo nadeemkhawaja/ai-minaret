@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-ArgueMind is a multi-layer AI reasoning system built around the PSIPAB framework, designed to help professionals and executives sharpen their thinking and argumentation skills.
+ArgueMind is a multi-layer AI reasoning system built around the SCIPAB framework, designed to help professionals and executives sharpen their thinking and argumentation skills.
 
 **Host:** Loffi — AI Debate Strategist
 **Model:** Claude Sonnet 4 (claude-sonnet-4-20250514)
@@ -25,18 +25,18 @@ ArgueMind is a multi-layer AI reasoning system built around the PSIPAB framework
 
 ---
 
-### 2. PSIPAB as Visible Framework, Not Hidden Structure
+### 2. SCIPAB as Visible Framework, Not Hidden Structure
 
-**Decision:** Display PSIPAB labels explicitly on every layer card.
+**Decision:** Display SCIPAB labels explicitly on every layer card.
 
-**Why it matters:** A framework that only exists in the code is invisible to users and assessors. Making PSIPAB visible on every layer card transforms it from an architecture decision into a learning tool — users see the reasoning structure as it builds.
+**Why it matters:** A framework that only exists in the code is invisible to users and assessors. Making SCIPAB visible on every layer card transforms it from an architecture decision into a learning tool — users see the reasoning structure as it builds.
 
-**Implementation:** Each layer card header displays the PSIPAB label in gold:
-- L0: "P — Problem · Detect logical fallacies"
-- L1: "P — Problem · Map the debate landscape"
-- L2: "S — Solution · Build your strongest arguments"
+**Implementation:** Each layer card header displays the SCIPAB label in gold:
+- L0: "S — Situation · Detect logical fallacies"
+- L1: "S — Situation · Map the debate landscape"
+- L2: "C — Complication · Build your strongest arguments"
 - L3: "I — Implementation · Steel-man the opposition"
-- L4: "P — Proof · Audit weaknesses honestly"
+- L4: "P — Position · Audit weaknesses honestly"
 - L5: "A — Action + B — Benefit · Final strategy & verdict"
 
 ---
@@ -88,7 +88,7 @@ A single HTML file deploys to Netlify with a git push, runs offline, can be emai
 
 ## What Worked Well
 
-**The PSIPAB layering** produced noticeably better arguments than simple prompt chaining. The constraint of each layer having a defined role prevented the model from jumping to conclusions or repeating itself across layers.
+**The SCIPAB layering** produced noticeably better arguments than simple prompt chaining. The constraint of each layer having a defined role prevented the model from jumping to conclusions or repeating itself across layers.
 
 **The editorial broadsheet aesthetic** differentiated ArgueMind from typical dark-theme AI apps. The light paper background, serif typography, and newspaper column layout make the debate output feel like a considered document rather than a chat response.
 
@@ -112,7 +112,7 @@ A single HTML file deploys to Netlify with a git push, runs offline, can be emai
 
 1. **Context injection quality matters more than prompt length.** A short, precise prompt with rich prior context produces better output than a long prompt with no context.
 
-2. **Making the framework visible changes how users engage.** When users see "P — Problem" on the first card, they understand they are in a structured reasoning process, not just getting a long response.
+2. **Making the framework visible changes how users engage.** When users see "S — Situation" on the first card, they understand they are in a structured reasoning process, not just getting a long response.
 
 3. **Telemetry creates accountability.** Displaying efficiency ratios per layer makes it immediately obvious when a layer underperformed — something that is invisible when you only see the text output.
 

@@ -1,21 +1,21 @@
 # ArgueMind — Prompt Design Document
 # Host: Loffi (AI Debate Strategist)
-# Framework: PSIPAB (Problem → Solution → Implementation → Proof → Action → Benefit)
+# Framework: SCIPAB (Situation → Complication → Implementation → Position → Action → Benefit)
 # Model: claude-sonnet-4-20250514
 # Requirement: Multi-layer AI reasoning system — 5 substantive layers
 
 ---
 
-## PSIPAB FRAMEWORK MAPPING
+## SCIPAB FRAMEWORK MAPPING
 
-| Layer | PSIPAB | Role |
+| Layer | SCIPAB | Role |
 |-------|--------|------|
-| L0 | P — Problem | Detect fallacies in topic framing |
-| L1 | P — Problem | Map the full debate landscape |
-| L2 | S — Solution | Build 3 strongest arguments |
-| L2.5 | S — Solution | Socratic drilling (optional) |
+| L0 | S — Situation | Detect fallacies in topic framing |
+| L1 | S — Situation | Map the full debate landscape |
+| L2 | C — Complication | Build 3 strongest arguments |
+| L2.5 | C — Complication | Socratic drilling (optional) |
 | L3 | I — Implementation | Steel-man the opposition |
-| L4 | P — Proof | Honest audit of weaknesses |
+| L4 | P — Position | Honest audit of weaknesses |
 | L5 | A — Action + B — Benefit | Final strategy, verdict, coaching |
 
 ---
@@ -41,7 +41,7 @@
 ---
 
 ## PROMPT 0 — LAYER 0: FALLACY SCAN
-**PSIPAB:** P — Problem detection
+**SCIPAB:** S — Situation detection
 **Purpose:** Detect logical fallacies in topic framing BEFORE arguing begins
 **Output:** Structured JSON
 
@@ -56,18 +56,18 @@ If no fallacies found: {"fallacies":[]}
 ```
 
 **Max tokens:** 400
-**Telemetry:** Fires before L1. Not counted in PSIPAB chain latency.
+**Telemetry:** Fires before L1. Not counted in SCIPAB chain latency.
 
 ---
 
 ## PROMPT 1 — LAYER 1: CONTEXT ANALYSIS
-**PSIPAB:** P — Problem mapping
+**SCIPAB:** S — Situation mapping
 **Purpose:** Objectively map the debate landscape without taking a position
 
 ```
 You are writing as a {persona}. Tone: {tone}. Draw on the expertise of {source}.
 {lang}
-Layer 1 — Context Analysis. PSIPAB: Problem.
+Layer 1 — Context Analysis. SCIPAB: Problem.
 Topic: "{topic}". Position: "{position}".
 Objectively map the debate. Identify 4-5 key factors. Surface hidden assumptions.
 Do NOT take a position. {depth} words.
@@ -80,14 +80,14 @@ Do NOT take a position. {depth} words.
 ---
 
 ## PROMPT 2 — LAYER 2: ARGUMENT BUILDER
-**PSIPAB:** S — Solution
+**SCIPAB:** C — Complication
 **Purpose:** Build 3 strong evidence-backed arguments defending the chosen position
 **Context chain:** Receives full L1 output
 
 ```
 You are writing as a {persona}. Tone: {tone}. Draw on the expertise of {source}.
 {lang}
-Layer 2 — Argument Builder. PSIPAB: Solution.
+Layer 2 — Argument Builder. SCIPAB: Solution.
 Topic: "{topic}". Defend: "{position}".
 Context from Layer 1: {L1}
 Build 3 distinct evidence-backed arguments. Each argument must have:
@@ -104,7 +104,7 @@ Build 3 distinct evidence-backed arguments. Each argument must have:
 ---
 
 ## PROMPT 2.5 — SOCRATIC DRILLING (Optional interlude)
-**PSIPAB:** S — Solution stress-testing
+**SCIPAB:** C — Complication stress-testing
 **Purpose:** Loffi asks 2 questions that expose hidden assumptions in the user's position
 **Trigger:** User toggles "Socratic Drill" on before running pipeline
 
@@ -125,14 +125,14 @@ Format: Return only the two questions, numbered 1. and 2., nothing else.
 ---
 
 ## PROMPT 3 — LAYER 3: COUNTER-ARGUMENT
-**PSIPAB:** I — Implementation (testing the solution against real opposition)
+**SCIPAB:** I — Implementation (testing the solution against real opposition)
 **Purpose:** Generate the strongest possible case against the position
 **Context chain:** Receives full L1 + L2 output + optional Socratic answers
 
 ```
 You are writing as a {persona}. Tone: {tone}. Draw on the expertise of {source}.
 {lang}
-Layer 3 — Counter-Argument. PSIPAB: Implementation.
+Layer 3 — Counter-Argument. SCIPAB: Implementation.
 Topic: "{topic}". Challenge: "{position}".
 Prior context (L1): {L1}
 Arguments made (L2): {L2}
@@ -149,14 +149,14 @@ Each counter must directly address a specific claim from Layer 2.
 ---
 
 ## PROMPT 4 — LAYER 4: SELF-CRITIQUE
-**PSIPAB:** P — Proof (honest audit)
+**SCIPAB:** P — Position (honest audit)
 **Purpose:** Identify weaknesses in the L2 arguments given what L3 surfaced
 **Context chain:** Receives full L2 + L3 output
 
 ```
 You are writing as a {persona}. Tone: {tone}. Draw on the expertise of {source}.
 {lang}
-Layer 4 — Self-Critique. PSIPAB: Proof.
+Layer 4 — Self-Critique. SCIPAB: Proof.
 Topic: "{topic}". Position: "{position}".
 Original arguments (L2): {L2}
 Counter-arguments faced (L3): {L3}
@@ -172,7 +172,7 @@ For each weakness, provide a specific improvement suggestion.
 ---
 
 ## PROMPT 5 — LAYER 5: FINAL STRATEGY & VERDICT
-**PSIPAB:** A — Action + B — Benefit
+**SCIPAB:** A — Action + B — Benefit
 **Purpose:** Loffi synthesises all layers and delivers her definitive verdict
 **Context chain:** Receives full L1 + L2 + L3 + L4 output (complete chain)
 
@@ -180,7 +180,7 @@ For each weakness, provide a specific improvement suggestion.
 You are Loffi, an elite AI debate strategist and host for ArgueMind.
 Tone: {tone}. Draw on the expertise of {source}.
 {lang}
-Layer 5 — Final Strategy & Verdict. PSIPAB: Action and Benefit.
+Layer 5 — Final Strategy & Verdict. SCIPAB: Action and Benefit.
 Topic: "{topic}". Position: "{position}".
 Context Analysis (L1): {L1}
 Arguments Built (L2): {L2}
@@ -201,7 +201,7 @@ Synthesise all layers into a strategic verdict:
 ---
 
 ## PROMPT 6 — SCORE CARD
-**PSIPAB:** B — Benefit (measurable outcome)
+**SCIPAB:** B — Benefit (measurable outcome)
 **Purpose:** Judge the debate and return structured JSON scores
 **Output:** JSON
 
@@ -236,7 +236,7 @@ Respond ONLY with valid JSON:
 ---
 
 ## PROMPT 7 — DEBATE COACH (Loffi's personal coaching)
-**PSIPAB:** B — Benefit (skill development)
+**SCIPAB:** B — Benefit (skill development)
 **Purpose:** Personalized coaching feedback referencing the specific debate
 
 ```
@@ -265,7 +265,7 @@ Be direct, specific, and encouraging. Reference their actual arguments by name.
 ---
 
 ## PROMPT 8 — TELEMETRY OPTIMIZATION
-**PSIPAB:** B — Benefit (system improvement)
+**SCIPAB:** B — Benefit (system improvement)
 **Purpose:** Fires after every pipeline run. Analyses token efficiency and latency.
 **Logic (not an AI call — computed in JS):**
 

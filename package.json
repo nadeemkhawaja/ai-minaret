@@ -1,16 +1,39 @@
 {
   "name": "arguemind",
   "version": "1.2.0",
-  "description": "ArgueMind — AI Debate Strategist with PSIPAB multi-layer reasoning",
+  "description": "ArgueMind — AI Debate Strategist with SCIPAB multi-layer reasoning",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev":   "node server.js"
+    "dev": "concurrently \"vite\" \"node server/index.js\"",
+    "build": "vite build",
+    "start": "node server/index.js",
+    "server": "node server/index.js",
+    "test": "vitest"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "keywords": ["debate", "ai", "psipab", "argumentation", "claude"],
+  "keywords": [
+    "debate",
+    "ai",
+    "scipab",
+    "argumentation",
+    "claude"
+  ],
   "author": "Nadeem Khawaja",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "concurrently": "^9.2.1",
+    "jsdom": "^29.1.1",
+    "supertest": "^7.2.2",
+    "vite": "^5.4.21",
+    "vitest": "^1.6.1"
+  }
 }
