@@ -27,14 +27,14 @@ The key is stored in your browser session only — never sent to any server exce
 
 ## Features
 
-- 🧠 **7-Layer PSIPAB Pipeline** — L0 Fallacy → L1 Context → L2 Args → L3 Counter → L4 Critique → L5 Verdict
+- 🧠 **5-Layer SCIPAB Pipeline** — L0 Fallacy → L1 Context → L2 Args → L3 Counter → L4 Critique → L5 Verdict
 - 📊 **AI Telemetry** — tokens, latency, efficiency ratio at every layer
 - ⚡ **Telemetry Optimization** — auto alert if efficiency or latency threshold breached
 - 🎯 **210 Topics** — 15 categories × 35 sub-categories × 6 topics each
 - 📂 **3-Level Navigation** — Category → Sub-category → Topic
 - ⚔️ **AI vs AI Arena** — Loffi debates an opponent AI
 - 🎤 **Live Voice Debate** — speak vs Loffi in real time
-- 🗺 **Flowchart Tab** — SVG pipeline diagram with PSIPAB labels
+- 🗺 **Flowchart Tab** — SVG pipeline diagram with SCIPAB labels
 - 🔊 **Kokoro TTS** — local voice, runs in browser, no API key, no cost
 
 ---
@@ -59,7 +59,7 @@ arguemind/
 ├── PROMPTS.md       ← All 14 AI prompts documented
 └── docs/
     ├── FLOWCHART.md
-    ├── PSIPAB.md
+    ├── SCIPAB.md
     ├── TELEMETRY.md
     └── REFLECTION.md
 ```
@@ -69,7 +69,7 @@ arguemind/
 ## Assignment Checklist
 
 - [x] Req 1: Multi-layer reasoning — 5 layers (L1–L5) + L0 fallacy scan
-- [x] Req 2: PSIPAB — labelled on every layer card + full table in Flowchart tab
+- [x] Req 2: SCIPAB — labelled on every layer card + full table in Flowchart tab
 - [x] Req 3: Flowchart — SVG diagram in dedicated tab
 - [x] Req 4: Telemetry — tokens in/out, latency, efficiency per layer
 - [x] Req 5: Optimization — efficiency + latency alerts after every run

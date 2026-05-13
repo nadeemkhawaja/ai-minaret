@@ -1,38 +1,38 @@
-# ArgueMind — PSIPAB Framework
+# ArgueMind — SCIPAB Framework
 
-## What is PSIPAB?
+## What is SCIPAB?
 
-PSIPAB is a structured reasoning framework for building and evaluating arguments. It stands for:
+SCIPAB is a structured reasoning framework for building and evaluating arguments. It stands for:
 
 | Letter | Stage | Question it answers |
 |--------|-------|---------------------|
-| **P** | Problem | What is the real issue at stake? |
-| **S** | Solution | What is the strongest proposed answer? |
+| **S** | Situation | What is the real issue at stake? |
+| **C** | Complication | What is the strongest proposed answer? |
 | **I** | Implementation | How does the solution hold up in practice? |
-| **P** | Proof | What are the honest weaknesses? |
+| **P** | Position | What are the honest weaknesses? |
 | **A** | Action | What should be done, and why? |
 | **B** | Benefit | What is the measurable improvement? |
 
-## How ArgueMind Maps PSIPAB to Layers
+## How ArgueMind Maps SCIPAB to Layers
 
-### P — Problem (Layers 0 and 1)
+### S — Situation (Layers 0 and 1)
 
 **Layer 0 — Fallacy Scan**
-Before any argument is built, Loffi scans the topic framing for logical fallacies. This is the first stage of Problem definition — ensuring the question itself is not poorly framed.
+Before any argument is built, Loffi scans the topic framing for logical fallacies. This is the first stage of Situation definition — ensuring the question itself is not poorly framed.
 
 If the topic contains a false dichotomy, loaded question, or hasty generalisation, users see an alert with a suggested reframe before they proceed.
 
 **Layer 1 — Context Analysis**
-Loffi maps the full debate landscape without taking a position. She identifies 4-5 key factors, surfaces hidden assumptions, and establishes the neutral ground on which both sides can argue. This is pure Problem mapping — objective, unbiased, factual.
+Loffi maps the full debate landscape without taking a position. She identifies 4-5 key factors, surfaces hidden assumptions, and establishes the neutral ground on which both sides can argue. This is pure Situation mapping — objective, unbiased, factual.
 
 ---
 
-### S — Solution (Layer 2)
+### C — Complication (Layer 2)
 
 **Layer 2 — Argument Builder**
 Loffi builds the strongest possible case for the user's chosen position. Each of the 3 arguments has a clear claim, specific evidence, and a concrete example.
 
-This is the Solution stage — proposing the best available answer to the problem defined in Layer 1. The arguments receive the full Layer 1 context so they are grounded in the actual debate landscape, not constructed in isolation.
+This is the Complication stage — proposing the best available answer to the problem defined in Layer 1. The arguments receive the full Layer 1 context so they are grounded in the actual debate landscape, not constructed in isolation.
 
 ---
 
@@ -47,12 +47,12 @@ Optional Socratic drilling between L2 and L3 adds a user-interactive stress test
 
 ---
 
-### P — Proof (Layer 4)
+### P — Position (Layer 4)
 
 **Layer 4 — Self-Critique**
 With the counter-arguments in hand, Loffi honestly audits the weaknesses in the Layer 2 arguments. She acknowledges what Layer 3 got right and suggests specific improvements.
 
-This is the Proof stage — validating that the solution can withstand scrutiny. A strong argument must be able to acknowledge its limits. This layer is the intellectual honesty checkpoint.
+This is the Position stage — validating that the solution can withstand scrutiny. A strong argument must be able to acknowledge its limits. This layer is the intellectual honesty checkpoint.
 
 ---
 
@@ -78,9 +78,9 @@ Loffi provides personalised coaching: strengths, weaknesses, style profile, exer
 
 ---
 
-## Why PSIPAB?
+## Why SCIPAB?
 
-The framework ensures no reasoning shortcuts. A pipeline that jumps from claim to verdict without testing, critique, or proof produces convincing-sounding but brittle arguments. PSIPAB forces every argument to pass through:
+The framework ensures no reasoning shortcuts. A pipeline that jumps from claim to verdict without testing, critique, or proof produces convincing-sounding but brittle arguments. SCIPAB forces every argument to pass through:
 
 1. Honest problem definition (are we even arguing the right thing?)
 2. Best-case construction (what is the strongest version of this position?)

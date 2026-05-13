@@ -1,16 +1,5 @@
-# Environment — NEVER commit this
+node_modules/
+dist/
 .env
 .env.local
-.env.*.local
-
-# Node
-node_modules/
-npm-debug.log*
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
 .claude/
