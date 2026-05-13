@@ -4,7 +4,7 @@
   "description": "ArgueMind — AI Debate Strategist with SCIPAB multi-layer reasoning",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"node server/index.js\"",
+    "dev": "node scripts/dev.js",
     "build": "vite build",
     "start": "node server/index.js",
     "server": "node server/index.js",
