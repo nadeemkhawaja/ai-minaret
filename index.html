@@ -2,7 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ArgueMind">
+<meta name="theme-color" content="#c41230">
+<meta name="description" content="ArgueMind — AI Debate Strategist. Sharpen your thinking with 5-layer AI reasoning.">
+<link rel="manifest" href="/manifest.json">
 <title>ArgueMind — Sharpen Your Thinking</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@400;600;700;800;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -44,6 +51,9 @@
       <button class="nav-item" onclick="exportDebate('md')">Export</button>
       <button class="nav-item" onclick="copyAll()">Copy</button>
       <button class="nav-item" onclick="clearAll()">Clear</button>
+      <button class="nav-item settings-btn" onclick="openSettings()" title="API Settings">
+        ⚙ <span class="settings-badge" id="settings-badge">Claude</span>
+      </button>
       <div class="lang-switcher" id="lang-switcher">
         <button class="lang-btn active" data-lang="en" onclick="switchLang('en')" title="English">🇬🇧</button>
         <button class="lang-btn" data-lang="ar" onclick="switchLang('ar')" title="العربية">🇸🇦</button>
@@ -58,7 +68,7 @@
 <div class="edition-banner">
   <span class="edition-tag">LIVE</span>
   <div class="edition-scroll">
-    <span id="edition-scroll-text">5-Layer AI Reasoning &nbsp;·&nbsp; Loffi — Your AI Debate Strategist &nbsp;·&nbsp; Fallacy Detection &nbsp;·&nbsp; Socratic Drilling &nbsp;·&nbsp; AI vs AI Arena &nbsp;·&nbsp; Live Voice Debate &nbsp;·&nbsp; 15 Categories &nbsp;·&nbsp; 90 Topics &nbsp;·&nbsp; Sports · Travel · News · Politics · Finance · AI · Education · Climate · Art · Health · Philosophy · Food · Business · Science · Law &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span id="edition-scroll-text">5-Layer AI Reasoning &nbsp;·&nbsp; Loffi — Your AI Debate Strategist &nbsp;·&nbsp; Dual-Model Perspectives &nbsp;·&nbsp; Fallacy Detection &nbsp;·&nbsp; Socratic Drilling &nbsp;·&nbsp; AI vs AI Arena &nbsp;·&nbsp; Live Voice Debate &nbsp;·&nbsp; 16 Categories &nbsp;·&nbsp; Sports · Travel · News · Politics · Finance · AI · Education · Climate · Art · Health · Philosophy · Food · Business · Science · Law · Faith &amp; Religion &nbsp;·&nbsp; Islam · Christianity · Judaism · Hinduism &nbsp;·&nbsp; OpenRouter · PDF Upload &nbsp;&nbsp;&nbsp;</span>
   </div>
 </div>
 
@@ -78,7 +88,7 @@
           <p class="deck" id="hero-deck">Your AI debate strategist. Loffi argues, challenges, questions your logic, fires back in real time, and delivers a verdict that makes you think harder.</p>
           <div class="byline" id="hero-byline">Hosted by Loffi &nbsp;·&nbsp; AI Debate Strategist &nbsp;·&nbsp; All Editions</div>
           <div class="stat-row">
-            <div class="stat-box"><div class="stat-num">15</div><div class="stat-label" id="stat-cats">Categories</div></div>
+            <div class="stat-box"><div class="stat-num">16</div><div class="stat-label" id="stat-cats">Categories</div></div>
             <div class="stat-box"><div class="stat-num">5</div><div class="stat-label" id="stat-layers">Layers</div></div>
             <div class="stat-box"><div class="stat-num">90</div><div class="stat-label" id="stat-topics">Topics</div></div>
             <div class="stat-box"><div class="stat-num">3</div><div class="stat-label" id="stat-modes">Modes</div></div>
@@ -180,10 +190,10 @@
         <div>
           <div class="cf-label" id="cf-depth-label">Argument Depth</div>
           <select id="sel-depth">
-            <option value="50-100">Compact — 50–100 words</option>
-            <option value="150-200">Brief — 150–200 words</option>
-            <option value="220-270" selected>Standard — 220–270 words</option>
-            <option value="300-350">In-depth — 300–350 words</option>
+            <option value="10-20">Compact — 10–20 words</option>
+            <option value="20-50">Brief — 20–50 words</option>
+            <option value="50-100" selected>Standard — 50–100 words</option>
+            <option value="100-150">In-depth — 100–150 words</option>
           </select>
         </div>
         <div>
@@ -250,6 +260,33 @@
         <div style="font-family:var(--mono);font-size:10px;color:var(--ink4);line-height:1.7;">
           Powered by <strong>kokoro-js</strong> + Transformers.js · 82M parameter model · Runs via WebAssembly · No data leaves your machine
         </div>
+      </div>
+    </div>
+
+    <!-- REFERENCE DOCUMENT UPLOAD -->
+    <div class="accordion" style="margin-bottom:1rem;">
+      <div class="acc-head" onclick="toggleAcc('refdoc')">
+        <div class="acc-head-left">
+          📎 Reference Document — Upload a text/PDF file for source context
+          <span class="acc-badge" id="refdoc-badge">NONE</span>
+        </div>
+        <span class="acc-arrow" id="refdoc-arrow">▼</span>
+      </div>
+      <div class="acc-body" id="refdoc-body">
+        <div style="margin-bottom:10px;font-family:var(--mono);font-size:10px;color:var(--ink3);line-height:1.7;">
+          Upload a plain text or PDF file (e.g., a hadith collection, research paper, or legal document).
+          The first 3,000 characters will be injected as context into all debate layers.<br>
+          <strong>Note:</strong> For PDFs, save as plain text first, or paste content directly in the custom topic box.
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <label style="padding:7px 14px;background:var(--ink);color:#fff;cursor:pointer;font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">
+            Choose File
+            <input type="file" id="ref-doc-input" accept=".txt,.md,.pdf,.doc,.docx" style="display:none;" onchange="handleRefDocUpload(this)">
+          </label>
+          <span id="ref-doc-name" style="font-family:var(--mono);font-size:10px;color:var(--ink3);">No file loaded</span>
+          <button id="ref-doc-clear" onclick="clearRefDoc()" style="display:none;padding:6px 10px;background:var(--paper2);border:1px solid var(--rule-heavy);cursor:pointer;font-family:var(--cond);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--red);">Remove</button>
+        </div>
+        <div style="margin-top:8px;font-family:var(--mono);font-size:9px;color:var(--ink4);">Max ~200 KB plain text · Files never leave your device</div>
       </div>
     </div>
 
@@ -348,10 +385,10 @@
         <div>
           <div class="cf-label">Argument depth</div>
           <select id="aia-depth">
-            <option value="50-100">Compact</option>
-            <option value="120-160">Brief</option>
-            <option value="180-220" selected>Standard</option>
-            <option value="250-300">In-depth</option>
+            <option value="10-20">Compact</option>
+            <option value="20-50">Brief</option>
+            <option value="50-100" selected>Standard</option>
+            <option value="100-150">In-depth</option>
           </select>
         </div>
       </div>
@@ -648,6 +685,63 @@
 
 </main>
 
+
+<!-- ========== SETTINGS MODAL ========== -->
+<div id="settings-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,10,8,.7);align-items:center;justify-content:center;padding:1rem;">
+  <div style="background:var(--paper);border:2px solid var(--rule-heavy);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:0;">
+    <div style="background:var(--ink);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-family:var(--cond);font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;">⚙ API &amp; Model Settings</span>
+      <button onclick="closeSettings()" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;line-height:1;">×</button>
+    </div>
+    <div style="padding:16px;display:flex;flex-direction:column;gap:14px;">
+
+      <div>
+        <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Provider</label>
+        <select id="set-provider" onchange="updateSettingsHints()" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+          <option value="anthropic">Anthropic (Claude) — via secure proxy</option>
+          <option value="openrouter">OpenRouter — 100+ models, BYOK</option>
+          <option value="free">Free tier (OpenRouter free models)</option>
+        </select>
+      </div>
+
+      <div>
+        <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">API Key</label>
+        <div style="display:flex;gap:6px;margin-top:4px;">
+          <input id="set-api-key" type="password" placeholder="Paste your API key here" style="flex:1;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+          <button onclick="clearApiKey()" style="padding:6px 10px;background:var(--paper2);border:1px solid var(--rule-heavy);cursor:pointer;font-family:var(--cond);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Clear</button>
+        </div>
+        <div id="set-key-hint" style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:3px;"></div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:2px;">Key is stored only in your browser (localStorage). Never sent anywhere except the chosen API.</div>
+      </div>
+
+      <div>
+        <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Primary Model (Layers 0,2,3,5)</label>
+        <input id="set-primary-model" type="text" placeholder="Leave blank for default" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+      </div>
+
+      <div>
+        <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Secondary Model (Layers 1,4 — independent perspective)</label>
+        <input id="set-secondary-model" type="text" placeholder="Leave blank for default" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:3px;">Layer 1 (Context) &amp; Layer 4 (Critique) use the secondary model to provide a truly independent analytical perspective.</div>
+      </div>
+
+      <div style="background:var(--paper2);border:1px solid var(--rule);padding:10px;font-family:var(--mono);font-size:9px;color:var(--ink3);line-height:1.7;">
+        <strong>Provider notes:</strong><br>
+        • <strong>Anthropic</strong>: Key stays server-side in .env — leave API key blank to use server key.<br>
+        • <strong>OpenRouter</strong>: Get a key at openrouter.ai/keys — access 100+ models including GPT-4o, Gemini, Llama.<br>
+        • <strong>Free</strong>: Uses OpenRouter's free-tier models (Llama 3.3, Gemma 3). Slower but no cost.
+      </div>
+
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button onclick="closeSettings()" style="padding:8px 16px;background:var(--paper2);border:1px solid var(--rule-heavy);cursor:pointer;font-family:var(--cond);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Cancel</button>
+        <button onclick="saveSettings()" style="padding:8px 20px;background:var(--ink);color:#fff;border:none;cursor:pointer;font-family:var(--cond);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">Save Settings</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== REFERENCE DOCUMENT PANEL (added to debate tab area) ========== -->
+<div id="ref-doc-panel" style="display:none;"><!-- rendered by JS into page --></div>
 
 <script type="module" src="/src/main.js"></script>
 </body>

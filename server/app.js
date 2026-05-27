@@ -36,9 +36,11 @@ app.post('/api/claude', (req, res) => {
     return res.status(400).json({ error: 'Invalid JSON or missing messages' });
   }
 
-  const API_KEY = process.env.ANTHROPIC_API_KEY;
+  // Accept user-supplied key from header (stored in browser, never in source code)
+  const userKey = req.headers['x-user-api-key'] || '';
+  const API_KEY = userKey || process.env.ANTHROPIC_API_KEY || '';
   if (!API_KEY) {
-    return res.status(500).json({ error: 'Server misconfiguration: API key missing' });
+    return res.status(500).json({ error: 'No API key. Set ANTHROPIC_API_KEY in .env or add your key in ⚙ Settings.' });
   }
 
   const payload = JSON.stringify({

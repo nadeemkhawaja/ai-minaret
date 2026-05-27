@@ -1,0 +1,26 @@
+{
+  "name": "ArgueMind — AI Debate Strategist",
+  "short_name": "ArgueMind",
+  "description": "Sharpen your thinking with 5-layer AI reasoning. Debate any topic with Loffi, your AI strategist.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf8f3",
+  "theme_color": "#c41230",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%23c41230'/><text x='50%' y='55%' font-size='110' text-anchor='middle' dominant-baseline='middle' font-family='Georgia' font-weight='bold' fill='white'>A</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "screenshots": [],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "text": "topic"
+    }
+  }
+}

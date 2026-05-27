@@ -382,6 +382,49 @@ const CATS = [
     ]
   },
   {
+    id:'religion', label:'Faith & Religion', accent:'#6b4c82',
+    subs:[
+      { id:'islam', label:'Islam', sources:['Quran.com (quran.com)','Sunnah.com (sunnah.com)','Yaqeen Institute (yaqeeninstitute.org)','SeekersGuidance (seekersguidance.org)'],
+        topics:[
+          {title:'Authenticity of Hadith',sub:'How reliable is the hadith corpus as a source of Islamic law?',positions:['The hadith corpus is rigorously authenticated and forms a reliable pillar of Islamic jurisprudence','The hadith authentication process has significant historical weaknesses that require critical re-evaluation']},
+          {title:'Moonsighting vs Calculation',sub:'Should Ramadan be determined by physical sighting or astronomical calculation?',positions:['Physical moonsighting is the Sunnah and should determine the start of Ramadan','Astronomical calculation should replace physical moonsighting for global Muslim unity']},
+          {title:'Music in Islam',sub:'Is music generally permissible or prohibited in Islamic law?',positions:['Music with appropriate content and context is generally permissible in Islam','The majority of classical scholars hold music is prohibited based on textual evidence']},
+          {title:'Women Leading Prayer',sub:'Can women lead mixed-gender congregational prayer?',positions:['Women leading mixed-gender congregational prayer is supported by valid scholarly opinion','Islamic jurisprudence based on hadith prohibits women from leading men in congregational prayer']},
+          {title:'Hijab: Obligation or Culture',sub:'Is the hijab a clear religious obligation or a cultural tradition?',positions:['The hijab is a clear Quranic obligation for Muslim women','Hijab is a cultural tradition that has been conflated with religious mandate']},
+          {title:'Islamic Finance Authenticity',sub:'Does Islamic finance genuinely differ from conventional interest-based banking?',positions:['Islamic finance provides a genuinely ethical and Shariah-compliant alternative to conventional banking','Most Islamic finance products are functionally equivalent to conventional interest and represent form without substance']},
+          {title:'Caliphate: Historical Legacy or Future Goal',sub:'Should Muslims work toward re-establishing a Caliphate?',positions:['Re-establishing a Caliphate is a theological and political obligation for Muslims','The historical Caliphate is a contextual institution not an eternal political obligation']},
+          {title:'Apostasy Laws in Islam',sub:'Should apostasy carry a legal penalty under Islamic law?',positions:['Classical scholars supported apostasy penalties within a structured Islamic state context','Apostasy is a matter of conscience and freedom; no legal penalty is justified in Islam']},
+        ]},
+      { id:'christianity', label:'Christianity', sources:['Vatican (vatican.va)','Christianity Today (christianitytoday.com)','Church Times (churchtimes.co.uk)','Mere Orthodoxy (mereorthodoxy.com)'],
+        topics:[
+          {title:'Sola Scriptura vs Church Tradition',sub:'Is Scripture alone sufficient as the ultimate authority in Christianity?',positions:['Scripture alone (Sola Scriptura) is the sufficient and supreme authority for Christian faith','Scripture and sacred Tradition together form the full deposit of Christian faith']},
+          {title:'Women\'s Ordination',sub:'Should women be ordained as priests or bishops?',positions:['Women\'s ordination is consistent with Scripture and the spirit of Christian equality','The tradition of a male priesthood reflects theological truth not cultural bias']},
+          {title:'Prosperity Gospel',sub:'Is the prosperity gospel a valid expression of Christian theology?',positions:['The prosperity gospel is a dangerous distortion of the Christian message of sacrifice and grace','Health and wealth as signs of God\'s blessing have genuine Scriptural support']},
+          {title:'Christian Nationalism',sub:'Should Christianity shape the laws and identity of modern states?',positions:['Christian values and law should form the foundation of national governance','Christian nationalism conflates faith with political power in a way that harms both']},
+          {title:'Historical Jesus',sub:'Is the Jesus of history consistent with the Christ of faith?',positions:['Historical scholarship confirms the core claims of Christian faith about Jesus','The Christ of faith is a theological construction that goes well beyond the historical Jesus']},
+          {title:'Same-Sex Marriage and Christianity',sub:'Can same-sex marriage be affirmed within Christianity?',positions:['Same-sex marriage can be affirmed within a faithful reading of Scripture and tradition','Christian theology is clear that marriage is between a man and a woman']},
+        ]},
+      { id:'judaism', label:'Judaism', sources:['My Jewish Learning (myjewishlearning.com)','Jewish Virtual Library (jewishvirtuallibrary.org)','Forward (forward.com)','Orthodox Union (ou.org)'],
+        topics:[
+          {title:'Who Is a Jew',sub:'Should Israel and world Jewry accept Reform and Conservative conversions?',positions:['All halachic and recognized non-Orthodox conversions should be accepted equally','Only conversions under Orthodox supervision meet the halachic standard of who is a Jew']},
+          {title:'Women in Orthodox Judaism',sub:'Should Orthodox Judaism expand women\'s roles in religious life?',positions:['Orthodox Judaism should expand women\'s participation in prayer leadership and Jewish learning','Halachic norms around gender roles in Orthodox Judaism are binding and not subject to revision']},
+          {title:'Zionism and Jewish Identity',sub:'Is support for Zionism a core part of Jewish identity?',positions:['Zionism is a natural and legitimate expression of Jewish peoplehood and identity','Zionism is a political movement that should not be conflated with Jewish religious identity']},
+          {title:'Talmud Study for Women',sub:'Should women engage in advanced Talmud study?',positions:['Women\'s Talmud study is halachically permitted and spiritually enriching','Traditional restrictions on women\'s Talmud study reflect halachic and cultural wisdom']},
+          {title:'Jewish Secularism',sub:'Can one be authentically Jewish without religious observance?',positions:['Jewish identity is cultural, ethnic, and national and does not require religious belief','Authentic Jewish identity is inseparable from Torah observance and religious commitment']},
+          {title:'Israel\'s Law of Return',sub:'Should Israel\'s Law of Return be reformed?',positions:['The Law of Return should be tightened to reflect halachic definitions of Jewish identity','The Law of Return in its current form correctly reflects a broad Zionist vision of Jewish solidarity']},
+        ]},
+      { id:'hinduism', label:'Hinduism', sources:['Hinduism Today (hinduismtoday.com)','Oxford Centre for Hindu Studies (ochs.org.uk)','Vedanta Society (vedanta.org)','ISKCON (iskcon.org)'],
+        topics:[
+          {title:'Caste System: Spiritual or Social',sub:'Is varna a spiritual framework or a harmful social hierarchy?',positions:['The varna system in its original form is a spiritual framework for social harmony not a hierarchy','The caste system regardless of its origins perpetuates severe social injustice and must be dismantled']},
+          {title:'Hindu Nationalism',sub:'Is Hindutva an authentic expression of Hindu civilisation?',positions:['Hindutva represents a legitimate cultural and civilisational assertion of Hindu identity','Hindutva conflates religion with political nationalism in ways that contradict Hindu pluralism']},
+          {title:'Vegetarianism as Dharmic Duty',sub:'Is vegetarianism a religious obligation in Hinduism?',positions:['Ahimsa makes vegetarianism a clear moral and religious obligation for Hindus','Vegetarianism is a recommended practice but not a universal religious obligation in Hinduism']},
+          {title:'Idol Worship vs Formless Brahman',sub:'Is murti puja a distraction from understanding the formless Brahman?',positions:['Murti puja is a valid and richly meaningful path to the formless Brahman for most devotees','Advanced Vedantic practice ultimately transcends form-based worship toward the formless Absolute']},
+          {title:'Western Yoga and Hinduism',sub:'Is Western yoga cultural appropriation of Hindu practice?',positions:['Western commercialisation of yoga strips it of its Hindu spiritual roots and constitutes appropriation','Yoga\'s spread to the West expresses its universal spiritual potential beyond cultural boundaries']},
+          {title:'Temple Entry and Menstruation',sub:'Should temples restrict women\'s entry during menstruation?',positions:['Traditional restrictions on women during menstruation reflect spiritual rather than gender-discriminatory principles','Restricting women\'s temple entry based on menstruation is discrimination that violates women\'s rights']},
+        ]},
+    ]
+  },
+  {
     id:'law', label:'Law & Justice', accent:'#4a3a6e',
     subs:[
       { id:'criminal_justice', label:'Criminal Justice', sources:['ABA Journal (abajournal.com)','ACLU (aclu.org)','SCOTUSblog (scotusblog.com)','Brennan Center (brennancenter.org)'],
@@ -412,7 +455,7 @@ const CATS = [
 const S = {
   topic:'', positions:[], position:'',
   persona:'Domain Analyst', tone:'compelling and rhetorically persuasive',
-  depth:'220-270', lang:'', source:'',
+  depth:'50-100', lang:'', source:'',
   layers:{}, totalIn:0, totalOut:0, startTime:0,
   running:false,
   kokoroEnabled:false, kokoroVoice:'af_sky',
@@ -423,7 +466,9 @@ const S = {
   activeAudio:null,
   history:[], lastScore:null,
   waveInterval:null, siInterval:null,
-  currentCat:'sports'
+  currentCat:'sports',
+  refDocText: '',   // uploaded reference document text
+  refDocName: '',   // uploaded file name
 };
 
 
@@ -815,7 +860,10 @@ window.onload = () => {
   buildCatStrip();
   renderCat('sports');
   initTones();
-
+  updateSettingsBadge();
+  // Sync depth selector default with S.depth
+  const ds = document.getElementById('sel-depth');
+  if (ds) { ds.value = S.depth; if (!ds.value) ds.selectedIndex = 2; }
 };
 
 // ================================================================
@@ -1106,22 +1154,25 @@ async function runPipeline() {
     // L0 FALLACY
     if (S.fallacyOn) { setTW('Layer 0 — Scanning for logical fallacies...'); await runFallacy(); }
 
-    // L1 CONTEXT
+    // Build optional reference-doc context string
+    const refCtx = S.refDocText ? `\n\nReference Document ("${S.refDocName}"):\n${S.refDocText.slice(0,3000)}\n` : '';
+
+    // L1 CONTEXT — uses secondary model for independent perspective
     setTW('Layer 1 — Mapping the debate landscape...');
     await runLayer(1,'Context Analysis','Loffi objectively maps the debate','#2c2c28',
       `You are writing as a ${S.persona}. Tone: ${S.tone}. Draw on the expertise of ${S.source}.
 ${S.lang}Layer 1 — Context Analysis.
-Topic: "${S.topic}". Position: "${S.position}".
+Topic: "${S.topic}". Position: "${S.position}".${refCtx}
 Objectively map the debate. Identify 4-5 key factors. Surface hidden assumptions.
-Do NOT take a position. ${S.depth} words.`);
+Do NOT take a position. ${S.depth} words.`, true);
 
-    // L2 ARGUMENTS
+    // L2 ARGUMENTS — primary model
     setTW('Layer 2 — Building your strongest arguments...');
     await runLayer(2,'Argument Builder','Three evidence-backed arguments in your defence','#c41230',
       `You are writing as a ${S.persona}. Tone: ${S.tone}. Draw on the expertise of ${S.source}.
 ${S.lang}Layer 2 — Argument Builder.
 Topic: "${S.topic}". Defend: "${S.position}".
-Context from Layer 1: ${S.layers[1]||''}
+Context from Layer 1: ${S.layers[1]||''}${refCtx}
 3 distinct evidence-backed arguments with claim, evidence, and example.
 ${S.depth} words.`);
 
@@ -1132,7 +1183,7 @@ ${S.depth} words.`);
       await waitSocratic();
     }
 
-    // L3 COUNTER
+    // L3 COUNTER — primary model
     setTW('Layer 3 — Generating the strongest opposition...');
     await runLayer(3,'Counter-Argument','The strongest case against your position','#5a5a52',
       `You are writing as a ${S.persona}. Tone: ${S.tone}. Draw on the expertise of ${S.source}.
@@ -1143,7 +1194,7 @@ Arguments made (L2): ${S.layers[2]||''}
 ${S.socraticAnswers.length?`User reinforced position: ${S.socraticAnswers.join(' | ')}`:''}
 3 genuinely compelling counter-arguments. No strawmen. ${S.depth} words.`);
 
-    // L4 CRITIQUE
+    // L4 CRITIQUE — uses secondary model for independent critical perspective
     setTW('Layer 4 — Auditing weaknesses in your case...');
     await runLayer(4,'Self-Critique','Honest flaws in the Layer 2 arguments','#b8860b',
       `You are writing as a ${S.persona}. Tone: ${S.tone}. Draw on the expertise of ${S.source}.
@@ -1151,7 +1202,7 @@ ${S.lang}Layer 4 — Self-Critique.
 Topic: "${S.topic}". Position: "${S.position}".
 Original arguments (L2): ${S.layers[2]||''}
 Counter-arguments faced (L3): ${S.layers[3]||''}
-3-4 honest weaknesses with improvement suggestions. ${S.depth} words.`);
+3-4 honest weaknesses with improvement suggestions. ${S.depth} words.`, true);
 
     // L5 FINAL
     setTW('Layer 5 — Loffi delivers the final verdict...');
@@ -1222,7 +1273,7 @@ If no fallacies: {"fallacies":[]}`, 400);
 // ================================================================
 // LAYER RUNNER
 // ================================================================
-async function runLayer(n, title, sub, color, prompt) {
+async function runLayer(n, title, sub, color, prompt, useSecondary=false) {
   // Create article placeholder
   const art = makeArticle(n, title, sub, color, true);
   document.getElementById('pipeline').appendChild(art);
@@ -1231,7 +1282,7 @@ async function runLayer(n, title, sub, color, prompt) {
   const t0 = Date.now();
   let text='', inTok=0, outTok=0;
   try {
-    const r = await apiWithTokens(prompt, 1400);
+    const r = await apiWithTokens(prompt, 1400, useSecondary);
     text=r.text; inTok=r.in; outTok=r.out;
   } catch(e) { text=`[Layer ${n} error: ${e.message}]`; }
 
@@ -1947,32 +1998,171 @@ function clearAll(){
 }
 
 // ================================================================
-// API
+// API — multi-provider: Anthropic (via proxy), OpenRouter, or free
+// Settings stored in localStorage under 'am_settings'
 // ================================================================
-// ================================================================
-// API — proxied through server.js (key in .env, never in browser)
-// ================================================================
-async function api(prompt, maxTokens=1200) {
-  const r = await fetch('/api/claude', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
-  });
-  if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error?.message || `Server ${r.status} — run: npm start`); }
-  const d = await r.json();
-  return d.content?.[0]?.text || '';
+
+function getApiSettings() {
+  try { return JSON.parse(localStorage.getItem('am_settings') || '{}'); } catch { return {}; }
 }
 
-async function apiWithTokens(prompt, maxTokens=1200) {
-  const r = await fetch('/api/claude', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
-  });
-  if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error?.message || `Server ${r.status} — run: npm start`); }
-  const d = await r.json();
-  return { text: d.content?.[0]?.text || '', in: d.usage?.input_tokens || 0, out: d.usage?.output_tokens || 0 };
+function getPrimaryModel() {
+  const s = getApiSettings();
+  const provider = s.provider || 'anthropic';
+  if (provider === 'anthropic') return s.primaryModel || 'claude-sonnet-4-20250514';
+  if (provider === 'openrouter') return s.primaryModel || 'anthropic/claude-sonnet-4';
+  return s.primaryModel || 'meta-llama/llama-3.3-70b-instruct:free';
 }
+
+function getSecondaryModel() {
+  const s = getApiSettings();
+  const provider = s.provider || 'anthropic';
+  if (provider === 'anthropic') return s.secondaryModel || 'claude-haiku-4-20250514';
+  if (provider === 'openrouter') return s.secondaryModel || 'google/gemma-3-27b-it:free';
+  return s.secondaryModel || 'google/gemma-3-27b-it:free';
+}
+
+async function api(prompt, maxTokens=1200, useSecondary=false) {
+  const r = await _apiFetch(prompt, maxTokens, useSecondary);
+  if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error?.message || e.error || `API error ${r.status}`); }
+  const d = await r.json();
+  // Anthropic format: d.content[0].text | OpenRouter/OpenAI format: d.choices[0].message.content
+  return d.content?.[0]?.text || d.choices?.[0]?.message?.content || '';
+}
+
+async function apiWithTokens(prompt, maxTokens=1200, useSecondary=false) {
+  const r = await _apiFetch(prompt, maxTokens, useSecondary);
+  if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error?.message || e.error || `API error ${r.status}`); }
+  const d = await r.json();
+  const text = d.content?.[0]?.text || d.choices?.[0]?.message?.content || '';
+  const inTok = d.usage?.input_tokens || d.usage?.prompt_tokens || 0;
+  const outTok = d.usage?.output_tokens || d.usage?.completion_tokens || 0;
+  return { text, in: inTok, out: outTok };
+}
+
+async function _apiFetch(prompt, maxTokens, useSecondary) {
+  const s = getApiSettings();
+  const provider = s.provider || 'anthropic';
+  const model = useSecondary ? getSecondaryModel() : getPrimaryModel();
+  const userKey = s.apiKey || '';
+
+  if (provider === 'openrouter' || provider === 'free') {
+    // Call OpenRouter directly from browser (they support CORS)
+    const key = userKey || (provider === 'free' ? '' : '');
+    if (!key && provider === 'openrouter') throw new Error('OpenRouter API key not set — open Settings ⚙');
+    return fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${key}`,
+        'HTTP-Referer': window.location.origin,
+        'X-Title': 'ArgueMind'
+      },
+      body: JSON.stringify({
+        model,
+        max_tokens: maxTokens,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+  }
+
+  // Default: Anthropic via server proxy (key in .env or user-supplied in header)
+  return fetch('/api/claude', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(userKey ? { 'x-user-api-key': userKey } : {})
+    },
+    body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
+  });
+}
+// ================================================================
+// SETTINGS MODAL
+// ================================================================
+function openSettings() {
+  const s = getApiSettings();
+  document.getElementById('set-provider').value = s.provider || 'anthropic';
+  document.getElementById('set-api-key').value = s.apiKey || '';
+  document.getElementById('set-primary-model').value = s.primaryModel || '';
+  document.getElementById('set-secondary-model').value = s.secondaryModel || '';
+  updateSettingsHints();
+  document.getElementById('settings-modal').style.display='flex';
+}
+function closeSettings() {
+  document.getElementById('settings-modal').style.display='none';
+}
+function saveSettings() {
+  const s = {
+    provider: document.getElementById('set-provider').value,
+    apiKey: document.getElementById('set-api-key').value.trim(),
+    primaryModel: document.getElementById('set-primary-model').value.trim(),
+    secondaryModel: document.getElementById('set-secondary-model').value.trim(),
+  };
+  localStorage.setItem('am_settings', JSON.stringify(s));
+  closeSettings();
+  telegram('Settings saved ✓', 'ok');
+  updateSettingsBadge();
+}
+function clearApiKey() {
+  document.getElementById('set-api-key').value = '';
+  const s = getApiSettings();
+  delete s.apiKey;
+  localStorage.setItem('am_settings', JSON.stringify(s));
+  telegram('API key cleared', 'ok');
+}
+function updateSettingsHints() {
+  const p = document.getElementById('set-provider').value;
+  const hints = {
+    anthropic: { key:'sk-ant-...  (get from console.anthropic.com)', p:'claude-sonnet-4-20250514', s:'claude-haiku-4-20250514' },
+    openrouter: { key:'sk-or-...  (get from openrouter.ai/keys)', p:'anthropic/claude-sonnet-4', s:'google/gemma-3-27b-it:free' },
+    free: { key:'sk-or-...  (optional — free models on OpenRouter)', p:'meta-llama/llama-3.3-70b-instruct:free', s:'google/gemma-3-27b-it:free' },
+  };
+  const h = hints[p] || hints.anthropic;
+  document.getElementById('set-key-hint').textContent = h.key;
+  if (!document.getElementById('set-primary-model').value) document.getElementById('set-primary-model').placeholder = h.p;
+  if (!document.getElementById('set-secondary-model').value) document.getElementById('set-secondary-model').placeholder = h.s;
+}
+function updateSettingsBadge() {
+  const s = getApiSettings();
+  const el = document.getElementById('settings-badge');
+  if (el) {
+    const p = s.provider || 'anthropic';
+    const labels = { anthropic:'Claude', openrouter:'OpenRouter', free:'Free' };
+    el.textContent = labels[p] || 'Claude';
+    el.style.background = p === 'anthropic' ? '#c41230' : p === 'openrouter' ? '#5b3dbd' : '#2e7d32';
+  }
+}
+
+// ================================================================
+// REFERENCE DOCUMENT UPLOAD
+// ================================================================
+function handleRefDocUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const MAX = 200 * 1024; // 200 KB plain text limit
+  if (file.size > MAX && !file.name.endsWith('.pdf')) {
+    telegram('File too large — keep text files under 200 KB', 'err'); return;
+  }
+  S.refDocName = file.name;
+  const reader = new FileReader();
+  reader.onload = e => {
+    S.refDocText = e.target.result;
+    document.getElementById('ref-doc-name').textContent = `📎 ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+    document.getElementById('ref-doc-clear').style.display='inline-block';
+    telegram(`Reference doc loaded: ${file.name}`, 'ok');
+  };
+  reader.onerror = () => telegram('Could not read file', 'err');
+  reader.readAsText(file);
+}
+function clearRefDoc() {
+  S.refDocText = '';
+  S.refDocName = '';
+  document.getElementById('ref-doc-name').textContent = 'No file loaded';
+  document.getElementById('ref-doc-clear').style.display='none';
+  const inp = document.getElementById('ref-doc-input');
+  if (inp) inp.value='';
+}
+
 // ── Global Exports for Inline HTML Handlers ──
 window.switchLang = switchLang;
 window.applyStrings = applyStrings;
@@ -2021,6 +2211,15 @@ window.playLayer = playLayer;
 window.delay = delay;
 window.telegram = telegram;
 window.clearAll = clearAll;
+window.openSettings = openSettings;
+window.closeSettings = closeSettings;
+window.saveSettings = saveSettings;
+window.clearApiKey = clearApiKey;
+window.updateSettingsHints = updateSettingsHints;
+window.updateSettingsBadge = updateSettingsBadge;
+window.handleRefDocUpload = handleRefDocUpload;
+window.clearRefDoc = clearRefDoc;
+window.getApiSettings = getApiSettings;
 
 // ── Global Async Exports ──
 window.initKokoro = initKokoro;
