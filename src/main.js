@@ -99,8 +99,8 @@ const CATS = [
 // ================================================================
 const S = {
   topic:'', positions:[], position:'',
-  persona:'General Analyst', tone:'compelling and rhetorically persuasive',
-  depth:'10-20', lang:'', source:'',
+  persona:'Islamic Scholar', tone:'simple, plain English — short sentences, everyday words, and explain any Arabic or technical term in brackets the first time it appears',
+  depth:'120-180', lang:'', source:'',
   layers:{}, totalIn:0, totalOut:0, startTime:0,
   running:false,
   kokoroEnabled:false, kokoroVoice:'af_sky',
@@ -799,8 +799,22 @@ async function runPipeline() {
     // L0 FALLACY
     if (S.fallacyOn) { setTW('Layer 0 — Scanning for logical fallacies...'); await runFallacy(); }
 
+    // Pull matching verses/hadith from the local library (data/library) if present
+    let libCtx = '';
+    try {
+      const lr = await fetch(`/api/library/search?q=${encodeURIComponent(S.topic + ' ' + S.position)}&limit=6`);
+      if (lr.ok) {
+        const { results } = await lr.json();
+        if (results?.length) {
+          libCtx = '\n\nLibrary references (verbatim from the local Quran/Hadith library — quote by ref, do not alter):\n'
+            + results.map(r => `[${r.ref}${r.grade ? ' — ' + r.grade : ''}] ${r.text}`).join('\n');
+          telegram(`📚 ${results.length} Quran/Hadith references attached from local library`, 'ok');
+        }
+      }
+    } catch {}
+
     // Build optional reference-doc context string
-    const refCtx = S.refDocText ? `\n\nReference Document ("${S.refDocName}"):\n${S.refDocText.slice(0,3000)}\n` : '';
+    const refCtx = (S.refDocText ? `\n\nReference Document ("${S.refDocName}"):\n${S.refDocText.slice(0,3000)}\n` : '') + libCtx;
 
     // L1 CONTEXT — uses secondary model for independent perspective
     setTW('Layer 1 — Mapping the debate landscape...');
@@ -1658,6 +1672,7 @@ function getPrimaryModel() {
   const s = getApiSettings();
   const provider = s.provider || 'anthropic';
   if (provider === 'anthropic') return s.primaryModel || 'claude-opus-4-8';
+  if (provider === 'local') return s.primaryModel || 'llama3.2';
   if (provider === 'openrouter') return s.primaryModel || 'anthropic/claude-opus-4.8';
   return s.primaryModel || 'meta-llama/llama-3.3-70b-instruct:free';
 }
@@ -1666,12 +1681,26 @@ function getSecondaryModel() {
   const s = getApiSettings();
   const provider = s.provider || 'anthropic';
   if (provider === 'anthropic') return s.secondaryModel || 'claude-haiku-4-5';
+  if (provider === 'local') return s.secondaryModel || 'llama3.2';
   if (provider === 'openrouter') return s.secondaryModel || 'anthropic/claude-haiku-4.5';
   return s.secondaryModel || 'qwen/qwen3-next-80b-a3b-instruct:free';
 }
 
+// Retry transient failures (rate limit / overloaded) up to 2 times.
+async function _apiFetchRetry(prompt, maxTokens, useSecondary) {
+  for (let attempt = 0; ; attempt++) {
+    const r = await _apiFetch(prompt, maxTokens, useSecondary);
+    if ((r.status === 429 || r.status === 503 || r.status === 529) && attempt < 2) {
+      telegram(`Model busy (${r.status}) — retrying in 4s… (${attempt + 1}/2)`, 'err');
+      await new Promise(s => setTimeout(s, 4000));
+      continue;
+    }
+    return r;
+  }
+}
+
 async function api(prompt, maxTokens=1200, useSecondary=false) {
-  const r = await _apiFetch(prompt, maxTokens, useSecondary);
+  const r = await _apiFetchRetry(prompt, maxTokens, useSecondary);
   if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error?.message || e.error || `API error ${r.status}`); }
   const d = await r.json();
   // Anthropic format: text block in d.content | OpenRouter/OpenAI format: d.choices[0].message.content
@@ -1679,7 +1708,7 @@ async function api(prompt, maxTokens=1200, useSecondary=false) {
 }
 
 async function apiWithTokens(prompt, maxTokens=1200, useSecondary=false) {
-  const r = await _apiFetch(prompt, maxTokens, useSecondary);
+  const r = await _apiFetchRetry(prompt, maxTokens, useSecondary);
   if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error?.message || e.error || `API error ${r.status}`); }
   const d = await r.json();
   const text = d.content?.find(b => b.type === 'text')?.text || d.choices?.[0]?.message?.content || '';
@@ -1693,6 +1722,20 @@ async function _apiFetch(prompt, maxTokens, useSecondary) {
   const provider = s.provider || 'anthropic';
   const model = useSecondary ? getSecondaryModel() : getPrimaryModel();
   const userKey = s.apiKey || '';
+
+  if (provider === 'local') {
+    // Ollama / LM Studio on this machine, via the server proxy (avoids CORS)
+    return fetch('/api/local', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        baseUrl: s.localUrl || 'http://localhost:11434',
+        model,
+        max_tokens: maxTokens,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+  }
 
   if (provider === 'openrouter' || provider === 'free') {
     // Call OpenRouter directly from browser (they support CORS)
@@ -1731,6 +1774,7 @@ function openSettings() {
   const s = getApiSettings();
   document.getElementById('set-provider').value = s.provider || 'anthropic';
   document.getElementById('set-api-key').value = s.apiKey || '';
+  document.getElementById('set-local-url').value = s.localUrl || '';
   document.getElementById('set-primary-model').value = s.primaryModel || '';
   document.getElementById('set-secondary-model').value = s.secondaryModel || '';
   updateSettingsHints();
@@ -1743,6 +1787,7 @@ function saveSettings() {
   const s = {
     provider: document.getElementById('set-provider').value,
     apiKey: document.getElementById('set-api-key').value.trim(),
+    localUrl: document.getElementById('set-local-url').value.trim(),
     primaryModel: document.getElementById('set-primary-model').value.trim(),
     secondaryModel: document.getElementById('set-secondary-model').value.trim(),
   };
@@ -1762,11 +1807,13 @@ function updateSettingsHints() {
   const p = document.getElementById('set-provider').value;
   const hints = {
     anthropic: { key:'sk-ant-...  (get from console.anthropic.com)', p:'claude-opus-4-8', s:'claude-haiku-4-5' },
+    local: { key:'No API key needed — models run entirely on your machine', p:'llama3.2', s:'llama3.2' },
     openrouter: { key:'sk-or-...  (get from openrouter.ai/keys)', p:'anthropic/claude-opus-4.8', s:'anthropic/claude-haiku-4.5' },
     free: { key:'sk-or-...  (optional — free models on OpenRouter)', p:'meta-llama/llama-3.3-70b-instruct:free', s:'qwen/qwen3-next-80b-a3b-instruct:free' },
   };
   const h = hints[p] || hints.anthropic;
   document.getElementById('set-key-hint').textContent = h.key;
+  document.getElementById('set-local-wrap').style.display = p === 'local' ? 'block' : 'none';
   if (!document.getElementById('set-primary-model').value) document.getElementById('set-primary-model').placeholder = h.p;
   if (!document.getElementById('set-secondary-model').value) document.getElementById('set-secondary-model').placeholder = h.s;
 }
@@ -1775,9 +1822,9 @@ function updateSettingsBadge() {
   const el = document.getElementById('settings-badge');
   if (el) {
     const p = s.provider || 'anthropic';
-    const labels = { anthropic:'Claude', openrouter:'OpenRouter', free:'Free' };
+    const labels = { anthropic:'Claude', local:'Local', openrouter:'OpenRouter', free:'Free' };
     el.textContent = labels[p] || 'Claude';
-    el.style.background = p === 'anthropic' ? '#c41230' : p === 'openrouter' ? '#5b3dbd' : '#2e7d32';
+    el.style.background = p === 'anthropic' ? '#c41230' : p === 'local' ? '#0e7490' : p === 'openrouter' ? '#5b3dbd' : '#2e7d32';
   }
 }
 

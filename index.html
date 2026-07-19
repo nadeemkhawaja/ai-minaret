@@ -128,8 +128,10 @@
         <div>
           <div class="cf-label" id="cf-depth-label">Argument Depth</div>
           <select id="sel-depth">
-            <option value="10-20" selected>Compact — 10–20 words</option>
+            <option value="10-20">Compact — 10–20 words</option>
             <option value="20-50">Brief — 20–50 words</option>
+            <option value="120-180" selected>Standard — 120–180 words</option>
+            <option value="220-280">Deep — 220–280 words</option>
           </select>
         </div>
         <div>
@@ -152,7 +154,8 @@
 
       <div class="tone-row">
         <span class="tone-label" id="tone-label">Tone —</span>
-        <button class="tone-pill sel" data-tone="balanced and measured">Balanced</button>
+        <button class="tone-pill sel" data-tone="simple, plain English — short sentences, everyday words, and explain any Arabic or technical term in brackets the first time it appears">Plain English</button>
+        <button class="tone-pill" data-tone="balanced and measured">Balanced</button>
         <button class="tone-pill" data-tone="formal and academic">Formal</button>
       </div>
     </div>
@@ -595,9 +598,16 @@
         <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Provider</label>
         <select id="set-provider" onchange="updateSettingsHints()" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
           <option value="anthropic">Anthropic (Claude) — via secure proxy</option>
+          <option value="local">Local — Ollama / LM Studio (no key, private)</option>
           <option value="openrouter">OpenRouter — 100+ models, BYOK</option>
           <option value="free">Free tier (OpenRouter free models)</option>
         </select>
+      </div>
+
+      <div id="set-local-wrap" style="display:none;">
+        <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Local Endpoint URL</label>
+        <input id="set-local-url" type="text" placeholder="http://localhost:11434" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:3px;">Ollama default: http://localhost:11434 &nbsp;·&nbsp; LM Studio default: http://localhost:1234</div>
       </div>
 
       <div>
@@ -623,6 +633,7 @@
 
       <div style="background:var(--paper2);border:1px solid var(--rule);padding:10px;font-family:var(--mono);font-size:9px;color:var(--ink3);line-height:1.7;">
         <strong>Provider notes:</strong><br>
+        • <strong>Local</strong>: Ollama or LM Studio on this machine — no key, no cloud, fully private. Install from ollama.com, then <code>ollama pull llama3.2</code>.<br>
         • <strong>Anthropic</strong>: Key stays server-side in .env — leave API key blank to use server key.<br>
         • <strong>OpenRouter</strong>: Get a key at openrouter.ai/keys — access 100+ models including GPT-4o, Gemini, Llama.<br>
         • <strong>Free</strong>: Uses OpenRouter's free-tier models (Llama 3.3, Qwen3). Slower but no cost.

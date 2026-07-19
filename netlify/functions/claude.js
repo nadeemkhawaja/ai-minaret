@@ -33,8 +33,11 @@ export default async (req) => {
 
   // Use user key if provided, otherwise fall back to server env key
   const API_KEY = userKey || process.env.ANTHROPIC_API_KEY || '';
+  
+  const overrideBaseUrl = process.env.LOCAL_LLM_BASE_URL;
+  const overrideModel = process.env.LOCAL_LLM_MODEL;
 
-  if (!API_KEY) {
+  if (!API_KEY && !overrideBaseUrl) {
     return new Response(
       JSON.stringify({
         error: 'No API key available. Set ANTHROPIC_API_KEY in Netlify env, or add your key in the ⚙ Settings panel.',
@@ -43,27 +46,30 @@ export default async (req) => {
     );
   }
 
-  const model = body.model || 'claude-opus-4-8';
+  const model = overrideModel || body.model || 'claude-opus-4-8';
   const isOpenRouter = model.includes('/') && !model.startsWith('claude-');
 
-  // Route to OpenRouter if model looks like an OpenRouter model
-  // (OpenRouter models are like "anthropic/claude-3.7-sonnet", "google/gemma-3-27b-it:free")
-  // Pure Anthropic models like "claude-3-7-sonnet-20250219" go to Anthropic directly
+  // Route to OpenRouter or Local if model looks like an OpenRouter model
   if (isOpenRouter) {
-    // This shouldn't normally be called via proxy for OpenRouter — the frontend calls OR directly.
-    // But if it does, proxy it.
-    const upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    const baseUrl = overrideBaseUrl ? overrideBaseUrl.replace(/\/$/, '') : 'https://openrouter.ai/api/v1';
+    
+    let messages = [...body.messages];
+    if (body.system) {
+      messages = [{ role: 'system', content: body.system }, ...messages];
+    }
+    
+    const upstream = await fetch(`${baseUrl}/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}`,
+        'Authorization': `Bearer ${API_KEY || 'local'}`,
         'HTTP-Referer': req.headers.get('origin') || 'https://arguemind.netlify.app',
         'X-Title': 'ArgueMind',
       },
       body: JSON.stringify({
         model,
         max_tokens: body.max_tokens || 1200,
-        messages: body.messages,
+        messages,
       }),
     });
     const text = await upstream.text();
@@ -74,11 +80,13 @@ export default async (req) => {
   }
 
   // Default: Anthropic API
-  const upstream = await fetch('https://api.anthropic.com/v1/messages', {
+  const baseUrl = overrideBaseUrl ? overrideBaseUrl.replace(/\/$/, '') : 'https://api.anthropic.com/v1';
+
+  const upstream = await fetch(`${baseUrl}/messages`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': API_KEY,
+      'x-api-key': API_KEY || 'local',
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
