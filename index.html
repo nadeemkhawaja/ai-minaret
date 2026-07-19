@@ -595,9 +595,11 @@
     </div>
     <div style="padding:16px;display:flex;flex-direction:column;gap:14px;">
 
-      <div style="display:flex;gap:10px;">
-        <div style="flex:1;">
-          <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Primary Provider</label>
+      <div style="background:var(--paper2);padding:14px;border:1px solid var(--rule);margin-bottom:12px;">
+        <label style="font-family:var(--cond);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);">Primary Model (Layers 0,2,3,5)</label>
+        
+        <div style="margin-top:10px;">
+          <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Provider</label>
           <select id="set-primary-provider" onchange="updateSettingsHints()" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
             <option value="anthropic">Anthropic (Claude)</option>
             <option value="local">Local (Ollama/LM Studio)</option>
@@ -606,8 +608,29 @@
             <option value="free">Free tier (OpenRouter)</option>
           </select>
         </div>
-        <div style="flex:1;">
-          <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Secondary Provider</label>
+
+        <div id="set-primary-local-wrap" style="display:none;margin-top:10px;">
+          <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Local / Self-Hosted Endpoint URL</label>
+          <input id="set-primary-local-url" type="text" placeholder="http://localhost:11434" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+          <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:3px;">Ollama default: http://localhost:11434 &nbsp;·&nbsp; LM Studio default: http://localhost:1234</div>
+        </div>
+
+        <div id="set-primary-key-wrap" style="margin-top:10px;">
+          <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">API Key</label>
+          <input id="set-primary-key" type="password" placeholder="sk-..." style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+        </div>
+
+        <div style="margin-top:10px;">
+          <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Model Name</label>
+          <input id="set-primary-model" type="text" placeholder="Leave blank for default" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+        </div>
+      </div>
+
+      <div style="background:var(--paper2);padding:14px;border:1px solid var(--rule);margin-bottom:12px;">
+        <label style="font-family:var(--cond);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);">Secondary Model (Layers 1,4 — independent perspective)</label>
+        
+        <div style="margin-top:10px;">
+          <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Provider</label>
           <select id="set-secondary-provider" onchange="updateSettingsHints()" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
             <option value="anthropic">Anthropic (Claude)</option>
             <option value="local">Local (Ollama/LM Studio)</option>
@@ -616,44 +639,23 @@
             <option value="free">Free tier (OpenRouter)</option>
           </select>
         </div>
-      </div>
 
-      <div id="set-local-wrap" style="display:none;">
-        <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Local Endpoint URL</label>
-        <input id="set-local-url" type="text" placeholder="http://localhost:11434" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
-        <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:3px;">Ollama default: http://localhost:11434 &nbsp;·&nbsp; LM Studio default: http://localhost:1234</div>
-      </div>
+        <div id="set-secondary-local-wrap" style="display:none;margin-top:10px;">
+          <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Local / Self-Hosted Endpoint URL</label>
+          <input id="set-secondary-local-url" type="text" placeholder="http://localhost:11434" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+          <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:3px;">Ollama default: http://localhost:11434 &nbsp;·&nbsp; LM Studio default: http://localhost:1234</div>
+        </div>
 
-      <div id="set-keys-wrap">
-        <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">API Keys</label>
-        
-        <div style="display:flex;gap:6px;margin-top:4px;align-items:center;">
-          <span style="font-family:var(--mono);font-size:10px;width:70px;">Anthropic:</span>
-          <input id="set-anthropic-key" type="password" placeholder="sk-ant-..." style="flex:1;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+        <div id="set-secondary-key-wrap" style="margin-top:10px;">
+          <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">API Key</label>
+          <input id="set-secondary-key" type="password" placeholder="sk-..." style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
         </div>
-        <div style="display:flex;gap:6px;margin-top:4px;align-items:center;">
-          <span style="font-family:var(--mono);font-size:10px;width:70px;">OpenRouter:</span>
-          <input id="set-openrouter-key" type="password" placeholder="sk-or-..." style="flex:1;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
-        </div>
-        <div style="display:flex;gap:6px;margin-top:4px;align-items:center;">
-          <span style="font-family:var(--mono);font-size:10px;width:70px;">Groq:</span>
-          <input id="set-groq-key" type="password" placeholder="gsk_..." style="flex:1;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:6px;">
-          <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);">Keys are stored only in your browser (localStorage).</div>
-          <button onclick="clearApiKey()" style="padding:2px 6px;background:var(--paper2);border:1px solid var(--rule-heavy);cursor:pointer;font-family:var(--cond);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Clear All</button>
-        </div>
-      </div>
 
-      <div>
-        <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Primary Model (Layers 0,2,3,5)</label>
-        <input id="set-primary-model" type="text" placeholder="Leave blank for default" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
-      </div>
-
-      <div>
-        <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Secondary Model (Layers 1,4 — independent perspective)</label>
-        <input id="set-secondary-model" type="text" placeholder="Leave blank for default" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
-        <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:3px;">Layer 1 (Context) &amp; Layer 4 (Critique) use the secondary model to provide a truly independent analytical perspective.</div>
+        <div style="margin-top:10px;">
+          <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Model Name</label>
+          <input id="set-secondary-model" type="text" placeholder="Leave blank for default" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+          <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:3px;">Layer 1 (Context) &amp; Layer 4 (Critique) use the secondary model to provide a truly independent analytical perspective.</div>
+        </div>
       </div>
 
       <div style="background:var(--paper2);border:1px solid var(--rule);padding:10px;font-family:var(--mono);font-size:9px;color:var(--ink3);line-height:1.7;">
@@ -661,7 +663,8 @@
         • <strong>Local</strong>: Ollama or LM Studio on this machine — no key, no cloud, fully private.<br>
         • <strong>Anthropic</strong>: Key stays server-side in .env — leave API key blank to use server key.<br>
         • <strong>OpenRouter / Groq</strong>: Add your API keys above to access their models.<br>
-        • <strong>Free</strong>: Uses OpenRouter's free-tier models (Llama 3.3, Qwen3). Slower but no cost.
+        • <strong>Free</strong>: Uses OpenRouter's free-tier models (Llama 3.3, Qwen3). Slower but no cost.<br>
+        <span style="display:inline-block;margin-top:6px;color:var(--ink4);">Keys are stored safely in your browser (localStorage).</span>
       </div>
 
       <div style="display:flex;gap:8px;justify-content:flex-end;">

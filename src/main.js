@@ -1748,14 +1748,14 @@ async function _apiFetch(prompt, maxTokens, useSecondary) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        baseUrl: s.localUrl || '',
+        baseUrl: useSecondary ? (s.secondaryLocalUrl || '') : (s.primaryLocalUrl || ''),
         model, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }]
       })
     });
   }
   
   if (provider === 'groq') {
-    const key = s.groqKey || '';
+    const key = useSecondary ? (s.secondaryKey || '') : (s.primaryKey || '');
     if (!key) throw new Error('Groq API key not set — open Settings ⚙');
     return fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
@@ -1766,7 +1766,7 @@ async function _apiFetch(prompt, maxTokens, useSecondary) {
 
   if (provider === 'openrouter' || provider === 'free') {
     // Call OpenRouter directly from browser (they support CORS)
-    const key = s.openrouterKey || (provider === 'free' ? '' : '');
+    const key = useSecondary ? (s.secondaryKey || '') : (s.primaryKey || '');
     if (!key && provider === 'openrouter') throw new Error('OpenRouter API key not set — open Settings ⚙');
     return fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
@@ -1781,11 +1781,12 @@ async function _apiFetch(prompt, maxTokens, useSecondary) {
   }
 
   // Default: Anthropic via server proxy (key in .env or user-supplied in header)
+  const key = useSecondary ? (s.secondaryKey || '') : (s.primaryKey || '');
   return fetch('/api/claude', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      ...(s.anthropicKey ? { 'x-user-api-key': s.anthropicKey } : {})
+      ...(key ? { 'x-user-api-key': key } : {})
     },
     body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
   });
@@ -1797,10 +1798,10 @@ function openSettings() {
   const s = getApiSettings();
   document.getElementById('set-primary-provider').value = s.primaryProvider || 'local';
   document.getElementById('set-secondary-provider').value = s.secondaryProvider || 'groq';
-  document.getElementById('set-anthropic-key').value = s.anthropicKey || '';
-  document.getElementById('set-openrouter-key').value = s.openrouterKey || '';
-  document.getElementById('set-groq-key').value = s.groqKey || '';
-  document.getElementById('set-local-url').value = s.localUrl || '';
+  document.getElementById('set-primary-local-url').value = s.primaryLocalUrl || '';
+  document.getElementById('set-secondary-local-url').value = s.secondaryLocalUrl || '';
+  document.getElementById('set-primary-key').value = s.primaryKey || '';
+  document.getElementById('set-secondary-key').value = s.secondaryKey || '';
   document.getElementById('set-primary-model').value = s.primaryModel || '';
   document.getElementById('set-secondary-model').value = s.secondaryModel || '';
   updateSettingsHints();
@@ -1813,10 +1814,10 @@ function saveSettings() {
   const s = {
     primaryProvider: document.getElementById('set-primary-provider').value,
     secondaryProvider: document.getElementById('set-secondary-provider').value,
-    anthropicKey: document.getElementById('set-anthropic-key').value.trim(),
-    openrouterKey: document.getElementById('set-openrouter-key').value.trim(),
-    groqKey: document.getElementById('set-groq-key').value.trim(),
-    localUrl: document.getElementById('set-local-url').value.trim(),
+    primaryLocalUrl: document.getElementById('set-primary-local-url').value.trim(),
+    secondaryLocalUrl: document.getElementById('set-secondary-local-url').value.trim(),
+    primaryKey: document.getElementById('set-primary-key').value.trim(),
+    secondaryKey: document.getElementById('set-secondary-key').value.trim(),
     primaryModel: document.getElementById('set-primary-model').value.trim(),
     secondaryModel: document.getElementById('set-secondary-model').value.trim(),
   };
@@ -1826,13 +1827,11 @@ function saveSettings() {
   updateSettingsBadge();
 }
 function clearApiKey() {
-  document.getElementById('set-anthropic-key').value = '';
-  document.getElementById('set-openrouter-key').value = '';
-  document.getElementById('set-groq-key').value = '';
+  document.getElementById('set-primary-key').value = '';
+  document.getElementById('set-secondary-key').value = '';
   const s = getApiSettings();
-  delete s.anthropicKey;
-  delete s.openrouterKey;
-  delete s.groqKey;
+  delete s.primaryKey;
+  delete s.secondaryKey;
   localStorage.setItem('am_settings', JSON.stringify(s));
   telegram('API keys cleared', 'ok');
 }
@@ -1848,7 +1847,12 @@ function updateSettingsHints() {
     free: { p:'meta-llama/llama-3.3-70b-instruct:free', s:'qwen/qwen3-next-80b-a3b-instruct:free' },
   };
   
-  document.getElementById('set-local-wrap').style.display = (pp === 'local' || sp === 'local') ? 'block' : 'none';
+  document.getElementById('set-primary-local-wrap').style.display = (pp === 'local') ? 'block' : 'none';
+  document.getElementById('set-primary-key-wrap').style.display = (pp === 'local' || pp === 'free') ? 'none' : 'block';
+  
+  document.getElementById('set-secondary-local-wrap').style.display = (sp === 'local') ? 'block' : 'none';
+  document.getElementById('set-secondary-key-wrap').style.display = (sp === 'local' || sp === 'free') ? 'none' : 'block';
+
   if (!document.getElementById('set-primary-model').value) document.getElementById('set-primary-model').placeholder = hints[pp]?.p || '';
   if (!document.getElementById('set-secondary-model').value) document.getElementById('set-secondary-model').placeholder = hints[sp]?.s || '';
 }
