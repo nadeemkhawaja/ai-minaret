@@ -1672,7 +1672,7 @@ function getPrimaryModel() {
   const s = getApiSettings();
   const provider = s.provider || 'anthropic';
   if (provider === 'anthropic') return s.primaryModel || 'claude-opus-4-8';
-  if (provider === 'local') return s.primaryModel || 'llama3.2';
+  if (provider === 'local') return s.primaryModel || '';
   if (provider === 'openrouter') return s.primaryModel || 'anthropic/claude-opus-4.8';
   return s.primaryModel || 'meta-llama/llama-3.3-70b-instruct:free';
 }
@@ -1681,7 +1681,7 @@ function getSecondaryModel() {
   const s = getApiSettings();
   const provider = s.provider || 'anthropic';
   if (provider === 'anthropic') return s.secondaryModel || 'claude-haiku-4-5';
-  if (provider === 'local') return s.secondaryModel || 'llama3.2';
+  if (provider === 'local') return s.secondaryModel || '';
   if (provider === 'openrouter') return s.secondaryModel || 'anthropic/claude-haiku-4.5';
   return s.secondaryModel || 'qwen/qwen3-next-80b-a3b-instruct:free';
 }
