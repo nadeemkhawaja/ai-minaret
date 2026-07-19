@@ -237,6 +237,26 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
   }
 });
 
+app.get('/api/uploads', async (req, res) => {
+  try {
+    const uploadDir = path.join(rootDir, 'data', 'uploads');
+    if (!fs.existsSync(uploadDir)) return res.json({ text: '' });
+    
+    let allText = '';
+    const files = fs.readdirSync(uploadDir);
+    for (const file of files) {
+      if (file.endsWith('.md') || file.endsWith('.txt')) {
+        const content = fs.readFileSync(path.join(uploadDir, file), 'utf8');
+        allText += `\n\n--- Source: ${file} ---\n\n${content}`;
+      }
+    }
+    return res.json({ text: allText });
+  } catch (err) {
+    console.error('Error reading uploads folder:', err);
+    return res.status(500).json({ error: 'Failed to read uploads' });
+  }
+});
+
 app.use(express.static(path.join(rootDir, 'dist')));
 
 export default app;

@@ -831,8 +831,17 @@ async function runPipeline() {
       }
     } catch {}
 
+    let serverUploadsCtx = '';
+    try {
+      const uRes = await fetch('/api/uploads');
+      if (uRes.ok) {
+        const uData = await uRes.json();
+        if (uData.text) serverUploadsCtx = `\n\nGlobal Uploaded Documents:\n${uData.text.slice(0, 500000)}\n`;
+      }
+    } catch {}
+
     // Build optional reference-doc context string
-    const refCtx = (S.refDocText ? `\n\nReference Document ("${S.refDocName}"):\n${S.refDocText.slice(0, 500000)}\n` : '') + libCtx;
+    const refCtx = (S.refDocText ? `\n\nReference Document ("${S.refDocName}"):\n${S.refDocText.slice(0, 500000)}\n` : '') + serverUploadsCtx + libCtx;
 
     // L1 CONTEXT — uses secondary model for independent perspective
     setTW('Layer 1 — Mapping the debate landscape...');
