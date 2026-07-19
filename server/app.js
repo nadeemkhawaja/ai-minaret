@@ -4,7 +4,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import https from 'https';
 import multer from 'multer';
-import pdfParse from 'pdf-parse';
+
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const pdfParse = require('pdf-parse');
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
