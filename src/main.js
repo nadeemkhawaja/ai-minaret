@@ -1895,14 +1895,17 @@ async function handleRefDocUpload(input) {
       method: 'POST',
       body: formData
     })
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+      return res.json();
+    })
     .then(data => {
       if (data.error) throw new Error(data.error);
       return `\n\n--- Source: ${file.name} ---\n\n${data.text}`;
     })
     .catch(err => {
-      console.error(err);
-      return `\n\n--- Error reading ${file.name} ---\n\n`;
+      console.error('File upload error for', file.name, err);
+      throw err; // Re-throw to ensure Promise.all fails
     });
     
     promises.push(promise);
@@ -1914,8 +1917,8 @@ async function handleRefDocUpload(input) {
     document.getElementById('ref-doc-clear').style.display='inline-block';
     telegram(`${files.length} document(s) uploaded and parsed`, 'ok');
   }).catch(err => {
-    telegram(err.message || err, 'err');
-    document.getElementById('ref-doc-name').textContent = 'Upload failed';
+    telegram('Upload failed: ' + (err.message || err), 'err');
+    document.getElementById('ref-doc-name').textContent = 'Upload failed! Check server logs.';
   });
 }
 function clearRefDoc() {
