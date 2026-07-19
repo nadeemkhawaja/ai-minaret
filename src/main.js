@@ -1689,9 +1689,9 @@ function getApiSettings() {
 
 function getPrimaryModel() {
   const s = getApiSettings();
-  const provider = s.primaryProvider || 'anthropic';
+  const provider = s.primaryProvider || 'local';
   if (provider === 'anthropic') return s.primaryModel || 'claude-opus-4-8';
-  if (provider === 'local') return s.primaryModel || '';
+  if (provider === 'local') return s.primaryModel || 'google/gemma-4-26B-A4B-it';
   if (provider === 'groq') return s.primaryModel || 'llama-3.3-70b-versatile';
   if (provider === 'openrouter') return s.primaryModel || 'anthropic/claude-opus-4.8';
   return s.primaryModel || 'meta-llama/llama-3.3-70b-instruct:free';
@@ -1699,9 +1699,9 @@ function getPrimaryModel() {
 
 function getSecondaryModel() {
   const s = getApiSettings();
-  const provider = s.secondaryProvider || 'anthropic';
+  const provider = s.secondaryProvider || 'groq';
   if (provider === 'anthropic') return s.secondaryModel || 'claude-haiku-4-5';
-  if (provider === 'local') return s.secondaryModel || '';
+  if (provider === 'local') return s.secondaryModel || 'google/gemma-4-26B-A4B-it';
   if (provider === 'groq') return s.secondaryModel || 'llama-3.1-8b-instant';
   if (provider === 'openrouter') return s.secondaryModel || 'anthropic/claude-haiku-4.5';
   return s.secondaryModel || 'qwen/qwen3-next-80b-a3b-instruct:free';
@@ -1796,8 +1796,8 @@ async function _apiFetch(prompt, maxTokens, useSecondary) {
 // ================================================================
 function openSettings() {
   const s = getApiSettings();
-  document.getElementById('set-primary-provider').value = s.primaryProvider || 'anthropic';
-  document.getElementById('set-secondary-provider').value = s.secondaryProvider || 'anthropic';
+  document.getElementById('set-primary-provider').value = s.primaryProvider || 'local';
+  document.getElementById('set-secondary-provider').value = s.secondaryProvider || 'groq';
   document.getElementById('set-anthropic-key').value = s.anthropicKey || '';
   document.getElementById('set-openrouter-key').value = s.openrouterKey || '';
   document.getElementById('set-groq-key').value = s.groqKey || '';
@@ -1857,9 +1857,9 @@ function updateSettingsBadge() {
   const s = getApiSettings();
   const el = document.getElementById('settings-badge');
   if (el) {
-    const p = s.primaryProvider || 'anthropic';
+    const p = s.primaryProvider || 'local';
     const labels = { anthropic:'Claude', local:'Local', openrouter:'OpenRouter', groq:'Groq', free:'Free' };
-    el.textContent = labels[p] || 'Claude';
+    el.textContent = labels[p] || 'Local';
     el.style.background = p === 'anthropic' ? '#c41230' : p === 'local' ? '#0e7490' : (p === 'openrouter' || p === 'groq') ? '#5b3dbd' : '#2e7d32';
   }
   const mastheadModels = document.getElementById('masthead-models');
