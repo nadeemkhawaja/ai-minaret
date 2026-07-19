@@ -1242,12 +1242,10 @@ Arguments (L2): ${(S.layers[2]||'').substring(0,450)}
 Counter (L3): ${(S.layers[3]||'').substring(0,350)}
 Critique (L4): ${(S.layers[4]||'').substring(0,350)}
 Provide coaching feedback in this structure:
-**Your Debating Strengths** (2-3 specific things done well with examples)
-**Key Areas to Improve** (2-3 specific weaknesses with actionable advice)
-**Your Style Profile** (2 sentences describing this debater)
-**Personalised Exercise** (One specific practice exercise)
-**Quick Win** (Single most impactful change for next debate)
-Be direct, specific, encouraging. Reference actual arguments. 260-320 words.`, 650);
+**Key Strength** (1 short sentence)
+**Biggest Weakness** (1 short sentence)
+**Quick Win** (1 short sentence on how to improve)
+Keep it incredibly brief, punchy, and clear for a normal reader. Maximum 50 words total.`, 150);
     const fmt=t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'</p><p>').replace(/\n/g,' ');
     document.getElementById('coach-text-inner').innerHTML=`<p>${fmt}</p>`;
   } catch(e){
