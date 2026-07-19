@@ -939,17 +939,17 @@ async function runLayer(n, title, sub, color, prompt, useSecondary=false) {
   art.scrollIntoView({behavior:'smooth',block:'nearest'});
 
   const t0 = Date.now();
-  let text='', inTok=0, outTok=0;
+  let text='', inTok=0, outTok=0, usedModel='';
   try {
     const r = await apiWithTokens(prompt, 1400, useSecondary);
-    text=r.text; inTok=r.in; outTok=r.out;
+    text=r.text; inTok=r.in; outTok=r.out; usedModel=r.model;
   } catch(e) { text=`[Layer ${n} error: ${e.message}]`; }
 
   const elapsed = ((Date.now()-t0)/1000).toFixed(1);
   S.layers[n]=text; S.totalIn+=inTok; S.totalOut+=outTok;
 
   // Fill article
-  fillArticle(art, n, title, sub, color, text, inTok, outTok, elapsed);
+  fillArticle(art, n, title, sub, color, text, inTok, outTok, elapsed, usedModel);
   updateTele();
 }
 
@@ -976,7 +976,7 @@ function makeArticle(n, title, sub, color, loading) {
   return div;
 }
 
-function fillArticle(div, n, title, sub, color, text, inTok, outTok, elapsed) {
+function fillArticle(div, n, title, sub, color, text, inTok, outTok, elapsed, usedModel) {
   const SCIPAB = {
     1: { label:'S — Situation', desc:'Map the debate landscape' },
     2: { label:'C — Complication', desc:'Build your strongest arguments' },
@@ -1008,7 +1008,7 @@ function fillArticle(div, n, title, sub, color, text, inTok, outTok, elapsed) {
         <div class="article-section" style="color:${color};">Layer ${n} — ${title}</div>
         <div style="font-family:var(--cond);font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;">${ps.label} &nbsp;·&nbsp; SCIPAB Framework</div>
         <div class="article-headline">${sub}</div>
-        <div class="article-deck">By AI Scholar · ${S.source.split(' (')[0]} · ${elapsed}s · eff: <span style="${effColor}">${efficiency}</span></div>
+        <div class="article-deck">By AI Scholar · ${S.source.split(' (')[0]} · ${elapsed}s · ${usedModel ? usedModel + ' · ' : ''}eff: <span style="${effColor}">${efficiency}</span></div>
       </div>
       <div class="article-status done2">PRINTED</div>
     </div>
@@ -1714,7 +1714,7 @@ async function apiWithTokens(prompt, maxTokens=1200, useSecondary=false) {
   const text = d.content?.find(b => b.type === 'text')?.text || d.choices?.[0]?.message?.content || '';
   const inTok = d.usage?.input_tokens || d.usage?.prompt_tokens || 0;
   const outTok = d.usage?.output_tokens || d.usage?.completion_tokens || 0;
-  return { text, in: inTok, out: outTok };
+  return { text, in: inTok, out: outTok, model: d.model || 'Unknown Model' };
 }
 
 async function _apiFetch(prompt, maxTokens, useSecondary) {
