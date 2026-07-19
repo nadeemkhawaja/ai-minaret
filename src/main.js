@@ -1044,7 +1044,6 @@ function fillArticle(div, n, title, sub, color, text, inTok, outTok, elapsed, us
       <span class="art-meta-item">↓ <b>${outTok}</b> out</span>
       <span class="art-meta-item" style="${effColor}">eff <b>${efficiency}</b></span>
       <button class="art-btn" onclick="copyTxt(this,'${esc(text)}')">Copy</button>
-      <button class="art-btn" onclick="playLayer(this, ${n})">Read Aloud</button>
     </div>`;
 }
 
@@ -1595,7 +1594,7 @@ function reloadEntry(i) {
     const art=document.createElement('div');
     art.className='article done';art.style.setProperty('--lc',colors[n-1]);
     const fmt=e.layers[n].replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'</p><p>').replace(/\n/g,' ');
-    art.innerHTML=`<div class="article-head"><div class="article-number" style="color:${colors[n-1]};">${n}</div><div class="article-meta"><div class="article-section" style="color:${colors[n-1]};">Layer ${n} — ${titles[n-1]}</div><div class="article-headline">${subs[n-1]}</div></div><div class="article-status done2">PRINTED</div></div><hr class="article-rule"><div class="article-body"><div class="article-text"><p>${fmt}</p></div></div><hr class="article-rule"><div class="article-footer"><button class="art-btn" onclick="copyTxt(this,'${esc(e.layers[n])}')">Copy</button><button class="art-btn" onclick="playLayer(this,${n})">Read Aloud</button></div>`;
+    art.innerHTML=`<div class="article-head"><div class="article-number" style="color:${colors[n-1]};">${n}</div><div class="article-meta"><div class="article-section" style="color:${colors[n-1]};">Layer ${n} — ${titles[n-1]}</div><div class="article-headline">${subs[n-1]}</div></div><div class="article-status done2">PRINTED</div></div><hr class="article-rule"><div class="article-body"><div class="article-text"><p>${fmt}</p></div></div><hr class="article-rule"><div class="article-footer"><button class="art-btn" onclick="copyTxt(this,'${esc(e.layers[n])}')">Copy</button></div>`;
     document.getElementById('pipeline').appendChild(art);
   }
   document.getElementById('export-strip').classList.add('show');
