@@ -863,24 +863,37 @@ async function runPipeline() {
     // Build optional reference-doc context string
     const refCtx = (S.refDocText ? `\n\nReference Document ("${S.refDocName}"):\n${S.refDocText.slice(0, 500000)}\n` : '') + serverUploadsCtx + libCtx;
 
+    const currentCatObj = CATS.find(c => c.id === S.currentCat);
+    const currentSubObj = currentCatObj ? currentCatObj.subs.find(s => s.id === S.currentSub) : null;
+    const allAvailableSources = currentSubObj ? [...currentSubObj.sources] : [S.source];
+    if (S.uploadFileNames && S.uploadFileNames.length > 0) allAvailableSources.push(...S.uploadFileNames);
+    
+    function getLayerSources() {
+      if (allAvailableSources.length === 0) return S.source;
+      const shuffled = [...allAvailableSources].sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, 2).join(' & ');
+    }
+
     // L1 CONTEXT — uses secondary model for independent perspective
     setTW('Layer 1 — Mapping the debate landscape...');
+    const src1 = getLayerSources();
     await runLayer(1,'Context Analysis','AI Scholar objectively maps the debate','#2c2c28',
-      `You are writing as a ${S.persona}. Tone: ${S.tone}. Keep the output brief, simple, crisp, and clear for a normal reader. Your length must strictly match the argument depth. Draw on the expertise of ${S.source}.
+      `You are writing as a ${S.persona}. Tone: ${S.tone}. Keep the output brief, simple, crisp, and clear for a normal reader. Your length must strictly match the argument depth. Draw on the expertise of ${src1}.
 ${S.lang}Layer 1 — Context Analysis.
 Topic: "${S.topic}". Position: "${S.position}".${refCtx}
 Objectively map the debate. Identify 4-5 key factors. Surface hidden assumptions.
-Do NOT take a position. ${S.depth} words. ${CITE}`, true);
+Do NOT take a position. ${S.depth} words. ${CITE}`, true, src1);
 
     // L2 ARGUMENTS — primary model
     setTW('Layer 2 — Building your strongest arguments...');
+    const src2 = getLayerSources();
     await runLayer(2,'Argument Builder','Three evidence-backed arguments in your defence','#c41230',
-      `You are writing as a ${S.persona}. Tone: ${S.tone}. Keep the output brief, simple, crisp, and clear for a normal reader. Your length must strictly match the argument depth. Draw on the expertise of ${S.source}.
+      `You are writing as a ${S.persona}. Tone: ${S.tone}. Keep the output brief, simple, crisp, and clear for a normal reader. Your length must strictly match the argument depth. Draw on the expertise of ${src2}.
 ${S.lang}Layer 2 — Argument Builder.
 Topic: "${S.topic}". Defend: "${S.position}".
 Context from Layer 1: ${S.layers[1]||''}${refCtx}
 3 distinct evidence-backed arguments with claim, evidence, and example.
-${S.depth} words. ${CITE}`);
+${S.depth} words. ${CITE}`, false, src2);
 
     // SOCRATIC
     if (S.socraticOn) {
@@ -891,24 +904,26 @@ ${S.depth} words. ${CITE}`);
 
     // L3 COUNTER — primary model
     setTW('Layer 3 — Generating the strongest opposition...');
+    const src3 = getLayerSources();
     await runLayer(3,'Counter-Argument','The strongest case against your position','#5a5a52',
-      `You are writing as a ${S.persona}. Tone: ${S.tone}. Keep the output brief, simple, crisp, and clear for a normal reader. Your length must strictly match the argument depth. Draw on the expertise of ${S.source}.
+      `You are writing as a ${S.persona}. Tone: ${S.tone}. Keep the output brief, simple, crisp, and clear for a normal reader. Your length must strictly match the argument depth. Draw on the expertise of ${src3}.
 ${S.lang}Layer 3 — Counter-Argument.
 Topic: "${S.topic}". Challenge: "${S.position}".
 Prior context (L1): ${S.layers[1]||''}
 Arguments made (L2): ${S.layers[2]||''}
 ${S.socraticAnswers.length?`User reinforced position: ${S.socraticAnswers.join(' | ')}`:''}
-3 genuinely compelling counter-arguments. No strawmen. ${S.depth} words. ${CITE}`);
+3 genuinely compelling counter-arguments. No strawmen. ${S.depth} words. ${CITE}`, false, src3);
 
     // L4 CRITIQUE — uses secondary model for independent critical perspective
     setTW('Layer 4 — Auditing weaknesses in your case...');
+    const src4 = getLayerSources();
     await runLayer(4,'Self-Critique','Honest flaws in the Layer 2 arguments','#b8860b',
-      `You are writing as a ${S.persona}. Tone: ${S.tone}. Keep the output brief, simple, crisp, and clear for a normal reader. Your length must strictly match the argument depth. Draw on the expertise of ${S.source}.
+      `You are writing as a ${S.persona}. Tone: ${S.tone}. Keep the output brief, simple, crisp, and clear for a normal reader. Your length must strictly match the argument depth. Draw on the expertise of ${src4}.
 ${S.lang}Layer 4 — Self-Critique.
 Topic: "${S.topic}". Position: "${S.position}".
 Original arguments (L2): ${S.layers[2]||''}
 Counter-arguments faced (L3): ${S.layers[3]||''}
-3-4 honest weaknesses with improvement suggestions. ${S.depth} words. ${CITE}`, true);
+3-4 honest weaknesses with improvement suggestions. ${S.depth} words. ${CITE}`, true, src4);
 
     // L5 FINAL
     setTW('Layer 5 — AI Scholar delivers the final verdict...');
@@ -979,9 +994,13 @@ If no fallacies: {"fallacies":[]}`, 400);
 // ================================================================
 // LAYER RUNNER
 // ================================================================
-async function runLayer(n, title, sub, color, prompt, useSecondary=false) {
+async function runLayer(n, title, sub, color, prompt, useSecondary=false, layerSourceOverride=null) {
   // Create article placeholder
-  const art = makeArticle(n, title, sub, color, true);
+  const s = getApiSettings();
+  const providerStr = (useSecondary ? s.secondaryProvider : s.primaryProvider) || (useSecondary ? 'groq' : 'local');
+  const roleStr = useSecondary ? 'Secondary' : 'Primary';
+  
+  const art = makeArticle(n, title, sub, color, true, roleStr, providerStr, layerSourceOverride);
   document.getElementById('pipeline').appendChild(art);
   art.scrollIntoView({behavior:'smooth',block:'nearest'});
 
@@ -996,21 +1015,22 @@ async function runLayer(n, title, sub, color, prompt, useSecondary=false) {
   S.layers[n]=text; S.totalIn+=inTok; S.totalOut+=outTok;
 
   // Fill article
-  fillArticle(art, n, title, sub, color, text, inTok, outTok, elapsed, usedModel);
+  fillArticle(art, n, title, sub, color, text, inTok, outTok, elapsed, usedModel, layerSourceOverride);
   updateTele();
 }
 
-function makeArticle(n, title, sub, color, loading) {
+function makeArticle(n, title, sub, color, loading, roleStr, providerStr, layerSourceOverride) {
   const div = document.createElement('div');
   const useSecondary = (n === 1 || n === 4);
   const s = getApiSettings();
-  const providerStr = (useSecondary ? s.secondaryProvider : s.primaryProvider) || (useSecondary ? 'groq' : 'local');
-  const roleStr = useSecondary ? 'Secondary' : 'Primary';
+  const fallbackProvider = (useSecondary ? s.secondaryProvider : s.primaryProvider) || (useSecondary ? 'groq' : 'local');
+  const actualProviderStr = providerStr || fallbackProvider;
+  const actualRoleStr = roleStr || (useSecondary ? 'Secondary' : 'Primary');
   const targetModel = useSecondary ? getSecondaryModel() : getPrimaryModel();
-  const targetModelInfo = `${roleStr} Model (${providerStr.toUpperCase()}) · ${targetModel}`;
+  const targetModelInfo = `${actualRoleStr} Model (${actualProviderStr.toUpperCase()}) · ${targetModel}`;
   
-  let sourceLabel = S.source.split(' (')[0];
-  if (S.uploadFileNames && S.uploadFileNames.length > 0) {
+  let sourceLabel = layerSourceOverride || S.source.split(' (')[0];
+  if (!layerSourceOverride && S.uploadFileNames && S.uploadFileNames.length > 0) {
     sourceLabel += ` & ${S.uploadFileNames.join(', ')}`;
   }
   
@@ -1035,7 +1055,7 @@ function makeArticle(n, title, sub, color, loading) {
   return div;
 }
 
-function fillArticle(div, n, title, sub, color, text, inTok, outTok, elapsed, usedModel) {
+function fillArticle(div, n, title, sub, color, text, inTok, outTok, elapsed, usedModel, layerSourceOverride) {
   const SCIPAB = {
     1: { label:'S — Situation', desc:'Map the debate landscape' },
     2: { label:'C — Complication', desc:'Build your strongest arguments' },
@@ -1064,8 +1084,8 @@ function fillArticle(div, n, title, sub, color, text, inTok, outTok, elapsed, us
   const roleStr = useSecondary ? 'Secondary' : 'Primary';
   const targetModelInfo = `${roleStr} (${providerStr.toUpperCase()}) · ${usedModel || (useSecondary ? getSecondaryModel() : getPrimaryModel())}`;
 
-  let sourceLabel = S.source.split(' (')[0];
-  if (S.uploadFileNames && S.uploadFileNames.length > 0) {
+  let sourceLabel = layerSourceOverride || S.source.split(' (')[0];
+  if (!layerSourceOverride && S.uploadFileNames && S.uploadFileNames.length > 0) {
     sourceLabel += ` & ${S.uploadFileNames.join(', ')}`;
   }
 
