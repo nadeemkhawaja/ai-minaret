@@ -1729,7 +1729,7 @@ async function _apiFetch(prompt, maxTokens, useSecondary) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        baseUrl: s.localUrl || 'http://localhost:11434',
+        baseUrl: s.localUrl || '',
         model,
         max_tokens: maxTokens,
         messages: [{ role: 'user', content: prompt }]
