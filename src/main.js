@@ -837,7 +837,7 @@ async function runPipeline() {
     // L1 CONTEXT — uses secondary model for independent perspective
     setTW('Layer 1 — Mapping the debate landscape...');
     await runLayer(1,'Context Analysis','AI Scholar objectively maps the debate','#2c2c28',
-      `You are writing as a ${S.persona}. Tone: ${S.tone}. Draw on the expertise of ${S.source}.
+      `You are writing as a ${S.persona}. Tone: ${S.tone}. Use simple and few sentences based on the argument depth only. Draw on the expertise of ${S.source}.
 ${S.lang}Layer 1 — Context Analysis.
 Topic: "${S.topic}". Position: "${S.position}".${refCtx}
 Objectively map the debate. Identify 4-5 key factors. Surface hidden assumptions.
@@ -846,7 +846,7 @@ Do NOT take a position. ${S.depth} words. ${CITE}`, true);
     // L2 ARGUMENTS — primary model
     setTW('Layer 2 — Building your strongest arguments...');
     await runLayer(2,'Argument Builder','Three evidence-backed arguments in your defence','#c41230',
-      `You are writing as a ${S.persona}. Tone: ${S.tone}. Draw on the expertise of ${S.source}.
+      `You are writing as a ${S.persona}. Tone: ${S.tone}. Use simple and few sentences based on the argument depth only. Draw on the expertise of ${S.source}.
 ${S.lang}Layer 2 — Argument Builder.
 Topic: "${S.topic}". Defend: "${S.position}".
 Context from Layer 1: ${S.layers[1]||''}${refCtx}
@@ -863,7 +863,7 @@ ${S.depth} words. ${CITE}`);
     // L3 COUNTER — primary model
     setTW('Layer 3 — Generating the strongest opposition...');
     await runLayer(3,'Counter-Argument','The strongest case against your position','#5a5a52',
-      `You are writing as a ${S.persona}. Tone: ${S.tone}. Draw on the expertise of ${S.source}.
+      `You are writing as a ${S.persona}. Tone: ${S.tone}. Use simple and few sentences based on the argument depth only. Draw on the expertise of ${S.source}.
 ${S.lang}Layer 3 — Counter-Argument.
 Topic: "${S.topic}". Challenge: "${S.position}".
 Prior context (L1): ${S.layers[1]||''}
@@ -874,7 +874,7 @@ ${S.socraticAnswers.length?`User reinforced position: ${S.socraticAnswers.join('
     // L4 CRITIQUE — uses secondary model for independent critical perspective
     setTW('Layer 4 — Auditing weaknesses in your case...');
     await runLayer(4,'Self-Critique','Honest flaws in the Layer 2 arguments','#b8860b',
-      `You are writing as a ${S.persona}. Tone: ${S.tone}. Draw on the expertise of ${S.source}.
+      `You are writing as a ${S.persona}. Tone: ${S.tone}. Use simple and few sentences based on the argument depth only. Draw on the expertise of ${S.source}.
 ${S.lang}Layer 4 — Self-Critique.
 Topic: "${S.topic}". Position: "${S.position}".
 Original arguments (L2): ${S.layers[2]||''}
@@ -885,7 +885,7 @@ Counter-arguments faced (L3): ${S.layers[3]||''}
     setTW('Layer 5 — AI Scholar delivers the final verdict...');
     await runLayer(5,'Final Strategy & Verdict',"AI Scholar's definitive ruling",'#0a0a08',
       `You are AI Scholar, an elite AI Reasoning Strategist and host.
-Tone: ${S.tone}. Draw on the expertise of ${S.source}.
+Tone: ${S.tone}. Use simple and few sentences based on the argument depth only. Draw on the expertise of ${S.source}.
 ${S.lang}Layer 5 — Final Strategy & Verdict.
 Topic: "${S.topic}". Position: "${S.position}".
 Context (L1): ${S.layers[1]||''}
