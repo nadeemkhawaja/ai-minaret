@@ -973,6 +973,7 @@ async function runLayer(n, title, sub, color, prompt, useSecondary=false) {
 
 function makeArticle(n, title, sub, color, loading) {
   const div = document.createElement('div');
+  const targetModel = (n === 1 || n === 4) ? getSecondaryModel() : getPrimaryModel();
   div.className = 'article loading';
   div.style.setProperty('--lc', color);
   div.innerHTML = `
@@ -981,7 +982,7 @@ function makeArticle(n, title, sub, color, loading) {
       <div class="article-meta">
         <div class="article-section" style="color:${color};">${title}</div>
         <div class="article-headline">${sub}</div>
-        <div class="article-deck">AI Scholar · Drawing on ${S.source.split(' (')[0]}</div>
+        <div class="article-deck">AI Scholar · Drawing on ${S.source.split(' (')[0]} · ${targetModel}</div>
       </div>
       <div class="article-status running">COMPOSING</div>
     </div>
@@ -1860,6 +1861,16 @@ function updateSettingsBadge() {
     const labels = { anthropic:'Claude', local:'Local', openrouter:'OpenRouter', groq:'Groq', free:'Free' };
     el.textContent = labels[p] || 'Claude';
     el.style.background = p === 'anthropic' ? '#c41230' : p === 'local' ? '#0e7490' : (p === 'openrouter' || p === 'groq') ? '#5b3dbd' : '#2e7d32';
+  }
+  const mastheadModels = document.getElementById('masthead-models');
+  if (mastheadModels) {
+    const pm = getPrimaryModel();
+    const sm = getSecondaryModel();
+    if (pm === sm) {
+      mastheadModels.textContent = `Connected: ${pm}`;
+    } else {
+      mastheadModels.textContent = `Primary: ${pm} | Secondary: ${sm}`;
+    }
   }
 }
 
