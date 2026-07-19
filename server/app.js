@@ -110,18 +110,24 @@ app.post('/api/local', async (req, res) => {
   const { baseUrl, model, max_tokens, messages } = req.body || {};
   if (!messages) return res.status(400).json({ error: 'Missing messages' });
 
+  let urlStr = baseUrl || process.env.LOCAL_LLM_BASE_URL || 'http://localhost:11434';
+  if (!urlStr.startsWith('http')) urlStr = 'http://' + urlStr;
+
   let url;
-  try { url = new URL(baseUrl || 'http://localhost:11434'); }
+  try { url = new URL(urlStr); }
   catch { return res.status(400).json({ error: 'Invalid local endpoint URL' }); }
-  if (!['localhost', '127.0.0.1', '[::1]', '::1'].includes(url.hostname)) {
-    return res.status(400).json({ error: 'Local endpoint must be on localhost (e.g. http://localhost:11434)' });
-  }
+
+  const targetModel = model || process.env.LOCAL_LLM_MODEL || 'llama3.2';
+  // If baseUrl already includes /v1, just append /chat/completions
+  const fetchUrl = urlStr.replace(/\/$/, '').endsWith('/v1')
+    ? `${urlStr.replace(/\/$/, '')}/chat/completions`
+    : `${url.origin}/v1/chat/completions`;
 
   try {
-    const upstream = await fetch(`${url.origin}/v1/chat/completions`, {
+    const upstream = await fetch(fetchUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: model || 'llama3.2', max_tokens: max_tokens || 1200, messages }),
+      body: JSON.stringify({ model: targetModel, max_tokens: max_tokens || 1200, messages }),
     });
     const text = await upstream.text();
     res.status(upstream.status).type('application/json').send(text);
