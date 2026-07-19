@@ -195,19 +195,35 @@ app.get('/api/library/search', (req, res) => {
 });
 
 // ── Document Upload Endpoint ───────────────────────────────
-const upload = multer({ limits: { fileSize: 10 * 1024 * 1024 } }); // 10MB limit
+const uploadDir = path.join(rootDir, 'data', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDir)
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, uniqueSuffix + '-' + file.originalname.replace(/[^a-zA-Z0-9.\-_]/g, '_'))
+  }
+})
+
+const upload = multer({ storage: storage, limits: { fileSize: 10 * 1024 * 1024 } }); // 10MB limit
 
 app.post('/api/upload', upload.single('file'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
   const file = req.file;
   try {
     let text = '';
+    const fileBuffer = fs.readFileSync(file.path);
     if (file.originalname.endsWith('.pdf')) {
-      const data = await pdfParse(file.buffer);
+      const data = await pdfParse(fileBuffer);
       text = data.text;
     } else if (file.originalname.endsWith('.md') || file.originalname.endsWith('.txt') || file.originalname.endsWith('.doc') || file.originalname.endsWith('.docx')) {
       // NOTE: For a real app, .doc/.docx require mammoth or similar. We'll fallback to string extract.
-      text = file.buffer.toString('utf8');
+      text = fileBuffer.toString('utf8');
     } else {
       return res.status(400).json({ error: 'Unsupported file type. Only .pdf and .md are allowed.' });
     }
