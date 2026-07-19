@@ -39,6 +39,11 @@ if ! kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
   exit 1
 fi
 
+IP=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null || echo "127.0.0.1")
+
 echo ""
-echo "✅ AI-Minaret running  →  http://localhost:$PORT"
+echo "✅ AI-Minaret running  →  http://$IP:$PORT"
 echo "   PID $(cat "$PID_FILE") · log: $LOG_FILE · stop with ./stop.sh"
+
+# Open the browser automatically
+open "http://$IP:$PORT" 2>/dev/null || true
