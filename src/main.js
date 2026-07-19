@@ -927,9 +927,11 @@ Counter-arguments faced (L3): ${S.layers[3]||''}
 
     // L5 FINAL
     setTW('Layer 5 — AI Scholar delivers the final verdict...');
+    const src5 = "ALL Uploaded Files, Quran, Sahih Muslim, and Category Sources";
     await runLayer(5,'Final Strategy & Verdict',"AI Scholar's definitive ruling",'#0a0a08',
       `You are AI Scholar, an elite AI Reasoning Strategist and host.
-Tone: ${S.tone}. Keep the output brief, simple, crisp, and clear for a normal reader. Your length must strictly match the argument depth. Draw on the expertise of ${S.source}.
+Tone: ${S.tone}. Keep the output brief, simple, crisp, and clear for a normal reader. Your length must strictly match the argument depth.
+CRITICAL RULE: Draw on ALL category sources and all uploaded .md files. Give heavy weight to Sahih Muslim for Hadith evidence. You MUST always look to the Quran as the final authoritative verdict, and ensure no cited Hadith contradicts the Quran.
 ${S.lang}Layer 5 — Final Strategy & Verdict.
 Topic: "${S.topic}". Position: "${S.position}".
 Context (L1): ${S.layers[1]||''}
@@ -937,7 +939,7 @@ Arguments (L2): ${S.layers[2]||''}
 Counters (L3): ${S.layers[3]||''}
 Critique (L4): ${S.layers[4]||''}
 Synthesise all layers. State conditions under which each side wins.
-End with a bold "FINAL VERDICT:" from AI Scholar. ${S.depth} words. ${CITE}`);
+End with a bold "FINAL VERDICT:" from AI Scholar. ${S.depth} words. ${CITE}`, false, src5);
 
     // SCORE
     setTW('Scoring the debate...');
