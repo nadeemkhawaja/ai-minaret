@@ -503,9 +503,22 @@ function toggleKokoro() {
 // ================================================================
 // BOOT
 // ================================================================
-window.onload = () => {
+window.onload = async () => {
   document.getElementById('masthead-date').textContent =
     new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    
+  try {
+    const res = await fetch('/api/dynamic-topics');
+    if (res.ok) {
+      const db = await res.json();
+      CATS.forEach(c => {
+        c.subs.forEach(sub => {
+          if (db[sub.id]) sub.topics = sub.topics.concat(db[sub.id]);
+        });
+      });
+    }
+  } catch (err) { console.warn("Could not load dynamic topics", err); }
+
   buildCatStrip();
   renderCat('quran');
   initTones();
@@ -513,6 +526,9 @@ window.onload = () => {
   // Sync depth selector default with S.depth
   const ds = document.getElementById('sel-depth');
   if (ds) { ds.value = S.depth; if (!ds.value) ds.selectedIndex = 2; }
+  
+  // Background task: generate a novel topic silently
+  setTimeout(generateDynamicTopic, 3000);
 };
 
 // ================================================================
@@ -2009,7 +2025,56 @@ window.handleRefDocUpload = handleRefDocUpload;
 window.clearRefDoc = clearRefDoc;
 window.getApiSettings = getApiSettings;
 
-// ── Global Async Exports ──
+async function generateDynamicTopic() {
+  if (sessionStorage.getItem('topic_generated')) return; 
+  
+  const flatSubs = [];
+  CATS.forEach(c => c.subs.forEach(s => flatSubs.push(s)));
+  const targetSub = flatSubs[Math.floor(Math.random() * flatSubs.length)];
+  const existingTitles = targetSub.topics.map(t => t.title).join(', ');
+  
+  const prompt = `You are an elite Islamic debate organizer. Generate exactly ONE highly rigorous, novel, and specific debate topic for the category "${targetSub.label}".
+It MUST NOT be any of these: ${existingTitles}.
+Return ONLY raw JSON in this exact format, with NO markdown formatting, NO backticks, NO intro or outro:
+{
+  "title": "English Title",
+  "title_ur": "Urdu Translation",
+  "title_ar": "Arabic Translation",
+  "sub": "English Subtitle/Question",
+  "sub_ur": "Urdu Subtitle/Question",
+  "sub_ar": "Arabic Subtitle/Question",
+  "positions": ["Argument Position 1", "Argument Position 2"]
+}`;
+  
+  try {
+    const raw = await api(prompt, 500, true);
+    let cleanJSON = raw.trim();
+    if (cleanJSON.startsWith('```')) {
+      cleanJSON = cleanJSON.replace(/^```(json)?/, '').replace(/```$/, '').trim();
+    }
+    const topicObj = JSON.parse(cleanJSON);
+    
+    if (!topicObj.title || !topicObj.positions) return;
+    
+    const res = await fetch('/api/dynamic-topics', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subId: targetSub.id, topic: topicObj })
+    });
+    
+    if (res.ok) {
+      sessionStorage.setItem('topic_generated', 'true');
+      targetSub.topics.push(topicObj);
+      const curCat = document.querySelector('.nav-item.active')?.dataset?.cat;
+      const curSub = document.querySelector('.sub-btn.sub-active')?.dataset?.sub;
+      if (curSub === targetSub.id) renderSub(curCat, curSub);
+    }
+  } catch (err) {
+    console.error("Failed to generate dynamic topic:", err);
+  }
+}
+
+// ── Global Synchronous Exports ──
 window.initKokoro = initKokoro;
 window.speak = speak;
 window.runPipeline = runPipeline;

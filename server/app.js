@@ -257,6 +257,44 @@ app.get('/api/uploads', async (req, res) => {
   }
 });
 
+const TOPICS_DB_PATH = path.join(rootDir, 'data', 'topics.json');
+
+app.get('/api/dynamic-topics', (req, res) => {
+  try {
+    if (!fs.existsSync(TOPICS_DB_PATH)) return res.json({});
+    const data = fs.readFileSync(TOPICS_DB_PATH, 'utf8');
+    return res.json(JSON.parse(data));
+  } catch (err) {
+    console.error('Error reading topics DB:', err);
+    return res.json({});
+  }
+});
+
+app.post('/api/dynamic-topics', express.json(), (req, res) => {
+  try {
+    const { subId, topic } = req.body;
+    if (!subId || !topic) return res.status(400).json({ error: 'Missing subId or topic' });
+    
+    let db = {};
+    if (fs.existsSync(TOPICS_DB_PATH)) {
+      db = JSON.parse(fs.readFileSync(TOPICS_DB_PATH, 'utf8'));
+    }
+    
+    if (!db[subId]) db[subId] = [];
+    db[subId].push(topic);
+    
+    if (!fs.existsSync(path.join(rootDir, 'data'))) {
+      fs.mkdirSync(path.join(rootDir, 'data'), { recursive: true });
+    }
+    fs.writeFileSync(TOPICS_DB_PATH, JSON.stringify(db, null, 2));
+    
+    return res.json({ success: true, db });
+  } catch (err) {
+    console.error('Error writing topics DB:', err);
+    return res.status(500).json({ error: 'Failed to save topic' });
+  }
+});
+
 app.use(express.static(path.join(rootDir, 'dist')));
 
 export default app;
