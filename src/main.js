@@ -848,11 +848,15 @@ async function runPipeline() {
     } catch {}
 
     let serverUploadsCtx = '';
+    S.uploadFileNames = [];
     try {
       const uRes = await fetch('/api/uploads');
       if (uRes.ok) {
         const uData = await uRes.json();
-        if (uData.text) serverUploadsCtx = `\n\nGlobal Uploaded Documents:\n${uData.text.slice(0, 500000)}\n`;
+        if (uData.text) {
+          serverUploadsCtx = `\n\nGlobal Uploaded Documents:\n${uData.text.slice(0, 500000)}\n`;
+          S.uploadFileNames = uData.files || [];
+        }
       }
     } catch {}
 
@@ -1005,6 +1009,11 @@ function makeArticle(n, title, sub, color, loading) {
   const targetModel = useSecondary ? getSecondaryModel() : getPrimaryModel();
   const targetModelInfo = `${roleStr} Model (${providerStr.toUpperCase()}) · ${targetModel}`;
   
+  let sourceLabel = S.source.split(' (')[0];
+  if (S.uploadFileNames && S.uploadFileNames.length > 0) {
+    sourceLabel += ` & ${S.uploadFileNames.join(', ')}`;
+  }
+  
   div.className = 'article loading';
   div.style.setProperty('--lc', color);
   div.innerHTML = `
@@ -1013,7 +1022,7 @@ function makeArticle(n, title, sub, color, loading) {
       <div class="article-meta">
         <div class="article-section" style="color:${color};">${title}</div>
         <div class="article-headline">${sub}</div>
-        <div class="article-deck">AI Scholar · Drawing on ${S.source.split(' (')[0]} · ${targetModelInfo}</div>
+        <div class="article-deck">AI Scholar · Drawing on ${sourceLabel} · ${targetModelInfo}</div>
       </div>
       <div class="article-status running">COMPOSING</div>
     </div>
@@ -1055,6 +1064,11 @@ function fillArticle(div, n, title, sub, color, text, inTok, outTok, elapsed, us
   const roleStr = useSecondary ? 'Secondary' : 'Primary';
   const targetModelInfo = `${roleStr} (${providerStr.toUpperCase()}) · ${usedModel || (useSecondary ? getSecondaryModel() : getPrimaryModel())}`;
 
+  let sourceLabel = S.source.split(' (')[0];
+  if (S.uploadFileNames && S.uploadFileNames.length > 0) {
+    sourceLabel += ` & ${S.uploadFileNames.join(', ')}`;
+  }
+
   div.className = 'article done';
   div.style.setProperty('--lc', color);
   div.innerHTML = `
@@ -1064,7 +1078,7 @@ function fillArticle(div, n, title, sub, color, text, inTok, outTok, elapsed, us
         <div class="article-section" style="color:${color};">Layer ${n} — ${title}</div>
         <div style="font-family:var(--cond);font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;">${ps.label} &nbsp;·&nbsp; SCIPAB Framework</div>
         <div class="article-headline">${sub}</div>
-        <div class="article-deck">By AI Scholar · ${S.source.split(' (')[0]} · ${elapsed}s · ${targetModelInfo} · eff: <span style="${effColor}">${efficiency}</span></div>
+        <div class="article-deck">By AI Scholar · ${sourceLabel} · ${elapsed}s · ${targetModelInfo} · eff: <span style="${effColor}">${efficiency}</span></div>
       </div>
       <div class="article-status done2">PRINTED</div>
     </div>

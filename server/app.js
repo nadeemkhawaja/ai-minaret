@@ -243,14 +243,16 @@ app.get('/api/uploads', async (req, res) => {
     if (!fs.existsSync(uploadDir)) return res.json({ text: '' });
     
     let allText = '';
+    const fileNames = [];
     const files = fs.readdirSync(uploadDir);
     for (const file of files) {
       if (file.endsWith('.md') || file.endsWith('.txt')) {
+        fileNames.push(file);
         const content = fs.readFileSync(path.join(uploadDir, file), 'utf8');
         allText += `\n\n--- Source: ${file} ---\n\n${content}`;
       }
     }
-    return res.json({ text: allText });
+    return res.json({ text: allText, files: fileNames });
   } catch (err) {
     console.error('Error reading uploads folder:', err);
     return res.status(500).json({ error: 'Failed to read uploads' });
