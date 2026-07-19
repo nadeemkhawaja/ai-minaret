@@ -110,7 +110,10 @@ app.post('/api/local', async (req, res) => {
   const { baseUrl, model, max_tokens, messages } = req.body || {};
   if (!messages) return res.status(400).json({ error: 'Missing messages' });
 
-  let urlStr = baseUrl || process.env.LOCAL_LLM_BASE_URL || 'http://localhost:11434';
+  let rawBaseUrl = baseUrl || process.env.LOCAL_LLM_BASE_URL || 'http://localhost:11434';
+  if (rawBaseUrl.includes('=')) rawBaseUrl = rawBaseUrl.replace(/^.*?=/, '').trim();
+  
+  let urlStr = rawBaseUrl;
   if (!urlStr.startsWith('http')) urlStr = 'http://' + urlStr;
 
   let url;
@@ -133,7 +136,7 @@ app.post('/api/local', async (req, res) => {
     res.status(upstream.status).type('application/json').send(text);
   } catch (err) {
     res.status(502).json({
-      error: `Cannot reach local model at ${url.origin} — is Ollama or LM Studio running? (${err.message})`,
+      error: `Cannot reach local model at ${url.origin} (${err.message})`,
     });
   }
 });
