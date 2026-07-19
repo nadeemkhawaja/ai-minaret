@@ -15,79 +15,79 @@ function esc(str) {
 // ================================================================
 const CATS = [
   {
-    id:'quran', label:'Quran', accent:'#1D9E75',
+    id:'quran', label:'Quran', label_ur:'قرآن', label_ar:'القرآن', accent:'#1D9E75',
     subs:[
-      { id:'quranic_sciences', label:'Quranic Sciences', sources:['Tafsir Ibn Kathir', 'Tafsir al-Jalalayn', 'Al-Qurtubi', 'Al-Tabari', 'Tafsir Al-Sa\'di', 'Baghawi', 'Maariful Quran', 'Tafhim-ul-Quran', 'Al-Kashshaf', 'Fi Zilal al-Quran'],
+      { id:'quranic_sciences', label:'Quranic Sciences', label_ur:'قرآنی علوم', label_ar:'علوم القرآن', sources:['Tafsir Ibn Kathir', 'Tafsir al-Jalalayn', 'Al-Qurtubi', 'Al-Tabari', 'Tafsir Al-Sa\'di', 'Baghawi', 'Maariful Quran', 'Tafhim-ul-Quran', 'Al-Kashshaf', 'Fi Zilal al-Quran'],
         topics:[
-          {title:'Interpretation of Ayatul Kursi',sub:'Understanding the greatest verse',positions:['Literal Attributes (Bila Kayf)', 'Metaphorical Interpretation (Ta\'wil)']},
-          {title:'Abrogation (Naskh) in the Quran',sub:'Do later verses cancel earlier ones?',positions:['Naskh applies to legal rulings', 'Naskh only applies to previous scriptures, not within Quran']},
-          {title:'Asbab al-Nuzul (Context of Revelation)',sub:'Is historical context binding?',positions:['Crucial for restricting general rulings', 'Secondary to the universal, general meaning of the text']},
-          {title:'The Seven Ahruf',sub:'Modes of Recitation',positions:['Distinct dialects of Arabic tribes', 'Different synonyms and wordings allowed for ease']}
+          {title:'Interpretation of Ayatul Kursi', title_ur:'آیۃ الکرسی کی تفسیر', title_ar:'تفسير آية الكرسي', sub:'Understanding the greatest verse', sub_ur:'عظیم ترین آیت کو سمجھنا', sub_ar:'فهم أعظم آية', positions:['Literal Attributes (Bila Kayf)', 'Metaphorical Interpretation (Ta\'wil)']},
+          {title:'Abrogation (Naskh) in the Quran', title_ur:'قرآن میں ناسخ و منسوخ', title_ar:'النسخ في القرآن', sub:'Do later verses cancel earlier ones?', sub_ur:'کیا بعد والی آیات پہلی آیات کو منسوخ کرتی ہیں؟', sub_ar:'هل تلغي الآيات اللاحقة الآيات السابقة؟', positions:['Naskh applies to legal rulings', 'Naskh only applies to previous scriptures, not within Quran']},
+          {title:'Asbab al-Nuzul (Context of Revelation)', title_ur:'اسباب نزول (وحی کا پس منظر)', title_ar:'أسباب النزول', sub:'Is historical context binding?', sub_ur:'کیا تاریخی پس منظر لازمی ہے؟', sub_ar:'هل السياق التاريخي ملزم؟', positions:['Crucial for restricting general rulings', 'Secondary to the universal, general meaning of the text']},
+          {title:'The Seven Ahruf', title_ur:'سات حروف (قراءت)', title_ar:'الأحرف السبعة', sub:'Modes of Recitation', sub_ur:'تلاوت کے طریقے', sub_ar:'طرق التلاوة', positions:['Distinct dialects of Arabic tribes', 'Different synonyms and wordings allowed for ease']}
         ]
       },
-      { id:'theology_in_quran', label:'Theology in the Quran', sources:['Al-Aqidah al-Tahawiyyah', 'Sharh al-Fiqh al-Akbar', 'Al-Ghazali'],
+      { id:'theology_in_quran', label:'Theology in the Quran', label_ur:'قرآن میں عقیدہ', label_ar:'العقيدة في القرآن', sources:['Al-Aqidah al-Tahawiyyah', 'Sharh al-Fiqh al-Akbar', 'Al-Ghazali'],
         topics:[
-          {title:'Free Will vs Predestination (Qadar)',sub:'Who creates human actions?',positions:['Everything is preordained (Jabariyyah)', 'Humans have absolute free will (Qadariyyah)', 'Kasb (acquisition) balances both (Ash\'ari)']},
-          {title:'The Concept of Tawhid',sub:'Focus of Islamic monotheism',positions:['Focus heavily on Tawhid al-Rububiyyah (Lordship)', 'Focus on Tawhid al-Uluhiyyah (Worship) and Attributes']}
+          {title:'Free Will vs Predestination (Qadar)', title_ur:'جبر و قدر (تقدیر)', title_ar:'الجبر والاختيار (القدر)', sub:'Who creates human actions?', sub_ur:'انسانی اعمال کا خالق کون ہے؟', sub_ar:'من يخلق أفعال الإنسان؟', positions:['Everything is preordained (Jabariyyah)', 'Humans have absolute free will (Qadariyyah)', 'Kasb (acquisition) balances both (Ash\'ari)']},
+          {title:'The Concept of Tawhid', title_ur:'توحید کا تصور', title_ar:'مفهوم التوحيد', sub:'Focus of Islamic monotheism', sub_ur:'اسلامی توحید کا مرکز', sub_ar:'محور التوحيد الإسلامي', positions:['Focus heavily on Tawhid al-Rububiyyah (Lordship)', 'Focus on Tawhid al-Uluhiyyah (Worship) and Attributes']}
         ]
       },
-      { id:'quranic_ethics', label:'Quranic Ethics', sources:['Ihya Ulum al-Din', 'Al-Akhlaq wa\'l-Siyar'],
+      { id:'quranic_ethics', label:'Quranic Ethics', label_ur:'قرآنی اخلاقیات', label_ar:'الأخلاق القرآنية', sources:['Ihya Ulum al-Din', 'Al-Akhlaq wa\'l-Siyar'],
         topics:[
-          {title:'Justice vs Mercy in Punishment',sub:'Applying penal codes',positions:['Strict adherence to prescribed penalties achieves justice', 'Prioritization of rehabilitation and mercy aligns with Quranic ethos']},
-          {title:'Wealth and Charity (Zakat)',sub:'The philosophy of wealth',positions:['Wealth is a trial; charity is mandatory purification', 'Wealth is a blessing to be enjoyed and invested responsibly']}
+          {title:'Justice vs Mercy in Punishment', title_ur:'سزا میں انصاف بمقابلہ رحم', title_ar:'العدل مقابل الرحمة في العقاب', sub:'Applying penal codes', sub_ur:'سزاؤں کا نفاذ', sub_ar:'تطبيق القوانين الجنائية', positions:['Strict adherence to prescribed penalties achieves justice', 'Prioritization of rehabilitation and mercy aligns with Quranic ethos']},
+          {title:'Wealth and Charity (Zakat)', title_ur:'دولت اور صدقہ (زکوٰۃ)', title_ar:'الثروة والصدقة (الزكاة)', sub:'The philosophy of wealth', sub_ur:'دولت کا فلسفہ', sub_ar:'فلسفة الثروة', positions:['Wealth is a trial; charity is mandatory purification', 'Wealth is a blessing to be enjoyed and invested responsibly']}
         ]
       }
     ]
   },
   {
-    id:'hadith', label:'Hadith', accent:'#0284c7',
+    id:'hadith', label:'Hadith', label_ur:'حدیث', label_ar:'الحديث', accent:'#0284c7',
     subs:[
-      { id:'hadith_methodology', label:'Hadith Methodology (Mustalah)', sources:['Muqaddimah Ibn al-Salah', 'Nukhbat al-Fikar', 'Al-Risalah', 'Al-Kifayah fi Ilm al-Riwayah', 'Tadrib al-Rawi', 'Fath al-Mughith', 'Qawaid al-Tahdith', 'Manhaj al-Naqd', 'Sunnah.com', 'Dorar.net'],
+      { id:'hadith_methodology', label:'Hadith Methodology (Mustalah)', label_ur:'اصول حدیث (مصطلح)', label_ar:'مصطلح الحديث', sources:['Muqaddimah Ibn al-Salah', 'Nukhbat al-Fikar', 'Al-Risalah', 'Al-Kifayah fi Ilm al-Riwayah', 'Tadrib al-Rawi', 'Fath al-Mughith', 'Qawaid al-Tahdith', 'Manhaj al-Naqd', 'Sunnah.com', 'Dorar.net'],
         topics:[
-          {title:'Authenticity of Ahad (Solitary) Hadith',sub:'Are solitary narrations binding?',positions:['Binding in both theology (Aqidah) and law (Fiqh)', 'Binding in law only, not theology', 'Not binding if they contradict established reason or Quran']},
-          {title:'Criteria for a Sahih Hadith',sub:'Evaluating narrations',positions:['Strict Isnad (chain) verification is sufficient', 'Matn (text) criticism and logical consistency are equally important']},
-          {title:'The Role of Weak (Da\'if) Hadith',sub:'Can weak hadith be used?',positions:['Acceptable for virtuous deeds (Fada\'il al-A\'mal)', 'Completely rejected in all matters of religion']}
+          {title:'Authenticity of Ahad (Solitary) Hadith', title_ur:'خبر واحد (انفرادی حدیث) کی استناد', title_ar:'حجية حديث الآحاد', sub:'Are solitary narrations binding?', sub_ur:'کیا انفرادی روایات لازمی ہیں؟', sub_ar:'هل روايات الآحاد ملزمة؟', positions:['Binding in both theology (Aqidah) and law (Fiqh)', 'Binding in law only, not theology', 'Not binding if they contradict established reason or Quran']},
+          {title:'Criteria for a Sahih Hadith', title_ur:'صحیح حدیث کے معیار', title_ar:'معايير الحديث الصحيح', sub:'Evaluating narrations', sub_ur:'روایات کا جائزہ', sub_ar:'تقييم الروايات', positions:['Strict Isnad (chain) verification is sufficient', 'Matn (text) criticism and logical consistency are equally important']},
+          {title:'The Role of Weak (Da\'if) Hadith', title_ur:'ضعیف حدیث کا کردار', title_ar:'دور الحديث الضعيف', sub:'Can weak hadith be used?', sub_ur:'کیا ضعیف حدیث استعمال کی جا سکتی ہے؟', sub_ar:'هل يمكن استخدام الحديث الضعيف؟', positions:['Acceptable for virtuous deeds (Fada\'il al-A\'mal)', 'Completely rejected in all matters of religion']}
         ]
       },
-      { id:'sahih_compilations', label:'Major Compilations', sources:['Sahih Bukhari', 'Sahih Muslim', 'Sunan Abu Dawud', 'Muwatta Malik'],
+      { id:'sahih_compilations', label:'Major Compilations', label_ur:'اہم کتب احادیث', label_ar:'الكتب الستة والمصنفات', sources:['Sahih Bukhari', 'Sahih Muslim', 'Sunan Abu Dawud', 'Muwatta Malik'],
         topics:[
-          {title:'Comparing Bukhari and Muslim',sub:'Which is superior?',positions:['Bukhari\'s strict conditions of meeting make it superior', 'Muslim\'s logical arrangement and textual variations make it superior']},
-          {title:'Contextualizing Prophetic Actions',sub:'Universal vs Contextual',positions:['All Prophetic actions are universal and timeless laws', 'Many actions must be understood in their 7th-century Arabian cultural context']}
+          {title:'Comparing Bukhari and Muslim', title_ur:'بخاری اور مسلم کا موازنہ', title_ar:'المقارنة بين البخاري ومسلم', sub:'Which is superior?', sub_ur:'کون سی کتاب برتر ہے؟', sub_ar:'أيهما أفضل؟', positions:['Bukhari\'s strict conditions of meeting make it superior', 'Muslim\'s logical arrangement and textual variations make it superior']},
+          {title:'Contextualizing Prophetic Actions', title_ur:'نبوی افعال کا سیاق و سباق', title_ar:'سياق الأفعال النبوية', sub:'Universal vs Contextual', sub_ur:'آفاقی بمقابلہ سیاق و سباق کے مطابق', sub_ar:'عالمي مقابل سياقي', positions:['All Prophetic actions are universal and timeless laws', 'Many actions must be understood in their 7th-century Arabian cultural context']}
         ]
       },
-      { id:'fiqh_al_hadith', label:'Jurisprudence from Hadith', sources:['Bidayat al-Mujtahid', 'Umdat al-Ahkam', 'Subul al-Salam'],
+      { id:'fiqh_al_hadith', label:'Jurisprudence from Hadith', label_ur:'حدیث سے فقہ', label_ar:'فقه الحديث', sources:['Bidayat al-Mujtahid', 'Umdat al-Ahkam', 'Subul al-Salam'],
         topics:[
-          {title:'Actions Judged by Intentions',sub:'Inner intent vs outer form',positions:['Inner sincere intent validates the action entirely', 'Outer correct form is strictly required alongside inner intent']},
-          {title:'Customs (Urf) vs Text (Nass)',sub:'Resolving conflicts',positions:['Text always supersedes local custom', 'Local custom can restrict or modify the application of text']}
+          {title:'Actions Judged by Intentions', title_ur:'اعمال کا دارومدار نیتوں پر ہے', title_ar:'إنما الأعمال بالنيات', sub:'Inner intent vs outer form', sub_ur:'اندرونی نیت بمقابلہ ظاہری شکل', sub_ar:'النية الداخلية مقابل الشكل الخارجي', positions:['Inner sincere intent validates the action entirely', 'Outer correct form is strictly required alongside inner intent']},
+          {title:'Customs (Urf) vs Text (Nass)', title_ur:'رواج (عرف) بمقابلہ نص (متن)', title_ar:'العرف مقابل النص', sub:'Resolving conflicts', sub_ur:'تنازعات کا حل', sub_ar:'حل التعارض', positions:['Text always supersedes local custom', 'Local custom can restrict or modify the application of text']}
         ]
       }
     ]
   },
   {
-    id:'islamqa', label:'Islam QA', accent:'#c2410c',
+    id:'islamqa', label:'Islam QA', label_ur:'اسلام سوال و جواب', label_ar:'فتاوى إسلامية', accent:'#c2410c',
     subs:[
-      { id:'fatwa_councils', label:'Fatwa Councils & Q&A', sources:['IslamQA.info', 'SeekersGuidance', 'Dar al-Ifta al-Misriyyah', 'AMJA Online', 'IslamWeb', 'Yaqeen Institute', 'AlMaghrib Institute', 'Assembly of Muslim Jurists', 'European Council for Fatwa', 'E-Fatwa (Malaysia)'],
+      { id:'fatwa_councils', label:'Fatwa Councils & Q&A', label_ur:'فتاویٰ کونسلز اور سوال و جواب', label_ar:'لجان الفتوى والأسئلة والأجوبة', sources:['IslamQA.info', 'SeekersGuidance', 'Dar al-Ifta al-Misriyyah', 'AMJA Online', 'IslamWeb', 'Yaqeen Institute', 'AlMaghrib Institute', 'Assembly of Muslim Jurists', 'European Council for Fatwa', 'E-Fatwa (Malaysia)'],
         topics:[
-          {title:'Methodology of Issuing Fatwa',sub:'Adherence to Madhab vs direct evidence',positions:['Must strictly follow one of the four established Madhabs', 'Should extract rulings directly from Quran and Sunnah if capable']}
+          {title:'Methodology of Issuing Fatwa', title_ur:'فتویٰ جاری کرنے کا طریقہ کار', title_ar:'منهجية إصدار الفتوى', sub:'Adherence to Madhab vs direct evidence', sub_ur:'مذہب کی پیروی بمقابلہ براہ راست ثبوت', sub_ar:'الالتزام بالمذهب مقابل الدليل المباشر', positions:['Must strictly follow one of the four established Madhabs', 'Should extract rulings directly from Quran and Sunnah if capable']}
         ]
       }
     ]
   },
   {
-    id:'top_questions', label:'Top 10 Questions', accent:'#9333ea',
+    id:'top_questions', label:'Top 10 Questions', label_ur:'اہم 10 سوالات', label_ar:'أهم 10 أسئلة', accent:'#9333ea',
     subs:[
-      { id:'modern_challenges', label:'Modern Challenges & Theology', sources:['Yaqeen Institute', 'Al-Ghazali', 'Contemporary Scholars'],
+      { id:'modern_challenges', label:'Modern Challenges & Theology', label_ur:'جدید چیلنجز اور عقیدہ', label_ar:'التحديات المعاصرة والعقيدة', sources:['Yaqeen Institute', 'Al-Ghazali', 'Contemporary Scholars'],
         topics:[
-          {title:'The Problem of Evil & Suffering',sub:'If God is Merciful, why is there suffering?',positions:['Suffering is a test and elevates spiritual rank', 'We lack the full perspective of God\'s overarching wisdom']},
-          {title:'Women\'s Rights in Islam',sub:'Are men and women equal?',positions:['Equal in spiritual worth, with complementary societal roles', 'Total egalitarianism in all legal and societal matters']},
-          {title:'Islam & Modern Science',sub:'Evolution and Cosmology',positions:['The Quran fully aligns with modern scientific discoveries', 'Science changes; the Quran is spiritual, not a science textbook']},
-          {title:'Jihad in the Modern World',sub:'Understanding armed struggle',positions:['Strictly defensive and requires legitimate state authority', 'A holistic spiritual struggle (Greater Jihad) with defensive limits']},
-          {title:'Islamic Finance & Mortgages',sub:'Navigating the modern economy',positions:['Conventional mortgages are strictly forbidden (Riba)', 'Necessity (Darurah) allows standard mortgages in the West']},
-          {title:'Fate vs Free Will',sub:'Do we actually have a choice?',positions:['God\'s knowledge does not negate our free choice', 'Our choices are illusions; all is divinely compelled']},
-          {title:'Apostasy (Riddah)',sub:'Freedom of religion',positions:['Traditional view of capital punishment for treason/apostasy', 'No worldly punishment; freedom of belief based on "No compulsion"']},
-          {title:'The Reality of the Hijab',sub:'Is it a strict requirement?',positions:['Mandatory obligation for modesty', 'A cultural recommendation rather than a strict legal requirement']},
-          {title:'Music and Arts',sub:'Permissibility of instruments',positions:['All musical instruments (except duff) are impermissible', 'Permissible as long as the lyrics and context are wholesome']},
-          {title:'Pluralism & Salvation',sub:'Are only Muslims saved?',positions:['Only those who accept Islam after hearing it properly are saved', 'God\'s mercy encompasses all sincere seekers of truth']}
+          {title:'The Problem of Evil & Suffering', title_ur:'برائی اور مصائب کا مسئلہ', title_ar:'مشكلة الشر والمعاناة', sub:'If God is Merciful, why is there suffering?', sub_ur:'اگر خدا رحیم ہے، تو مصائب کیوں ہیں؟', sub_ar:'إذا كان الله رحيماً، فلماذا توجد معاناة؟', positions:['Suffering is a test and elevates spiritual rank', 'We lack the full perspective of God\'s overarching wisdom']},
+          {title:'Women\'s Rights in Islam', title_ur:'اسلام میں خواتین کے حقوق', title_ar:'حقوق المرأة في الإسلام', sub:'Are men and women equal?', sub_ur:'کیا مرد اور عورت برابر ہیں؟', sub_ar:'هل يتساوى الرجل والمرأة؟', positions:['Equal in spiritual worth, with complementary societal roles', 'Total egalitarianism in all legal and societal matters']},
+          {title:'Islam & Modern Science', title_ur:'اسلام اور جدید سائنس', title_ar:'الإسلام والعلم الحديث', sub:'Evolution and Cosmology', sub_ur:'ارتقاء اور کائنات', sub_ar:'التطور وعلم الكونيات', positions:['The Quran fully aligns with modern scientific discoveries', 'Science changes; the Quran is spiritual, not a science textbook']},
+          {title:'Jihad in the Modern World', title_ur:'جدید دنیا میں جہاد', title_ar:'الجهاد في العالم المعاصر', sub:'Understanding armed struggle', sub_ur:'مسلح جدوجہد کو سمجھنا', sub_ar:'فهم الكفاح المسلح', positions:['Strictly defensive and requires legitimate state authority', 'A holistic spiritual struggle (Greater Jihad) with defensive limits']},
+          {title:'Islamic Finance & Mortgages', title_ur:'اسلامی فنانس اور مارگیج', title_ar:'التمويل الإسلامي والرهن العقاري', sub:'Navigating the modern economy', sub_ur:'جدید معیشت میں رہنمائی', sub_ar:'التعامل مع الاقتصاد الحديث', positions:['Conventional mortgages are strictly forbidden (Riba)', 'Necessity (Darurah) allows standard mortgages in the West']},
+          {title:'Fate vs Free Will', title_ur:'تقدیر بمقابلہ آزاد مرضی', title_ar:'القدر مقابل حرية الإرادة', sub:'Do we actually have a choice?', sub_ur:'کیا واقعی ہمارے پاس انتخاب ہے؟', sub_ar:'هل لدينا حقاً خيار؟', positions:['God\'s knowledge does not negate our free choice', 'Our choices are illusions; all is divinely compelled']},
+          {title:'Apostasy (Riddah)', title_ur:'ارتداد (مذہب چھوڑنا)', title_ar:'الردة', sub:'Freedom of religion', sub_ur:'مذہبی آزادی', sub_ar:'حرية الدين', positions:['Traditional view of capital punishment for treason/apostasy', 'No worldly punishment; freedom of belief based on "No compulsion"']},
+          {title:'The Reality of the Hijab', title_ur:'حجاب کی حقیقت', title_ar:'حقيقة الحجاب', sub:'Is it a strict requirement?', sub_ur:'کیا یہ ایک سخت ضرورت ہے؟', sub_ar:'هل هو مطلب صارم؟', positions:['Mandatory obligation for modesty', 'A cultural recommendation rather than a strict legal requirement']},
+          {title:'Music and Arts', title_ur:'موسیقی اور فنون', title_ar:'الموسيقى والفنون', sub:'Permissibility of instruments', sub_ur:'آلات کی اجازت', sub_ar:'جواز الآلات الموسيقية', positions:['All musical instruments (except duff) are impermissible', 'Permissible as long as the lyrics and context are wholesome']},
+          {title:'Pluralism & Salvation', title_ur:'تکثیریت اور نجات', title_ar:'التعددية والخلاص', sub:'Are only Muslims saved?', sub_ur:'کیا صرف مسلمان نجات پائیں گے؟', sub_ar:'هل ينجو المسلمون فقط؟', positions:['Only those who accept Islam after hearing it properly are saved', 'God\'s mercy encompasses all sincere seekers of truth']}
         ]
       }
     ]
@@ -390,6 +390,10 @@ function switchLang(code) {
   // Apply UI string translations
   applyStrings(lang.strings);
 
+  // Re-render categories and topics in new language
+  buildCatStrip();
+  if (S.currentCat) renderCat(S.currentCat);
+
   // Flash confirmation
   telegram(`${lang.name} — زبان تبدیل ہوگئی / Language changed`, 'ok');
 }
@@ -512,15 +516,17 @@ window.onload = () => {
 };
 
 // ================================================================
-// CATEGORY STRIP — build once on load
+// CATEGORY STRIP — build once on load (and on language switch)
 // ================================================================
 function buildCatStrip() {
   const strip = document.getElementById('cat-strip');
+  strip.innerHTML = '';
   CATS.forEach(c => {
     const btn = document.createElement('button');
-    btn.className = 'cat-btn' + (c.id==='quran' ? ' active' : '');
+    btn.className = 'cat-btn' + (c.id === S.currentCat ? ' active' : '');
     btn.dataset.id = c.id;
-    btn.innerHTML = `<span class="cat-accent" style="background:${c.accent}"></span>${c.label}`;
+    const label = currentLang === 'ur' ? (c.label_ur || c.label) : currentLang === 'ar' ? (c.label_ar || c.label) : c.label;
+    btn.innerHTML = `<span class="cat-accent" style="background:${c.accent}"></span>${label}`;
     btn.onclick = () => renderCat(c.id);
     strip.appendChild(btn);
   });
@@ -532,18 +538,24 @@ function buildCatStrip() {
 function renderCat(catId) {
   S.currentCat = catId;
   const cat = CATS.find(c => c.id === catId);
+  const catLabel = currentLang === 'ur' ? (cat.label_ur || cat.label) : currentLang === 'ar' ? (cat.label_ar || cat.label) : cat.label;
+  
   document.querySelectorAll('.cat-btn').forEach(b =>
     b.classList.toggle('active', b.dataset.id === catId));
-  document.getElementById('cat-kicker').textContent = `Select Topic — ${cat.label}`;
+    
+  const s = LANGS[currentLang].strings;
+  document.getElementById('cat-kicker').textContent = `${s.selectTopic} — ${catLabel}`;
 
   // Build sub-category pill row
   const grid = document.getElementById('topic-grid');
   grid.innerHTML = `
     <div class="sub-strip" id="sub-strip" style="display:flex;gap:0;flex-wrap:wrap;border-bottom:1px solid var(--rule-heavy);margin-bottom:.8rem;padding-bottom:0;grid-column:1/-1;">
-      ${cat.subs.map((sub,i) => `
-        <button class="sub-btn${i===0?' sub-active':''}" data-sub="${sub.id}" onclick="renderSub('${catId}','${sub.id}')">
-          ${sub.label}
-        </button>`).join('')}
+      ${cat.subs.map((sub,i) => {
+        const subLabel = currentLang === 'ur' ? (sub.label_ur || sub.label) : currentLang === 'ar' ? (sub.label_ar || sub.label) : sub.label;
+        return `<button class="sub-btn${i===0?' sub-active':''}" data-sub="${sub.id}" onclick="renderSub('${catId}','${sub.id}')">
+          ${subLabel}
+        </button>`;
+      }).join('')}
     </div>
     <div id="sub-topic-grid" style="display:contents;"></div>`;
 
@@ -574,6 +586,7 @@ function renderSub(catId, subId) {
   S.currentSub = subId;
   const cat = CATS.find(c => c.id === catId);
   const sub = cat.subs.find(s => s.id === subId);
+  const subLabel = currentLang === 'ur' ? (sub.label_ur || sub.label) : currentLang === 'ar' ? (sub.label_ar || sub.label) : sub.label;
 
   // Update active sub pill
   document.querySelectorAll('.sub-btn').forEach(b =>
@@ -585,18 +598,23 @@ function renderSub(catId, subId) {
     `<option value="${s}">${s.split(' (')[0]}</option>`).join('');
   S.source = sub.sources[0];
   const fn = document.getElementById('source-footnote');
-  if (fn) fn.innerHTML = `<strong>Sources for ${sub.label}:</strong> ${sub.sources.join(' &nbsp;·&nbsp; ')}`;
+  const sourceStr = currentLang === 'ur' ? 'کے ماخذ' : currentLang === 'ar' ? 'مصادر' : 'Sources for';
+  if (fn) fn.innerHTML = `<strong>${sourceStr} ${subLabel}:</strong> ${sub.sources.join(' &nbsp;·&nbsp; ')}`;
 
   // Render 6 topic cards
   const stg = document.getElementById('sub-topic-grid');
   if (!stg) return;
-  stg.innerHTML = sub.topics.map((t, i) => `
-    <div class="topic-card" id="tc-${catId}-${subId}-${i}" onclick="selectTopic('${catId}','${subId}',${i})">
-      <div class="tc-label" style="color:${cat.accent};">${sub.label.toUpperCase()}</div>
-      <div class="tc-head">${t.title}</div>
-      <div class="tc-sub">${t.sub}</div>
-      <div class="tc-check">✓</div>
-    </div>`).join('');
+  stg.innerHTML = sub.topics.map((t, i) => {
+    const title = currentLang === 'ur' ? (t.title_ur || t.title) : currentLang === 'ar' ? (t.title_ar || t.title) : t.title;
+    const tSub = currentLang === 'ur' ? (t.sub_ur || t.sub) : currentLang === 'ar' ? (t.sub_ar || t.sub) : t.sub;
+    return `
+      <div class="topic-card" id="tc-${catId}-${subId}-${i}" onclick="selectTopic('${catId}','${subId}',${i})">
+        <div class="tc-label" style="color:${cat.accent};">${subLabel.toUpperCase()}</div>
+        <div class="tc-head">${title}</div>
+        <div class="tc-sub">${tSub}</div>
+        <div class="tc-check">✓</div>
+      </div>`;
+  }).join('');
 }
 
 function selectTopic(catId, subId, i) {
@@ -814,7 +832,7 @@ async function runPipeline() {
     } catch {}
 
     // Build optional reference-doc context string
-    const refCtx = (S.refDocText ? `\n\nReference Document ("${S.refDocName}"):\n${S.refDocText.slice(0,3000)}\n` : '') + libCtx;
+    const refCtx = (S.refDocText ? `\n\nReference Document ("${S.refDocName}"):\n${S.refDocText.slice(0, 500000)}\n` : '') + libCtx;
 
     // L1 CONTEXT — uses secondary model for independent perspective
     setTW('Layer 1 — Mapping the debate landscape...');
@@ -1670,18 +1688,20 @@ function getApiSettings() {
 
 function getPrimaryModel() {
   const s = getApiSettings();
-  const provider = s.provider || 'anthropic';
+  const provider = s.primaryProvider || 'anthropic';
   if (provider === 'anthropic') return s.primaryModel || 'claude-opus-4-8';
   if (provider === 'local') return s.primaryModel || '';
+  if (provider === 'groq') return s.primaryModel || 'llama-3.3-70b-versatile';
   if (provider === 'openrouter') return s.primaryModel || 'anthropic/claude-opus-4.8';
   return s.primaryModel || 'meta-llama/llama-3.3-70b-instruct:free';
 }
 
 function getSecondaryModel() {
   const s = getApiSettings();
-  const provider = s.provider || 'anthropic';
+  const provider = s.secondaryProvider || 'anthropic';
   if (provider === 'anthropic') return s.secondaryModel || 'claude-haiku-4-5';
   if (provider === 'local') return s.secondaryModel || '';
+  if (provider === 'groq') return s.secondaryModel || 'llama-3.1-8b-instant';
   if (provider === 'openrouter') return s.secondaryModel || 'anthropic/claude-haiku-4.5';
   return s.secondaryModel || 'qwen/qwen3-next-80b-a3b-instruct:free';
 }
@@ -1719,9 +1739,8 @@ async function apiWithTokens(prompt, maxTokens=1200, useSecondary=false) {
 
 async function _apiFetch(prompt, maxTokens, useSecondary) {
   const s = getApiSettings();
-  const provider = s.provider || 'anthropic';
+  const provider = useSecondary ? (s.secondaryProvider || 'anthropic') : (s.primaryProvider || 'anthropic');
   const model = useSecondary ? getSecondaryModel() : getPrimaryModel();
-  const userKey = s.apiKey || '';
 
   if (provider === 'local') {
     // Ollama / LM Studio on this machine, via the server proxy (avoids CORS)
@@ -1730,16 +1749,24 @@ async function _apiFetch(prompt, maxTokens, useSecondary) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         baseUrl: s.localUrl || '',
-        model,
-        max_tokens: maxTokens,
-        messages: [{ role: 'user', content: prompt }]
+        model, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }]
       })
+    });
+  }
+  
+  if (provider === 'groq') {
+    const key = s.groqKey || '';
+    if (!key) throw new Error('Groq API key not set — open Settings ⚙');
+    return fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+      body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
     });
   }
 
   if (provider === 'openrouter' || provider === 'free') {
     // Call OpenRouter directly from browser (they support CORS)
-    const key = userKey || (provider === 'free' ? '' : '');
+    const key = s.openrouterKey || (provider === 'free' ? '' : '');
     if (!key && provider === 'openrouter') throw new Error('OpenRouter API key not set — open Settings ⚙');
     return fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
@@ -1749,11 +1776,7 @@ async function _apiFetch(prompt, maxTokens, useSecondary) {
         'HTTP-Referer': window.location.origin,
         'X-Title': 'AI-Minaret'
       },
-      body: JSON.stringify({
-        model,
-        max_tokens: maxTokens,
-        messages: [{ role: 'user', content: prompt }]
-      })
+      body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
     });
   }
 
@@ -1762,7 +1785,7 @@ async function _apiFetch(prompt, maxTokens, useSecondary) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      ...(userKey ? { 'x-user-api-key': userKey } : {})
+      ...(s.anthropicKey ? { 'x-user-api-key': s.anthropicKey } : {})
     },
     body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
   });
@@ -1772,8 +1795,11 @@ async function _apiFetch(prompt, maxTokens, useSecondary) {
 // ================================================================
 function openSettings() {
   const s = getApiSettings();
-  document.getElementById('set-provider').value = s.provider || 'anthropic';
-  document.getElementById('set-api-key').value = s.apiKey || '';
+  document.getElementById('set-primary-provider').value = s.primaryProvider || 'anthropic';
+  document.getElementById('set-secondary-provider').value = s.secondaryProvider || 'anthropic';
+  document.getElementById('set-anthropic-key').value = s.anthropicKey || '';
+  document.getElementById('set-openrouter-key').value = s.openrouterKey || '';
+  document.getElementById('set-groq-key').value = s.groqKey || '';
   document.getElementById('set-local-url').value = s.localUrl || '';
   document.getElementById('set-primary-model').value = s.primaryModel || '';
   document.getElementById('set-secondary-model').value = s.secondaryModel || '';
@@ -1785,8 +1811,11 @@ function closeSettings() {
 }
 function saveSettings() {
   const s = {
-    provider: document.getElementById('set-provider').value,
-    apiKey: document.getElementById('set-api-key').value.trim(),
+    primaryProvider: document.getElementById('set-primary-provider').value,
+    secondaryProvider: document.getElementById('set-secondary-provider').value,
+    anthropicKey: document.getElementById('set-anthropic-key').value.trim(),
+    openrouterKey: document.getElementById('set-openrouter-key').value.trim(),
+    groqKey: document.getElementById('set-groq-key').value.trim(),
     localUrl: document.getElementById('set-local-url').value.trim(),
     primaryModel: document.getElementById('set-primary-model').value.trim(),
     secondaryModel: document.getElementById('set-secondary-model').value.trim(),
@@ -1797,83 +1826,96 @@ function saveSettings() {
   updateSettingsBadge();
 }
 function clearApiKey() {
-  document.getElementById('set-api-key').value = '';
+  document.getElementById('set-anthropic-key').value = '';
+  document.getElementById('set-openrouter-key').value = '';
+  document.getElementById('set-groq-key').value = '';
   const s = getApiSettings();
-  delete s.apiKey;
+  delete s.anthropicKey;
+  delete s.openrouterKey;
+  delete s.groqKey;
   localStorage.setItem('am_settings', JSON.stringify(s));
-  telegram('API key cleared', 'ok');
+  telegram('API keys cleared', 'ok');
 }
 function updateSettingsHints() {
-  const p = document.getElementById('set-provider').value;
+  const pp = document.getElementById('set-primary-provider').value;
+  const sp = document.getElementById('set-secondary-provider').value;
+  
   const hints = {
-    anthropic: { key:'sk-ant-...  (get from console.anthropic.com)', p:'claude-opus-4-8', s:'claude-haiku-4-5' },
-    local: { key:'No API key needed — models run entirely on your machine', p:'llama3.2', s:'llama3.2' },
-    openrouter: { key:'sk-or-...  (get from openrouter.ai/keys)', p:'anthropic/claude-opus-4.8', s:'anthropic/claude-haiku-4.5' },
-    free: { key:'sk-or-...  (optional — free models on OpenRouter)', p:'meta-llama/llama-3.3-70b-instruct:free', s:'qwen/qwen3-next-80b-a3b-instruct:free' },
+    anthropic: { p:'claude-opus-4-8', s:'claude-haiku-4-5' },
+    local: { p:'llama3.2', s:'llama3.2' },
+    openrouter: { p:'anthropic/claude-opus-4.8', s:'anthropic/claude-haiku-4.5' },
+    groq: { p:'llama-3.3-70b-versatile', s:'llama-3.1-8b-instant' },
+    free: { p:'meta-llama/llama-3.3-70b-instruct:free', s:'qwen/qwen3-next-80b-a3b-instruct:free' },
   };
-  const h = hints[p] || hints.anthropic;
-  document.getElementById('set-key-hint').textContent = h.key;
-  document.getElementById('set-local-wrap').style.display = p === 'local' ? 'block' : 'none';
-  if (!document.getElementById('set-primary-model').value) document.getElementById('set-primary-model').placeholder = h.p;
-  if (!document.getElementById('set-secondary-model').value) document.getElementById('set-secondary-model').placeholder = h.s;
+  
+  document.getElementById('set-local-wrap').style.display = (pp === 'local' || sp === 'local') ? 'block' : 'none';
+  if (!document.getElementById('set-primary-model').value) document.getElementById('set-primary-model').placeholder = hints[pp]?.p || '';
+  if (!document.getElementById('set-secondary-model').value) document.getElementById('set-secondary-model').placeholder = hints[sp]?.s || '';
 }
 function updateSettingsBadge() {
   const s = getApiSettings();
   const el = document.getElementById('settings-badge');
   if (el) {
-    const p = s.provider || 'anthropic';
-    const labels = { anthropic:'Claude', local:'Local', openrouter:'OpenRouter', free:'Free' };
+    const p = s.primaryProvider || 'anthropic';
+    const labels = { anthropic:'Claude', local:'Local', openrouter:'OpenRouter', groq:'Groq', free:'Free' };
     el.textContent = labels[p] || 'Claude';
-    el.style.background = p === 'anthropic' ? '#c41230' : p === 'local' ? '#0e7490' : p === 'openrouter' ? '#5b3dbd' : '#2e7d32';
+    el.style.background = p === 'anthropic' ? '#c41230' : p === 'local' ? '#0e7490' : (p === 'openrouter' || p === 'groq') ? '#5b3dbd' : '#2e7d32';
   }
 }
 
 // ================================================================
 // REFERENCE DOCUMENT UPLOAD
 // ================================================================
-function handleRefDocUpload(input) {
+async function handleRefDocUpload(input) {
   const files = input.files;
   if (!files || files.length === 0) return;
-  const MAX = 1000 * 1024; // 1 MB combined text limit
-  
-  let totalSize = 0;
-  for (let i = 0; i < files.length; i++) {
-    totalSize += files[i].size;
-    if (files[i].name.endsWith('.pdf')) {
-      telegram('PDF parsing not directly supported here. Please upload plain text.', 'err'); 
-      return;
-    }
-  }
-  
-  if (totalSize > MAX) {
-    telegram('Combined files too large — keep text files under 1 MB total', 'err'); return;
-  }
+  const MAX = 10 * 1024 * 1024; // 10 MB limit per file
   
   S.refDocName = files.length === 1 ? files[0].name : `${files.length} files loaded`;
   S.refDocText = '';
   
+  document.getElementById('ref-doc-name').textContent = 'Uploading and parsing...';
+  
   const promises = [];
+  let totalSize = 0;
   
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    const promise = new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        resolve(`\n\n--- Source: ${file.name} ---\n\n${e.target.result}`);
-      };
-      reader.onerror = () => reject(`Could not read file ${file.name}`);
-      reader.readAsText(file);
+    totalSize += file.size;
+    
+    if (file.size > MAX) {
+      telegram(`File ${file.name} is too large (> 10MB)`, 'err');
+      continue;
+    }
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    const promise = fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) throw new Error(data.error);
+      return `\n\n--- Source: ${file.name} ---\n\n${data.text}`;
+    })
+    .catch(err => {
+      console.error(err);
+      return `\n\n--- Error reading ${file.name} ---\n\n`;
     });
+    
     promises.push(promise);
   }
   
   Promise.all(promises).then(results => {
     S.refDocText = results.join('');
-    document.getElementById('ref-doc-name').textContent = `📎 ${S.refDocName} (${(totalSize/1024).toFixed(1)} KB total)`;
+    document.getElementById('ref-doc-name').textContent = `📎 ${S.refDocName} (${(totalSize/1024/1024).toFixed(2)} MB total)`;
     document.getElementById('ref-doc-clear').style.display='inline-block';
-    telegram(`${files.length} document(s) loaded`, 'ok');
+    telegram(`${files.length} document(s) uploaded and parsed`, 'ok');
   }).catch(err => {
-    telegram(err, 'err');
+    telegram(err.message || err, 'err');
+    document.getElementById('ref-doc-name').textContent = 'Upload failed';
   });
 }
 function clearRefDoc() {

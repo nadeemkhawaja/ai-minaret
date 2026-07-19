@@ -594,14 +594,27 @@
     </div>
     <div style="padding:16px;display:flex;flex-direction:column;gap:14px;">
 
-      <div>
-        <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Provider</label>
-        <select id="set-provider" onchange="updateSettingsHints()" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
-          <option value="anthropic">Anthropic (Claude) — via secure proxy</option>
-          <option value="local">Local — Ollama / LM Studio (no key, private)</option>
-          <option value="openrouter">OpenRouter — 100+ models, BYOK</option>
-          <option value="free">Free tier (OpenRouter free models)</option>
-        </select>
+      <div style="display:flex;gap:10px;">
+        <div style="flex:1;">
+          <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Primary Provider</label>
+          <select id="set-primary-provider" onchange="updateSettingsHints()" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+            <option value="anthropic">Anthropic (Claude)</option>
+            <option value="local">Local (Ollama/LM Studio)</option>
+            <option value="openrouter">OpenRouter</option>
+            <option value="groq">Groq</option>
+            <option value="free">Free tier (OpenRouter)</option>
+          </select>
+        </div>
+        <div style="flex:1;">
+          <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">Secondary Provider</label>
+          <select id="set-secondary-provider" onchange="updateSettingsHints()" style="width:100%;margin-top:4px;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+            <option value="anthropic">Anthropic (Claude)</option>
+            <option value="local">Local (Ollama/LM Studio)</option>
+            <option value="openrouter">OpenRouter</option>
+            <option value="groq">Groq</option>
+            <option value="free">Free tier (OpenRouter)</option>
+          </select>
+        </div>
       </div>
 
       <div id="set-local-wrap" style="display:none;">
@@ -610,14 +623,25 @@
         <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:3px;">Ollama default: http://localhost:11434 &nbsp;·&nbsp; LM Studio default: http://localhost:1234</div>
       </div>
 
-      <div>
-        <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">API Key</label>
-        <div style="display:flex;gap:6px;margin-top:4px;">
-          <input id="set-api-key" type="password" placeholder="Paste your API key here" style="flex:1;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
-          <button onclick="clearApiKey()" style="padding:6px 10px;background:var(--paper2);border:1px solid var(--rule-heavy);cursor:pointer;font-family:var(--cond);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Clear</button>
+      <div id="set-keys-wrap">
+        <label style="font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);">API Keys</label>
+        
+        <div style="display:flex;gap:6px;margin-top:4px;align-items:center;">
+          <span style="font-family:var(--mono);font-size:10px;width:70px;">Anthropic:</span>
+          <input id="set-anthropic-key" type="password" placeholder="sk-ant-..." style="flex:1;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
         </div>
-        <div id="set-key-hint" style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:3px;"></div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:2px;">Key is stored only in your browser (localStorage). Never sent anywhere except the chosen API.</div>
+        <div style="display:flex;gap:6px;margin-top:4px;align-items:center;">
+          <span style="font-family:var(--mono);font-size:10px;width:70px;">OpenRouter:</span>
+          <input id="set-openrouter-key" type="password" placeholder="sk-or-..." style="flex:1;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+        </div>
+        <div style="display:flex;gap:6px;margin-top:4px;align-items:center;">
+          <span style="font-family:var(--mono);font-size:10px;width:70px;">Groq:</span>
+          <input id="set-groq-key" type="password" placeholder="gsk_..." style="flex:1;font-size:12px;padding:6px 8px;border:1px solid var(--rule-heavy);background:var(--paper);font-family:var(--mono);">
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;">
+          <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);">Keys are stored only in your browser (localStorage).</div>
+          <button onclick="clearApiKey()" style="padding:2px 6px;background:var(--paper2);border:1px solid var(--rule-heavy);cursor:pointer;font-family:var(--cond);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Clear All</button>
+        </div>
       </div>
 
       <div>
@@ -633,9 +657,9 @@
 
       <div style="background:var(--paper2);border:1px solid var(--rule);padding:10px;font-family:var(--mono);font-size:9px;color:var(--ink3);line-height:1.7;">
         <strong>Provider notes:</strong><br>
-        • <strong>Local</strong>: Ollama or LM Studio on this machine — no key, no cloud, fully private. Install from ollama.com, then <code>ollama pull llama3.2</code>.<br>
+        • <strong>Local</strong>: Ollama or LM Studio on this machine — no key, no cloud, fully private.<br>
         • <strong>Anthropic</strong>: Key stays server-side in .env — leave API key blank to use server key.<br>
-        • <strong>OpenRouter</strong>: Get a key at openrouter.ai/keys — access 100+ models including GPT-4o, Gemini, Llama.<br>
+        • <strong>OpenRouter / Groq</strong>: Add your API keys above to access their models.<br>
         • <strong>Free</strong>: Uses OpenRouter's free-tier models (Llama 3.3, Qwen3). Slower but no cost.
       </div>
 

@@ -3,6 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import https from 'https';
+import multer from 'multer';
+import pdfParse from 'pdf-parse';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
@@ -190,6 +192,30 @@ app.get('/api/library/search', (req, res) => {
       text: item.text.length > 400 ? item.text.slice(0, 400) + '…' : item.text,
     })),
   });
+});
+
+// ── Document Upload Endpoint ───────────────────────────────
+const upload = multer({ limits: { fileSize: 10 * 1024 * 1024 } }); // 10MB limit
+
+app.post('/api/upload', upload.single('file'), async (req, res) => {
+  if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+  const file = req.file;
+  try {
+    let text = '';
+    if (file.originalname.endsWith('.pdf')) {
+      const data = await pdfParse(file.buffer);
+      text = data.text;
+    } else if (file.originalname.endsWith('.md') || file.originalname.endsWith('.txt') || file.originalname.endsWith('.doc') || file.originalname.endsWith('.docx')) {
+      // NOTE: For a real app, .doc/.docx require mammoth or similar. We'll fallback to string extract.
+      text = file.buffer.toString('utf8');
+    } else {
+      return res.status(400).json({ error: 'Unsupported file type. Only .pdf and .md are allowed.' });
+    }
+    return res.json({ text });
+  } catch (err) {
+    console.error('File parsing error:', err);
+    return res.status(500).json({ error: 'Failed to parse file: ' + err.message });
+  }
 });
 
 app.use(express.static(path.join(rootDir, 'dist')));
