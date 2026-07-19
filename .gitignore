@@ -4,3 +4,6 @@ dist/
 .env.local
 .claude/
 .server-port
+.DS_Store
+.server.pid
+server.log

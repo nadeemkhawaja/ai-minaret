@@ -1,7 +1,7 @@
 # ArgueMind — Prompt Design Document
 # Host: Loffi (AI Debate Strategist)
 # Framework: SCIPAB (Situation → Complication → Implementation → Position → Action → Benefit)
-# Model: claude-sonnet-4-20250514
+# Models: claude-opus-4-8 (primary — L2/L3/L5) · claude-haiku-4-5 (secondary — L1/L4)
 # Requirement: Multi-layer AI reasoning system — 5 substantive layers
 
 ---

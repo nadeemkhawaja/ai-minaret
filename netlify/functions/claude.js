@@ -43,12 +43,12 @@ export default async (req) => {
     );
   }
 
-  const model = body.model || 'claude-sonnet-4-20250514';
+  const model = body.model || 'claude-opus-4-8';
   const isOpenRouter = model.includes('/') && !model.startsWith('claude-');
 
   // Route to OpenRouter if model looks like an OpenRouter model
-  // (OpenRouter models are like "anthropic/claude-sonnet-4", "google/gemma-3-27b-it:free")
-  // Pure Anthropic models like "claude-sonnet-4-20250514" go to Anthropic directly
+  // (OpenRouter models are like "anthropic/claude-3.7-sonnet", "google/gemma-3-27b-it:free")
+  // Pure Anthropic models like "claude-3-7-sonnet-20250219" go to Anthropic directly
   if (isOpenRouter) {
     // This shouldn't normally be called via proxy for OpenRouter — the frontend calls OR directly.
     // But if it does, proxy it.
@@ -85,6 +85,8 @@ export default async (req) => {
       model,
       max_tokens: body.max_tokens || 1200,
       messages: body.messages,
+      ...(body.system ? { system: body.system } : {}),
+      ...(body.thinking ? { thinking: body.thinking } : {}),
     }),
   });
 

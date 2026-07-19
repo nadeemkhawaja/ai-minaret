@@ -22,7 +22,7 @@ describe('API Endpoints', () => {
       .send({ messages: [{ role: 'user', content: 'test' }] });
     
     expect(response.status).toBe(500);
-    expect(response.body.error).toBe('Server misconfiguration: API key missing');
+    expect(response.body.error).toBe('No API key. Set ANTHROPIC_API_KEY in .env or add your key in ⚙ Settings.');
 
     // Restore API key
     process.env.ANTHROPIC_API_KEY = oldKey;

@@ -7,8 +7,8 @@ import app from './app.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT_FILE = path.join(__dirname, '..', '.server-port');
 
-// PORT=0 → OS picks a free random port. Set PORT=3000 (etc.) to pin it.
-const REQUESTED_PORT = Number(process.env.PORT ?? 0);
+// Defaults to port 3210. Set PORT=0 for a random free port (dev script does this).
+const REQUESTED_PORT = Number(process.env.PORT ?? 3210);
 const HOST = process.env.HOST || '0.0.0.0';
 
 function lanAddresses() {

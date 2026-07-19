@@ -219,7 +219,7 @@ body {
 
 .front-grid {
   display: grid;
-  grid-template-columns: 1fr 2px 1fr 2px 1fr;
+  grid-template-columns: 1fr 2px 2.5fr;
   gap: 0;
 }
 

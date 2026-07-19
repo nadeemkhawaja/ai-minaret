@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -26,7 +25,8 @@ export function loadEnv() {
 loadEnv();
 
 const app = express();
-app.use(cors());
+// No CORS middleware: the UI is served same-origin (Vite proxies /api in dev),
+// so cross-origin pages on the LAN can't spend the server's API key.
 app.use(express.json());
 
 // ── API Routes ─────────────────────────────────────────────
@@ -44,9 +44,11 @@ app.post('/api/claude', (req, res) => {
   }
 
   const payload = JSON.stringify({
-    model: parsed.model || 'claude-sonnet-4-20250514',
+    model: parsed.model || 'claude-opus-4-8',
     max_tokens: parsed.max_tokens || 1200,
     messages: parsed.messages,
+    ...(parsed.system ? { system: parsed.system } : {}),
+    ...(parsed.thinking ? { thinking: parsed.thinking } : {}),
   });
 
   const options = {

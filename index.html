@@ -6,12 +6,12 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ArgueMind">
+<meta name="apple-mobile-web-app-title" content="AI-Minaret">
 <meta name="theme-color" content="#c41230">
-<meta name="description" content="ArgueMind — AI Debate Strategist. Sharpen your thinking with 5-layer AI reasoning.">
+<meta name="description" content="AI-Minaret — AI Reasoning Strategist. Sharpen your thinking with 5-layer AI reasoning.">
 <link rel="manifest" href="/manifest.json">
-<title>ArgueMind — Sharpen Your Thinking</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@400;600;700;800;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>AI-Minaret — Sharpen Your Thinking</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Courier+Prime:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="/src/style.css">
 
@@ -25,26 +25,22 @@
 
 <header class="masthead">
   <div class="masthead-top">
-    <div>Est. 2025 &nbsp;·&nbsp; Vol. II &nbsp;·&nbsp; ArgueMind</div>
+    <div>Est. 2025 &nbsp;·&nbsp; Vol. II &nbsp;·&nbsp; AI-Minaret</div>
     <div class="live-ticker">
       <div class="ticker-dot"></div>
-      <span id="ticker-text">READY TO ARGUE</span>
+      <span id="ticker-text">READY TO REASON</span>
     </div>
     <div id="masthead-date" style="font-family:var(--mono);font-size:10px;"></div>
   </div>
 
   <div class="masthead-main">
     <nav class="masthead-nav-left">
-      <button class="nav-item active" onclick="switchTab('debate')">Debate</button>
-      <button class="nav-item" onclick="switchTab('aia')">Arena</button>
-      <button class="nav-item" onclick="switchTab('live')">Live</button>
-      <button class="nav-item" onclick="switchTab('flowchart')">Flowchart</button>
-      <button class="nav-item" onclick="switchTab('history')">Archive</button>
-    </nav>
+      
+      </nav>
 
     <div class="masthead-title" onclick="scrollTo(0,0)">
-      <div class="paper-name">ArgueMind</div>
-      <div class="paper-tagline" id="masthead-tagline">Hosted by Loffi &nbsp;·&nbsp; Sharpen Your Thinking &nbsp;·&nbsp; Powered by Claude</div>
+      <div class="paper-name">AI-Minaret</div>
+      <div class="paper-tagline" id="masthead-tagline">Hosted by AI Scholar &nbsp;·&nbsp; Sharpen Your Thinking</div>
     </div>
 
     <nav class="masthead-nav-right">
@@ -64,13 +60,7 @@
   </div>
 </header>
 
-<!-- EDITION BANNER -->
-<div class="edition-banner">
-  <span class="edition-tag">LIVE</span>
-  <div class="edition-scroll">
-    <span id="edition-scroll-text">5-Layer AI Reasoning &nbsp;·&nbsp; Loffi — Your AI Debate Strategist &nbsp;·&nbsp; Dual-Model Perspectives &nbsp;·&nbsp; Fallacy Detection &nbsp;·&nbsp; Socratic Drilling &nbsp;·&nbsp; AI vs AI Arena &nbsp;·&nbsp; Live Voice Debate &nbsp;·&nbsp; 16 Categories &nbsp;·&nbsp; Sports · Travel · News · Politics · Finance · AI · Education · Climate · Art · Health · Philosophy · Food · Business · Science · Law · Faith &amp; Religion &nbsp;·&nbsp; Islam · Christianity · Judaism · Hinduism &nbsp;·&nbsp; OpenRouter · PDF Upload &nbsp;&nbsp;&nbsp;</span>
-  </div>
-</div>
+<!-- EDITION BANNER REMOVED -->
 
 <!-- BROADSHEET -->
 <main class="broadsheet">
@@ -84,22 +74,18 @@
         <!-- LEFT: Intro column -->
         <div class="front-col col-rule">
           <div class="kicker" id="hero-kicker">Meet Your Strategist</div>
-          <h1 class="headline"><span id="hero-headline-text">Sharpen your thinking with</span> <em id="hero-headline-em">ArgueMind</em></h1>
-          <p class="deck" id="hero-deck">Your AI debate strategist. Loffi argues, challenges, questions your logic, fires back in real time, and delivers a verdict that makes you think harder.</p>
-          <div class="byline" id="hero-byline">Hosted by Loffi &nbsp;·&nbsp; AI Debate Strategist &nbsp;·&nbsp; All Editions</div>
-          <div class="stat-row">
-            <div class="stat-box"><div class="stat-num">16</div><div class="stat-label" id="stat-cats">Categories</div></div>
-            <div class="stat-box"><div class="stat-num">5</div><div class="stat-label" id="stat-layers">Layers</div></div>
-            <div class="stat-box"><div class="stat-num">90</div><div class="stat-label" id="stat-topics">Topics</div></div>
-            <div class="stat-box"><div class="stat-num">3</div><div class="stat-label" id="stat-modes">Modes</div></div>
-          </div>
+          <h1 class="headline"><span id="hero-headline-text">Sharpen your thinking with</span> <em id="hero-headline-em">AI-Minaret</em></h1>
+          <p class="deck" id="hero-deck">Your AI Reasoning Strategist. AI-Minaret reasons, challenges, questions your logic, fires back in real time, and delivers a verdict that makes you think harder.</p>
+          <div class="byline" id="hero-byline">Hosted by AI Scholar &nbsp;·&nbsp; AI Reasoning Strategist &nbsp;·&nbsp; All Editions</div>
+
         </div>
 
-        <div class="col-divider"></div>
+        
 
         <!-- CENTRE: Domain selector + topics -->
+        <div class="col-divider"></div>
         <div class="front-col col-rule">
-          <div class="kicker" id="cat-kicker">Select Topic &mdash; Sports</div>
+          <div class="kicker" id="cat-kicker">Select Topic &mdash; Quran</div>
 
           <!-- LEVEL 1: Category strip -->
           <div class="cat-strip" id="cat-strip"></div>
@@ -108,58 +94,14 @@
           <div class="topic-grid" id="topic-grid"></div>
 
           <div class="custom-row">
-            <input class="custom-in" id="custom-in" placeholder="Or propose your own motion..." onkeydown="if(event.key==='Enter')setCustom()">
-            <button class="custom-btn" onclick="setCustom()">File →</button>
+            <input class="custom-in" id="custom-in" placeholder="Ask your own Question" onkeydown="if(event.key==='Enter')setCustom()">
+            <button class="custom-btn" onclick="setCustom()">Enter</button>
           </div>
         </div>
 
-        <div class="col-divider"></div>
+        
 
-        <!-- RIGHT: Quick preview + voice -->
-        <div class="front-col">
-          <!-- LOFFILULA — real photo -->
-          <div style="text-align:center;margin-bottom:14px;">
-            <div style="width:120px;height:130px;border-radius:50%;overflow:hidden;margin:0 auto 8px;border:3px solid var(--ink);">
-              <img src="data:image/jpeg;base64,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" alt="Loffi"
-                style="width:100%;height:100%;object-fit:cover;object-position:center 10%;">
-            </div>
-            <div style="font-family:var(--cond);font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-bottom:1px;">Loffi</div>
-            <div style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--ink4);text-transform:uppercase;">AI Debate Strategist · ArgueMind</div>
-          </div>
 
-          <div class="kicker" id="prev-label">Dispatch Preview</div>
-          <div style="border:1px solid var(--rule-heavy);padding:12px;margin-bottom:12px;">
-            <div style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:6px;" id="prev-motion-label">Selected Motion</div>
-            <div style="font-family:var(--serif);font-size:15px;font-weight:700;line-height:1.3;margin-bottom:8px;" id="prev-topic">—</div>
-            <div style="font-family:var(--mono);font-size:9px;color:var(--ink4);" id="prev-pos">Pick a topic and position →</div>
-          </div>
-
-          <!-- Feature toggles inline -->
-          <div style="border:1px solid var(--rule-heavy);padding:10px 12px;margin-bottom:10px;">
-            <div style="font-family:var(--cond);font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;" id="print-settings-label">Print Settings</div>
-            <div class="toggles-row" style="padding:0;">
-              <div class="toggle-item" onclick="toggleFeature('fallacy')">
-                <div class="toggle-box checked" id="tog-fallacy">✓</div>
-                <span class="toggle-text" id="tog-label-fallacy">Fallacy Scan</span>
-              </div>
-              <div class="toggle-item" onclick="toggleFeature('socratic')">
-                <div class="toggle-box" id="tog-socratic"></div>
-                <span class="toggle-text" id="tog-label-socratic">Socratic Drill</span>
-              </div>
-              <div class="toggle-item" onclick="toggleFeature('video')">
-                <div class="toggle-box" id="tog-video"></div>
-                <span class="toggle-text" id="tog-label-video">Live Avatar</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Canvas avatar for live/speaking state (hidden unless toggled) -->
-          <div id="avatar-panel" style="display:none;margin-bottom:10px;text-align:center;">
-            <canvas id="avatar-canvas" width="100" height="100"
-              style="border:2px solid var(--ink);display:block;margin:0 auto 4px;"></canvas>
-            <div style="font-family:var(--mono);font-size:8px;letter-spacing:.1em;color:var(--ink4);text-transform:uppercase;">Loffi · Live</div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -177,23 +119,17 @@
         <div>
           <div class="cf-label" id="cf-persona-label">Persona</div>
           <select id="sel-persona">
-            <option value="Domain Analyst">Domain Analyst</option>
-            <option value="Academic Researcher">Academic Researcher</option>
-            <option value="Investigative Journalist">Journalist</option>
-            <option value="Defense Lawyer">Defense Lawyer</option>
-            <option value="Economist">Economist</option>
-            <option value="Policy Activist">Policy Activist</option>
+            <option value="Islamic Scholar">Islamic Scholar</option>
+            <option value="Historian">Historian</option>
             <option value="Philosopher">Philosopher</option>
-            <option value="Tech Visionary">Tech Visionary</option>
+            <option value="General Analyst">General Analyst</option>
           </select>
         </div>
         <div>
           <div class="cf-label" id="cf-depth-label">Argument Depth</div>
           <select id="sel-depth">
-            <option value="10-20">Compact — 10–20 words</option>
+            <option value="10-20" selected>Compact — 10–20 words</option>
             <option value="20-50">Brief — 20–50 words</option>
-            <option value="50-100" selected>Standard — 50–100 words</option>
-            <option value="100-150">In-depth — 100–150 words</option>
           </select>
         </div>
         <div>
@@ -216,77 +152,39 @@
 
       <div class="tone-row">
         <span class="tone-label" id="tone-label">Tone —</span>
-        <button class="tone-pill sel" data-tone="compelling and rhetorically persuasive">Persuasive</button>
+        <button class="tone-pill sel" data-tone="balanced and measured">Balanced</button>
         <button class="tone-pill" data-tone="formal and academic">Formal</button>
-        <button class="tone-pill" data-tone="sharp and aggressive">Aggressive</button>
-        <button class="tone-pill" data-tone="balanced and measured">Balanced</button>
-        <button class="tone-pill" data-tone="Socratic and questioning">Socratic</button>
-        <button class="tone-pill" data-tone="witty and sharp">Witty</button>
       </div>
     </div>
 
 
 
-    <!-- KOKORO TTS SETTINGS -->
-    <div class="accordion" style="margin-bottom:1rem;">
-      <div class="acc-head" onclick="toggleAcc('kokoro')">
-        <div class="acc-head-left">
-          🔊 Kokoro TTS — Local voice (runs in your browser, no API key)
-          <span class="acc-badge" id="kokoro-badge">OFF</span>
-        </div>
-        <span class="acc-arrow" id="kokoro-arrow">▼</span>
-      </div>
-      <div class="acc-body" id="kokoro-body">
-        <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
-          <div class="toggle-item" onclick="toggleKokoro()">
-            <div class="toggle-box" id="tog-kokoro"></div>
-            <span class="toggle-text">Enable Kokoro TTS</span>
-          </div>
-          <span style="font-family:var(--mono);font-size:10px;color:var(--ink4);">First use downloads ~80MB model · then works offline · Apache licensed</span>
-        </div>
-        <div style="margin-bottom:10px;">
-          <div class="cf-label">Voice</div>
-          <select id="kokoro-voice" onchange="S.kokoroVoice=this.value" style="max-width:280px;">
-            <option value="af_sky">af_sky — American Female, warm</option>
-            <option value="af_nicole">af_nicole — American Female, soft</option>
-            <option value="af_bella">af_bella — American Female, bright</option>
-            <option value="af_sarah">af_sarah — American Female, clear</option>
-            <option value="am_adam">am_adam — American Male, deep</option>
-            <option value="am_michael">am_michael — American Male, natural</option>
-            <option value="bf_emma">bf_emma — British Female, elegant</option>
-            <option value="bm_george">bm_george — British Male, authoritative</option>
-          </select>
-        </div>
-        <div style="font-family:var(--mono);font-size:10px;color:var(--ink4);line-height:1.7;">
-          Powered by <strong>kokoro-js</strong> + Transformers.js · 82M parameter model · Runs via WebAssembly · No data leaves your machine
-        </div>
-      </div>
-    </div>
+    <!-- Kokoro removed -->
 
     <!-- REFERENCE DOCUMENT UPLOAD -->
     <div class="accordion" style="margin-bottom:1rem;">
       <div class="acc-head" onclick="toggleAcc('refdoc')">
         <div class="acc-head-left">
-          📎 Reference Document — Upload a text/PDF file for source context
+          📎 Reference Documents — Upload files for ingestion
           <span class="acc-badge" id="refdoc-badge">NONE</span>
         </div>
         <span class="acc-arrow" id="refdoc-arrow">▼</span>
       </div>
       <div class="acc-body" id="refdoc-body">
         <div style="margin-bottom:10px;font-family:var(--mono);font-size:10px;color:var(--ink3);line-height:1.7;">
-          Upload a plain text or PDF file (e.g., a hadith collection, research paper, or legal document).
-          The first 3,000 characters will be injected as context into all debate layers.<br>
+          Upload multiple text/PDF files to ingest into the reasoning engine.
+          The combined text will be injected as context into all reasoning layers.<br>
           <strong>Note:</strong> For PDFs, save as plain text first, or paste content directly in the custom topic box.
         </div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
           <label style="padding:7px 14px;background:var(--ink);color:#fff;cursor:pointer;font-family:var(--cond);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;">
-            Choose File
-            <input type="file" id="ref-doc-input" accept=".txt,.md,.pdf,.doc,.docx" style="display:none;" onchange="handleRefDocUpload(this)">
+            Choose Files
+            <input type="file" id="ref-doc-input" accept=".txt,.md,.pdf,.doc,.docx" multiple style="display:none;" onchange="handleRefDocUpload(this)">
           </label>
-          <span id="ref-doc-name" style="font-family:var(--mono);font-size:10px;color:var(--ink3);">No file loaded</span>
-          <button id="ref-doc-clear" onclick="clearRefDoc()" style="display:none;padding:6px 10px;background:var(--paper2);border:1px solid var(--rule-heavy);cursor:pointer;font-family:var(--cond);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--red);">Remove</button>
+          <span id="ref-doc-name" style="font-family:var(--mono);font-size:10px;color:var(--ink3);">No files loaded</span>
+          <button id="ref-doc-clear" onclick="clearRefDoc()" style="display:none;padding:6px 10px;background:var(--paper2);border:1px solid var(--rule-heavy);cursor:pointer;font-family:var(--cond);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--red);">Remove All</button>
         </div>
-        <div style="margin-top:8px;font-family:var(--mono);font-size:9px;color:var(--ink4);">Max ~200 KB plain text · Files never leave your device</div>
+        <div style="margin-top:8px;font-family:var(--mono);font-size:9px;color:var(--ink4);">Max ~1 MB total plain text · Files never leave your device</div>
       </div>
     </div>
 
@@ -299,7 +197,7 @@
     <!-- PRESS BUTTON -->
     <button class="press-btn" id="press-btn" onclick="runPipeline()">
       <span>⊕ Run 5-Layer Reasoning Engine</span>
-      <span class="press-subtext" id="run-btn-sub">Loffi will argue · question · counter · critique · deliver verdict</span>
+      <span class="press-subtext" id="run-btn-sub">AI Scholar will argue · question · counter · critique · deliver verdict</span>
     </button>
 
     <!-- TELEMETRY -->
@@ -320,13 +218,13 @@
     <section id="pipeline" class="pipeline-section">
       <div class="pipeline-empty">
         <div class="pipeline-empty-headline">No dispatch in print.</div>
-        <div class="pipeline-empty-sub">Configure your debate and press Run to begin.</div>
+        <div class="pipeline-empty-sub">Configure your reasoning and press Run to begin.</div>
       </div>
     </section>
 
     <!-- SOCRATIC BROADSIDE -->
     <div class="socratic-broadside" id="socratic-broadside">
-      <div class="sb-head">LUFIALLOLA CHALLENGES YOUR LOGIC — Answer before we continue</div>
+      <div class="sb-head">AI SCHOLAR CHALLENGES YOUR LOGIC — Answer before we continue</div>
       <div class="sb-body" id="socratic-body"></div>
     </div>
 
@@ -349,29 +247,27 @@
   <!-- ========== TAB: AI vs AI ARENA ========== -->
   <div id="tab-aia" style="display:none;">
     <div class="kicker" style="margin-top:1rem;">Arena — Match Report</div>
-    <h1 class="headline" style="margin-bottom:.5rem;"><span id="arena-headline-text">Loffi vs The Opposition</span></h1>
-    <p class="deck" id="arena-deck" style="margin-bottom:1.5rem;">Watch two AI debaters go head-to-head. Loffi argues one side; you assign the opponent's persona. An impartial judge delivers the final verdict.</p>
+    <h1 class="headline" style="margin-bottom:.5rem;"><span id="arena-headline-text">AI Scholar vs The Opposition</span></h1>
+    <p class="deck" id="arena-deck" style="margin-bottom:1.5rem;">Watch two AI reasoners go head-to-head. AI-Minaret reasons one side; you assign the opponent's persona. An impartial judge delivers the final verdict.</p>
 
     <div class="config-block">
       <div class="config-header"><span>Arena Configuration</span></div>
       <div class="config-inner">
         <div>
-          <div class="cf-label">Motion (from Debate tab or custom)</div>
-          <select id="aia-topic" style="font-size:12px;"><option value="">— Set topic in Debate tab first —</option></select>
+          <div class="cf-label">Motion (from Reason tab or custom)</div>
+          <select id="aia-topic" style="font-size:12px;"><option value="">— Set topic in Reason tab first —</option></select>
         </div>
         <div>
-          <div class="cf-label">Loffi argues</div>
+          <div class="cf-label">AI-Minaret reasons</div>
           <select id="aia-lufia-side"><option value="">— Select position —</option></select>
         </div>
         <div>
           <div class="cf-label">Opponent persona</div>
           <select id="aia-opp">
-            <option value="Academic Researcher">Academic Researcher</option>
-            <option value="Defense Lawyer">Defense Lawyer</option>
-            <option value="Economist">Economist</option>
-            <option value="Investigative Journalist">Journalist</option>
-            <option value="Policy Activist">Policy Activist</option>
-            <option value="Tech Visionary">Tech Visionary</option>
+            <option value="Islamic Scholar">Islamic Scholar</option>
+            <option value="Historian">Historian</option>
+            <option value="Philosopher">Philosopher</option>
+            <option value="General Analyst">General Analyst</option>
           </select>
         </div>
         <div>
@@ -403,13 +299,13 @@
       </div>
       <div class="match-combatants">
         <div class="match-fighter">
-          <div class="mf-name lufia">Loffi</div>
-          <div class="mf-role" id="aia-lufia-role">AI Debate Host</div>
+          <div class="mf-name lufia">AI Scholar</div>
+          <div class="mf-role" id="aia-lufia-role">AI Reasoning Host</div>
         </div>
         <div class="match-vs">vs</div>
         <div class="match-fighter" style="border-left:1px solid var(--rule-heavy);">
           <div class="mf-name" id="aia-opp-name">Opponent</div>
-          <div class="mf-role" id="aia-opp-role">AI Debater</div>
+          <div class="mf-role" id="aia-opp-role">AI Reasoner</div>
         </div>
       </div>
       <div class="match-transcript" id="aia-transcript">
@@ -426,8 +322,8 @@
   <!-- ========== TAB: LIVE DEBATE ========== -->
   <div id="tab-live" style="display:none;">
     <div class="kicker" style="margin-top:1rem;">Live Edition</div>
-    <h1 class="headline" style="margin-bottom:.5rem;"><span id="live-headline-text">Debate Loffi live</span></h1>
-    <p class="deck" id="live-deck" style="margin-bottom:1.5rem;">Speak your arguments. Loffi listens, sharpens her counter in real time, and fires back. Your microphone vs her reasoning.</p>
+    <h1 class="headline" style="margin-bottom:.5rem;"><span id="live-headline-text">Reason with AI-Minaret live</span></h1>
+    <p class="deck" id="live-deck" style="margin-bottom:1.5rem;">Speak your arguments. AI Scholar listens, sharpens her counter in real time, and fires back. Your microphone vs her reasoning.</p>
 
     <div class="broadcast-booth">
       <div class="booth-tape">
@@ -435,13 +331,13 @@
           <div class="ticker-dot"></div>
           <span>ON AIR</span>
         </div>
-        <span>Loffi · Live Broadcast</span>
+        <span>AI Scholar · Live Broadcast</span>
         <span style="margin-left:auto;opacity:.7;font-size:9px;" id="live-air-time"></span>
       </div>
 
       <div class="booth-host">
         <div class="host-nameplate">
-          <div class="hn-name">Loffi</div>
+          <div class="hn-name">AI Scholar</div>
           <div class="hn-title">AI Strategist</div>
 
         </div>
@@ -451,7 +347,7 @@
             <div class="host-status-dot idle" id="host-dot"></div>
             <span id="host-status-txt" style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);">Awaiting broadcast</span>
           </div>
-          <div class="host-text" id="host-text">Loffi is ready. Set your topic and position in the Debate tab, then open the floor below.</div>
+          <div class="host-text" id="host-text">AI Scholar is ready. Set your topic and position in the Reason tab, then open the floor below.</div>
         </div>
       </div>
 
@@ -475,7 +371,7 @@
   <!-- ========== TAB: FLOWCHART ========== -->
   <div id="tab-flowchart" style="display:none;">
     <div class="kicker" style="margin-top:1rem;">System Architecture</div>
-    <h1 class="headline" style="margin-bottom:.4rem;">ArgueMind <em>Reasoning Pipeline</em></h1>
+    <h1 class="headline" style="margin-bottom:.4rem;">AI-Minaret <em>Reasoning Pipeline</em></h1>
     <p class="deck" style="margin-bottom:1.5rem;">Multi-layer AI reasoning system using the SCIPAB framework. Each layer receives all prior layers as chained context. Telemetry is captured at every node.</p>
 
     <svg width="100%" viewBox="0 0 680 920" xmlns="http://www.w3.org/2000/svg" style="display:block;margin-bottom:1.5rem;max-width:700px;">
@@ -510,7 +406,7 @@
       <g class="c-gray">
         <rect x="180" y="192" width="320" height="56" rx="4" stroke-width="0.5"/>
         <text class="th" x="340" y="213" text-anchor="middle" dominant-baseline="central">Layer 1 — Context analysis</text>
-        <text class="ts" x="340" y="231" text-anchor="middle" dominant-baseline="central">S — Situation · Map the full debate landscape</text>
+        <text class="ts" x="340" y="231" text-anchor="middle" dominant-baseline="central">S — Situation · Map the full reasoning landscape</text>
       </g>
       <rect x="514" y="199" width="80" height="20" rx="3" fill="none" stroke="#5F5E5A" stroke-width="0.5"/>
       <text class="ts" x="554" y="209" text-anchor="middle" dominant-baseline="central" fill="#5F5E5A">telemetry</text>
@@ -562,7 +458,7 @@
       <g class="c-purple">
         <rect x="160" y="580" width="360" height="56" rx="4" stroke-width="1"/>
         <text class="th" x="340" y="601" text-anchor="middle" dominant-baseline="central">Layer 5 — Final strategy &amp; verdict</text>
-        <text class="ts" x="340" y="619" text-anchor="middle" dominant-baseline="central">A — Action · B — Benefit · Loffi's ruling</text>
+        <text class="ts" x="340" y="619" text-anchor="middle" dominant-baseline="central">A — Action · B — Benefit · AI Scholar's ruling</text>
       </g>
       <rect x="534" y="587" width="80" height="20" rx="3" fill="none" stroke="#534AB7" stroke-width="0.5"/>
       <text class="ts" x="574" y="597" text-anchor="middle" dominant-baseline="central" fill="#534AB7">telemetry</text>
@@ -638,12 +534,12 @@
         <tr style="border-bottom:1px solid var(--rule);">
           <td style="padding:9px 14px;font-weight:700;font-family:var(--cond);color:var(--gold);">A</td>
           <td style="padding:9px 14px;font-weight:700;">Action</td>
-          <td style="padding:9px 14px;color:var(--ink3);">L5 Final verdict — Loffi delivers definitive strategy and ruling</td>
+          <td style="padding:9px 14px;color:var(--ink3);">L5 Final verdict — AI Scholar delivers definitive strategy and ruling</td>
         </tr>
         <tr>
           <td style="padding:9px 14px;font-weight:700;font-family:var(--cond);color:var(--gold);">B</td>
           <td style="padding:9px 14px;font-weight:700;">Benefit</td>
-          <td style="padding:9px 14px;color:var(--ink3);">Score card + coaching — measurable improvement for the debater</td>
+          <td style="padding:9px 14px;color:var(--ink3);">Score card + coaching — measurable improvement for the reasoner</td>
         </tr>
       </table>
     </div>
@@ -729,7 +625,7 @@
         <strong>Provider notes:</strong><br>
         • <strong>Anthropic</strong>: Key stays server-side in .env — leave API key blank to use server key.<br>
         • <strong>OpenRouter</strong>: Get a key at openrouter.ai/keys — access 100+ models including GPT-4o, Gemini, Llama.<br>
-        • <strong>Free</strong>: Uses OpenRouter's free-tier models (Llama 3.3, Gemma 3). Slower but no cost.
+        • <strong>Free</strong>: Uses OpenRouter's free-tier models (Llama 3.3, Qwen3). Slower but no cost.
       </div>
 
       <div style="display:flex;gap:8px;justify-content:flex-end;">
@@ -740,9 +636,13 @@
   </div>
 </div>
 
-<!-- ========== REFERENCE DOCUMENT PANEL (added to debate tab area) ========== -->
+<!-- ========== REFERENCE DOCUMENT PANEL (added to reason tab area) ========== -->
 <div id="ref-doc-panel" style="display:none;"><!-- rendered by JS into page --></div>
 
+<footer style="max-width:1200px;margin:2rem auto 1rem;padding:0 1rem;text-align:center;font-size:11px;line-height:1.6;color:#8a8a80;border-top:1px solid #d8d5cc;padding-top:.75rem;">
+  AI-Minaret is an AI reasoning exercise for study and reflection. It is <strong>not</strong> a mufti and its output is <strong>not</strong> a fatwa or religious ruling.
+  AI models can misquote or misattribute sources — verify every Quran and Hadith citation with qualified scholars before relying on it.
+</footer>
 <script type="module" src="/src/main.js"></script>
 </body>
 </html>
