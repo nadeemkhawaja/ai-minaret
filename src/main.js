@@ -407,7 +407,7 @@ function applyStrings(s) {
   set('masthead-tagline', s.appTagline);
 
   // Nav tabs
-  const tabs = document.querySelectorAll('.nav-item');
+  const tabs = document.querySelectorAll('.masthead-nav-left .nav-item');
   const tabKeys = ['debate', 'arena', 'live', 'flowchart', 'archive'];
   const tabStrings = [s.debate, s.arena, s.live, s.flowchart, s.archive];
   tabs.forEach((t, i) => { if (tabStrings[i]) t.textContent = tabStrings[i]; });
